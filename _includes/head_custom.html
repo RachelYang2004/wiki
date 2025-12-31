@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="{{ '/assets/css/just-the-docs-custom.css' | relative_url }}">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Avoid duplicates
+  if (document.getElementById('page-toc')) return;
+
+  const main = document.querySelector('.main-content');
+  const wrap = document.querySelector('.main-content-wrap');
+  if (!main || !wrap) return;
+
+  // Collect headings
+  const headings = Array.from(main.querySelectorAll('h2, h3'));
+  if (!headings.length) return;
+
+  const slugify = (s) => (s || '').trim().toLowerCase()
+    .replace(/[\s]+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-+/g, '-');
+
+  const used = new Set();
+  function ensureId(h) {
+    if (h.id) return h.id;
+    const base = slugify(h.textContent) || 'section';
+    let id = base, i = 2;
+    while (used.has(id) || document.getElementById(id)) id = `${base}-${i++}`;
+    h.id = id;
+    used.add(id);
+    return id;
+  }
+
+  const aside = document.createElement('aside');
+  aside.id = 'page-toc';
+  aside.className = 'page-toc';
+  aside.innerHTML = '<div class="page-toc-title">On this page</div><ul class="page-toc-list"></ul>';
+
+  const ul = aside.querySelector('.page-toc-list');
+  headings.forEach(h => {
+    const id = ensureId(h);
+    const li = document.createElement('li');
+    li.className = 'lvl-' + h.tagName.toLowerCase();
+    const a = document.createElement('a');
+    a.href = '#' + id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  wrap.appendChild(aside);
+});
+</script>
