@@ -5,53 +5,74 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // ---------- 1) Right-side TOC (auto) ----------
-  // If you already have a TOC, don't duplicate
-  if (!document.getElementById('page-toc')) {
-    const main = document.querySelector('.main-content');
-    const wrap = document.querySelector('.main-content-wrap') || main;
-    if (main) {
-      const headings = Array.from(main.querySelectorAll('h2, h3, h4'));
-      if (headings.length) {
-        const used = new Set();
-        const slugify = (s) => (s || '').trim().toLowerCase()
-          .replace(/[\s]+/g, '-')
-          .replace(/[^\w\-]+/g, '')
-          .replace(/\-+/g, '-');
+  function buildPageTOC() {
+    // If TOC already exists, don't duplicate
+    if (document.getElementById('page-toc')) return;
 
-        function ensureId(h) {
-          if (h.id) return h.id;
-          const base = slugify(h.textContent) || 'section';
-          let id = base, i = 2;
-          while (used.has(id) || document.getElementById(id)) id = `${base}-${i++}`;
-          h.id = id;
-          used.add(id);
-          return id;
-        }
+    // Pick the best "content root" across Just-the-Docs versions
+    const contentRoot =
+      document.getElementById('main-content') ||               // common in JTD
+      document.querySelector('.page-content') ||               // common in JTD
+      document.querySelector('.main-content') ||               // fallback
+      document.querySelector('main');                          // last resort
 
-        const aside = document.createElement('aside');
-        aside.id = 'page-toc';
-        aside.className = 'page-toc';
-        aside.innerHTML = '<div class="page-toc-title">On this page</div><ul class="page-toc-list"></ul>';
+    if (!contentRoot) return;
 
-        const ul = aside.querySelector('.page-toc-list');
-        headings.forEach(h => {
-          const id = ensureId(h);
-          const li = document.createElement('li');
-          li.className = 'lvl-' + h.tagName.toLowerCase();
-          const a = document.createElement('a');
-          a.href = '#' + id;
-          a.textContent = h.textContent;
-          li.appendChild(a);
-          ul.appendChild(li);
-        });
+    // Only scan headings inside the *article area* (avoid nav/sidebar)
+    const headings = Array.from(contentRoot.querySelectorAll('h2, h3, h4'))
+      .filter(h => h.textContent && h.textContent.trim().length > 0);
 
-        // Put TOC inside main-content so float/sticky behave nicely
-        wrap.appendChild(aside);
-      }
+    if (!headings.length) return;
+
+    const used = new Set();
+    const slugify = (s) => (s || '').trim().toLowerCase()
+      .replace(/[\s]+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-+/g, '-');
+
+    function ensureId(h) {
+      if (h.id) return h.id;
+      const base = slugify(h.textContent) || 'section';
+      let id = base, i = 2;
+      while (used.has(id) || document.getElementById(id)) id = `${base}-${i++}`;
+      h.id = id;
+      used.add(id);
+      return id;
     }
+
+    const aside = document.createElement('aside');
+    aside.id = 'page-toc';
+    aside.className = 'page-toc';
+    aside.innerHTML = '<div class="page-toc-title">On this page</div><ul class="page-toc-list"></ul>';
+
+    const ul = aside.querySelector('.page-toc-list');
+    headings.forEach(h => {
+      const id = ensureId(h);
+      const li = document.createElement('li');
+      li.className = 'lvl-' + h.tagName.toLowerCase();
+      const a = document.createElement('a');
+      a.href = '#' + id;
+      a.textContent = h.textContent.trim();
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+
+    // Place TOC next to the main content area (stable across layouts)
+    const wrap =
+      document.querySelector('.main-content-wrap') ||
+      document.querySelector('.main') ||
+      contentRoot.closest('.main-content-wrap') ||
+      contentRoot.parentElement;
+
+    if (wrap) wrap.appendChild(aside);
   }
 
-  // ---------- 2) Sidebar: mark expanded directory items ----------
+  // Run multiple times to handle different load behaviors (and prevent "sometimes empty")
+  buildPageTOC();
+  window.addEventListener('load', buildPageTOC);
+  setTimeout(buildPageTOC, 0);
+  setTimeout(buildPageTOC, 200);
+// ---------- 2) Sidebar: mark expanded directory items ----------
   function syncExpanded() {
     document.querySelectorAll('.nav-list-item').forEach(li => li.classList.remove('is-expanded'));
     document.querySelectorAll('.nav-list-expander[aria-expanded="true"]').forEach(btn => {

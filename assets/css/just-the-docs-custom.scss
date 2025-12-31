@@ -91,23 +91,20 @@ html, body, .side-bar, .main, .main-header, .main-content-wrap {
   stroke: var(--fs-accent) !important;
 }
 
-/* -------- Breadcrumb: keep on one line -------- */
-.breadcrumb-nav {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* -------- Breadcrumb -------- */
+/* Keep Just the Docs default breadcrumb behavior (no forced ellipsis). */
+.breadcrumb-nav { 
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
-.breadcrumb-nav a {
-  color: var(--fs-muted) !important;
-}
-.breadcrumb-nav a:hover {
-  color: var(--fs-accent) !important;
-}
+.breadcrumb-nav a { color: var(--fs-muted) !important; }
+.breadcrumb-nav a:hover { color: var(--fs-accent) !important; }
 
 /* -------- Content width + right TOC layout (NVIDIA docs vibe) -------- */
-#page-toc.page-toc { display: none; }
+/* #page-toc is injected by head_custom.html; hidden on small screens below */
 
-@media (min-width: 62rem) {
+@media (min-width: 60rem) {
   /* widen the whole content lane to reduce giant empty gutter */
   .main-content-wrap {
     max-width: 1440px !important;
@@ -171,7 +168,7 @@ html, body, .side-bar, .main, .main-header, .main-content-wrap {
   }
 }
 
-@media (max-width: 61.99rem) {
+@media (max-width: 59.99rem) {
   #page-toc.page-toc { display: none !important; }
   .main-content-wrap { display: block !important; }
   .main-content { margin-right: 0 !important; }
