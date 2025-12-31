@@ -134,3 +134,17 @@ th, td {
 .tip { border-left-color: #76b900; }      /* 主色 */
 .warning { border-left-color: #ffb020; }
 .important { border-left-color: #ff4d6d; }
+
+
+/* 让“正文里的链接”不要全绿：默认灰白，hover/active 才变绿 */
+.main-content a {
+  color: #cbd5e1 !important;
+  text-decoration: none;
+}
+
+.main-content a:hover,
+.main-content a:focus {
+  color: #8641A9 !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
