@@ -1,116 +1,158 @@
 ---
 ---
 
-/* 背景 */
-html, body, .side-bar, .main-content-wrap, .main-header {
-  background-color: #000 !important;
+/* ServoDevelop Wiki — custom overrides for Just the Docs (dark)
+   Goals:
+   - Right-side TOC like NVIDIA docs (sticky, always visible on wide screens)
+   - Fix huge blank space between sidebar and content (don't flex main-content-wrap)
+   - Keep main accent color (#76b900) but avoid "everything is green"
+   - Show green left bar for active *and expanded* nav items (without :has / @supports selector())
+*/
+
+:root{
+  --fs-accent: #76b900;
+  --fs-text: #e6e6e6;
+  --fs-muted: #a9b0b8;
+  --fs-bg: #000000;
+  --fs-panel: rgba(255,255,255,0.03);
+  --fs-border: rgba(255,255,255,0.12);
 }
 
-/* ====== 1) 修：红框大空白（内容不要被居中挤走） ====== */
-@media (min-width: 67rem) {
-  .main-content-wrap{
-    display: flex !important;
-    align-items: flex-start !important;
-    justify-content: flex-start !important;
-    gap: 28px !important;
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-  }
-
-  .main-content{
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-    max-width: 1100px !important;     /* 更接近 NVIDIA 的正文宽度 */
-    margin-left: 0 !important;        /* 关键：别 auto 居中 */
-    margin-right: 0 !important;
-  }
+/* -------- Base background -------- */
+html, body, .side-bar, .main, .main-header, .main-content-wrap {
+  background: var(--fs-bg) !important;
 }
 
-/* ====== 2) 修：面包屑不换行 + 超长用省略号 ====== */
-.breadcrumb-nav,
-.breadcrumb-nav-list {
-  white-space: nowrap !important;
-  flex-wrap: nowrap !important;
+/* -------- Links: keep accent, but not ALL text -------- */
+a { color: #8bc2ff; }
+a:hover { color: var(--fs-accent); }
+
+/* Sidebar nav: default text gray, hover/active accent */
+.nav-list .nav-list-link {
+  color: var(--fs-muted) !important;
 }
-.breadcrumb-nav {
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+.nav-list .nav-list-link:hover{
+  color: var(--fs-accent) !important;
 }
 
-/* ====== 3) 左侧导航：恢复绿竖条（文章 active） ====== */
-.nav-list .nav-list-link { position: relative; }
-
+/* Active page item */
 .nav-list .nav-list-item.active > .nav-list-link,
-.nav-list .nav-list-item > .nav-list-link.active {
-  background: rgba(118,185,0,0.12) !important;
-  color: #e6edf3 !important;
+.nav-list .nav-list-item .nav-list-link.active {
+  color: #ffffff !important;
+  background-color: rgba(118,185,0,0.12) !important;
+}
+
+/* Expanded directory item (set by JS adding .is-expanded) */
+.nav-list .nav-list-item.is-expanded > .nav-list-link{
+  color: #ffffff !important;
+  background-color: rgba(118,185,0,0.08) !important;
+}
+
+/* Green left bar for active + expanded (directory or leaf) */
+.nav-list .nav-list-link{
+  position: relative;
+  border-radius: 10px;
 }
 .nav-list .nav-list-item.active > .nav-list-link::before,
-.nav-list .nav-list-item > .nav-list-link.active::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:6px;
-  bottom:6px;
-  width:4px;
-  background:#76b900;
-  border-radius:2px;
+.nav-list .nav-list-item.is-expanded > .nav-list-link::before,
+.nav-list .nav-list-link.active::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 4px;
+  border-radius: 999px;
+  background: var(--fs-accent);
 }
 
-/* ====== 4) 目录项选中也要绿竖条（“展开即高亮”方案） ======
-   说明：Documents/Protocols 这种往往只是展开器，不是页面，所以不会 active。
-   我们用 :has()：只要它展开了，也给它同样的高亮。
-*/
-@supports selector(.a:has(.b)) {
-  .nav-list .nav-list-item:has(> .nav-list-expander[aria-expanded="true"]) > .nav-list-link {
-    background: rgba(118,185,0,0.10) !important;
-    color: #e6edf3 !important;
-  }
-  .nav-list .nav-list-item:has(> .nav-list-expander[aria-expanded="true"]) > .nav-list-link::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:6px;
-    bottom:6px;
-    width:4px;
-    background:#76b900;
-    border-radius:2px;
-    opacity: .8;
-  }
+/* Avoid the "selected item becomes white block" issue */
+.nav-list .nav-list-item.active > .nav-list-link{
+  box-shadow: inset 0 0 0 1px rgba(118,185,0,0.22);
 }
 
-/* ====== 5) 右侧 TOC 栏 ====== */
+/* -------- Breadcrumb: keep on one line -------- */
+.breadcrumb-nav {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.breadcrumb-nav ol, .breadcrumb-nav ul {
+  white-space: nowrap;
+}
+.breadcrumb-nav li, .breadcrumb-nav a {
+  white-space: nowrap;
+}
+
+/* -------- Content width: closer to NVIDIA docs -------- */
 @media (min-width: 67rem) {
-  #page-toc{
-    flex: 0 0 280px;
+  /* Widen the whole content area so there isn't a giant empty gutter */
+  .main-content-wrap{
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding-left: 2.25rem !important;
+    padding-right: 2.25rem !important;
+  }
+
+  /* Reserve space for the right TOC so it doesn't overlap content */
+  .main-content{
+    margin-right: 320px !important;
+    max-width: 980px !important;
+  }
+}
+
+/* -------- Right-side TOC (sticky) -------- */
+#page-toc.page-toc{
+  display: none;
+}
+
+@media (min-width: 67rem) {
+  #page-toc.page-toc{
+    display: block;
     position: sticky;
     top: 96px;
+    float: right;
+    width: 280px;
+    margin-left: 2rem;
+    padding-left: 16px;
+    border-left: 1px solid var(--fs-border);
     max-height: calc(100vh - 140px);
     overflow: auto;
-    border-left: 1px solid rgba(255,255,255,0.10);
-    padding-left: 16px;
   }
+
   #page-toc .page-toc-title{
-    font-size: .85rem;
-    color: #9bb0c5;
-    margin-bottom: 10px;
+    font-size: 0.85rem;
+    color: #cfd3d8;
+    margin: 0 0 10px 0;
   }
+
   #page-toc .page-toc-list{
-    list-style:none;
-    margin:0;
-    padding:0;
-    font-size:.85rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
-  #page-toc .page-toc-list li{ margin: 8px 0; }
-  #page-toc .page-toc-list li.lvl-h3{ margin-left: 10px; }
 
-  #page-toc a{ color:#b8c4d1 !important; text-decoration:none; }
-  #page-toc a:hover{ color:#76b900 !important; text-decoration:underline; text-underline-offset:3px; }
+  #page-toc .page-toc-list li{
+    margin: 6px 0;
+    line-height: 1.25;
+  }
+  #page-toc .page-toc-list li.lvl-h3{ margin-left: 12px; opacity: 0.95; }
+  #page-toc a{
+    color: var(--fs-muted) !important;
+    text-decoration: none;
+  }
+  #page-toc a:hover{
+    color: var(--fs-accent) !important;
+  }
 }
+
+/* -------- Small screens: hide TOC to avoid layout fights -------- */
 @media (max-width: 66.99rem){
-  #page-toc{ display:none; }
+  #page-toc.page-toc{ display:none !important; }
+  .main-content{ margin-right: 0 !important; }
 }
 
-/* 正文链接不要全绿 */
-.main-content a { color: #cbd5e1 !important; text-decoration: none; }
-.main-content a:hover { color: #76b900 !important; text-decoration: underline; text-underline-offset: 3px; }
+/* -------- Make headings readable (avoid low-contrast) -------- */
+h1, h2, h3, h4, h5, h6{
+  color: #ffffff;
+}

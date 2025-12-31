@@ -9,17 +9,18 @@ document.addEventListener('DOMContentLoaded', function () {
   const wrap = document.querySelector('.main-content-wrap');
   if (!main || !wrap) return;
 
-  // Collect headings
+  // Collect headings (you can extend to h4 if needed)
   const headings = Array.from(main.querySelectorAll('h2, h3'));
   if (!headings.length) return;
 
   const slugify = (s) => (s || '').trim().toLowerCase()
     .replace(/[\s]+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-+/g, '-');
+    .replace(/[^a-z0-9\u4e00-\u9fa5\-]/g, '')
+    .replace(/\-+/g, '-')
+    .replace(/^\-|\-$/g, '');
 
   const used = new Set();
-  function ensureId(h) {
+  function ensureId(h){
     if (h.id) return h.id;
     const base = slugify(h.textContent) || 'section';
     let id = base, i = 2;
@@ -47,5 +48,27 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   wrap.appendChild(aside);
+
+  // ---------- Sidebar: add .is-expanded to expanded directories (no :has needed) ----------
+  function syncExpanded(){
+    document.querySelectorAll('.nav-list-expander').forEach(btn => {
+      const li = btn.closest('.nav-list-item');
+      if (!li) return;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      li.classList.toggle('is-expanded', expanded);
+    });
+  }
+
+  syncExpanded();
+
+  const sideBar = document.querySelector('.side-bar');
+  if (sideBar){
+    sideBar.addEventListener('click', function(e){
+      if (e.target && e.target.closest && e.target.closest('.nav-list-expander')){
+        // Wait for Just-the-Docs to update aria-expanded
+        setTimeout(syncExpanded, 0);
+      }
+    });
+  }
 });
 </script>
