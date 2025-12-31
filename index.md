@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 首页
+title: Home
 nav_order: 1
 description: "欢迎访问 ServoDevelop 技术文档"
 ---
