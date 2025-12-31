@@ -1,30 +1,40 @@
 ---
 ---
-/* 注意：这里不需要写 @import，主题会自动把这些样式加载在最后 */
+/* NVIDIA 灵魂配色变量覆盖 */
+$body-background-color: #000000;    /* 纯黑背景 */
+$sidebar-color: #0b0b0b;           /* 侧边栏极深灰 */
+$link-color: #76b900;              /* NVIDIA 绿 */
+$nav-child-link-color: #999;       /* 未选中文字颜色 */
 
-/* 1. NVIDIA 纯黑背景定义 */
-$body-background-color: #000000;
-$sidebar-color: #0b0b0b;
-$code-background-color: #1a1a1a;
-
-/* 2. 侧边栏选中时的 NVIDIA 绿色竖条 */
+/* 1. 左侧选中的绿色竖条效果 */
 .nav-list-item.active > .nav-list-link {
-    color: #76b900 !important; 
-    border-left: 4px solid #76b900 !important;
+    color: #76b900 !important;
+    border-left: 3px solid #76b900 !important;
     background-color: rgba(118, 185, 0, 0.1) !important;
     padding-left: 12px !important;
 }
 
-/* 3. 右侧导航栏 (TOC) 布局优化 */
-.table-of-contents {
-    border-left: 1px solid #333;
-    padding-left: 1rem;
-    margin-left: 1rem;
-    font-size: 0.85em;
-}
-
-/* 4. 这里的样式会覆盖主题默认深色模式 */
+/* 2. 强制深色模式下的底色 */
 body[data-theme="dark"] {
     --body-background-color: #000000;
     --sidebar-color: #0b0b0b;
+}
+
+/* 3. 实现右侧“本页内容”布局 (TOC) */
+@media (min-width: 67rem) {
+    .main-content {
+        display: flex;
+        flex-direction: row-reverse; /* 将 TOC 挤到右侧 */
+        justify-content: flex-end;
+    }
+    .table-of-contents {
+        width: 250px;
+        position: sticky;
+        top: 80px;
+        height: fit-content;
+        border-left: 1px solid #222;
+        padding-left: 1.5rem;
+        margin-left: 2rem;
+        font-size: 0.85em;
+    }
 }
