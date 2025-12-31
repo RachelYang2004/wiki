@@ -1,164 +1,97 @@
 ---
 ---
-/* 强制全站背景全黑 (NVIDIA 风格) */
+
+/* ===== Base background (keep dark) ===== */
 html, body, .side-bar, .main-content-wrap, .main-header {
-    background-color: #000000 !important;
+  background-color: #000000 !important;
 }
 
-/* 左侧菜单：选中时的绿色竖条 */
-.nav-list-item.active > .nav-list-link {
-    color: #76b900 !important;
-    border-left: 4px solid #76b900 !important;
-    background-color: rgba(118, 185, 0, 0.1) !important;
-    padding-left: 15px !important;
-}
-
-/* 强行将 TOC (本页内容) 移动到右侧 */
-@media (min-width: 67rem) {
-    #main-content {
-        display: flex !important;
-        flex-direction: row-reverse !important; /* 核心：左右反转 */
-        justify-content: flex-end !important;
-    }
-    
-    /* 针对 Kramdown 自动生成的 TOC 容器 */
-    #markdown-toc {
-        display: block !important;
-        width: 250px !important;
-        position: sticky !important;
-        top: 100px !important;
-        height: fit-content !important;
-        border-left: 1px solid #333 !important;
-        padding-left: 20px !important;
-        margin-left: 30px !important;
-        font-size: 0.85em !important;
-        list-style: none !important;
-    }
-}
-
-/* ---------------------------
-   NVIDIA-like dark polishing
-   --------------------------- */
-
-/* 阅读宽度 & 字体层级 */
-.main-content {
-  max-width: 980px;
-  line-height: 1.75;
-}
-
-h1, h2, h3 {
-  letter-spacing: -0.01em;
-}
-
-h1 { font-size: 2.0rem; }
-h2 { font-size: 1.35rem; margin-top: 2.0rem; }
-h3 { font-size: 1.15rem; margin-top: 1.5rem; }
-
-hr {
-  border: 0;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-/* 链接：绿色强调，但不“刺眼” */
-a {
+/* ===== Fix #1: body links NOT all green =====
+   Default: light gray, hover: green */
+.main-content a {
+  color: #cbd5e1 !important;
   text-decoration: none;
 }
-a:hover {
+.main-content a:hover,
+.main-content a:focus {
+  color: #76b900 !important;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-/* 左侧导航：像 NVIDIA 一样用“左侧色条 + 微底色”突出当前项 */
-.nav-list .nav-list-item > .nav-list-link {
-  border-left: 3px solid transparent;
-  padding-left: 14px;
-}
-
+/* ===== Fix #2: left nav active item NOT white background ===== */
 .nav-list .nav-list-item.active > .nav-list-link,
 .nav-list .nav-list-item > .nav-list-link.active {
-  color: #eaffd4 !important;
-  border-left-color: #76b900 !important;
-  background: rgba(118, 185, 0, 0.10) !important;
+  background: rgba(118, 185, 0, 0.12) !important;
+  color: #e6edf3 !important;
+  border-left: 4px solid #76b900 !important;
+  padding-left: 15px !important;
 }
-
 .nav-list .nav-list-item > .nav-list-link:hover {
   background: rgba(255,255,255,0.04) !important;
 }
 
-/* 搜索框：更像 docs 风格的“面板” */
-.search-input-wrap input {
-  border: 1px solid rgba(255,255,255,0.10) !important;
-  border-radius: 12px !important;
-  background: rgba(255,255,255,0.03) !important;
+/* ===== Typography polish ===== */
+.main-content {
+  max-width: 980px;
+  line-height: 1.75;
 }
+h1, h2, h3 { letter-spacing: -0.01em; }
+hr { border: 0; border-top: 1px solid rgba(255,255,255,0.08); }
 
-/* 代码块：更面板化 */
-pre, code { border-radius: 10px; }
-pre {
-  border: 1px solid rgba(255,255,255,0.10);
-}
-
-/* 表格：轻边框 + 圆角 */
+/* ===== Code & table ===== */
+pre { border: 1px solid rgba(255,255,255,0.10); border-radius: 10px; }
+code { border-radius: 6px; }
 table {
   border: 1px solid rgba(255,255,255,0.10);
   border-radius: 10px;
   overflow: hidden;
 }
-th, td {
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+th, td { border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+/* ===== Fix #3: right-side TOC layout ===== */
+@media (min-width: 67rem) {
+  .main-content-wrap {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 32px;
+  }
+
+  .main-content {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  #page-toc.page-toc {
+    flex: 0 0 260px;
+    position: sticky;
+    top: 96px;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+
+    border-left: 1px solid rgba(255,255,255,0.10);
+    padding-left: 16px;
+  }
+
+  #page-toc .page-toc-title {
+    font-size: 0.85rem;
+    color: #9bb0c5;
+    margin-bottom: 10px;
+  }
+
+  #page-toc .page-toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.85rem;
+  }
+  #page-toc .page-toc-list li { margin: 8px 0; }
+  #page-toc .page-toc-list li.lvl-h3 { margin-left: 10px; }
+
+  #page-toc a { color: #b8c4d1 !important; text-decoration: none; }
+  #page-toc a:hover { color: #76b900 !important; }
 }
 
-/* 右侧 On this page（你的 TOC） */
-#markdown-toc {
-  border-left: 1px solid rgba(255,255,255,0.10) !important;
-  padding-left: 16px !important;
-  font-size: 0.85rem !important;
-}
-#markdown-toc a {
-  color: #b8c4d1 !important;
-}
-#markdown-toc a:hover {
-  color: #ffffff !important;
-  text-decoration: none !important;
-}
-
-/* Callouts：note / warning / tip / important */
-.note, .warning, .tip, .important {
-  border: 1px solid rgba(255,255,255,0.10);
-  border-left-width: 4px;
-  border-radius: 12px;
-  padding: 12px 14px;
-  background: rgba(255,255,255,0.03);
-}
-.note { border-left-color: #2b77ff; }
-.tip { border-left-color: #76b900; }      /* 主色 */
-.warning { border-left-color: #ffb020; }
-.important { border-left-color: #ff4d6d; }
-
-
-/* 让“正文里的链接”不要全绿：默认灰白，hover/active 才变绿 */
-.main-content a {
-  color: #cbd5e1 !important;
-  text-decoration: none;
-}
-
-.main-content a:hover,
-.main-content a:focus {
-  color: #8641A9 !important;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-
-/* 左侧导航当前项：深底 + 绿左边线，不要白底 */
-.nav-list .nav-list-item.active > .nav-list-link,
-.nav-list .nav-list-item > .nav-list-link.active {
-  background: rgba(118, 185, 0, 0.12) !important;
-  color: #e6edf3 !important;
-  border-left: 4px solid #8641A9 !important;
-}
-
-/* hover 也别变白 */
-.nav-list .nav-list-item > .nav-list-link:hover {
-  background: rgba(255,255,255,0.04) !important;
+@media (max-width: 66.99rem) {
+  #page-toc { display: none; }
 }
