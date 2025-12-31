@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 伺服舵机
+title: Servo
 has_children: true
 nav_order: 6
 ---

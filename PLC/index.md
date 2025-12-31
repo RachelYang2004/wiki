@@ -1,6 +1,6 @@
 ---
 layout: default
-title: PLC控制
+title: PLC Application
 has_children: true
 nav_order: 3
 ---

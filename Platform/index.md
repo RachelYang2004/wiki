@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 系统应用
+title: Platforms
 has_children: true
 nav_order: 4
 ---

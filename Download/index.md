@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 下载专区
+title: Downloads
 has_children: true
 nav_order: 2
 ---
