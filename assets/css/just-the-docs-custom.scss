@@ -1,38 +1,37 @@
 ---
 ---
-/* 强制全站全黑底色与 NVIDIA 绿 */
-html, body, .main-content-wrap, .side-bar {
-  background-color: #000000 !important;
-  --body-background-color: #000000 !important;
-  --sidebar-color: #0d0d0d !important;
-  --link-color: #76b900 !important;
+/* 强制全站背景全黑 (NVIDIA 风格) */
+html, body, .side-bar, .main-content-wrap, .main-header {
+    background-color: #000000 !important;
 }
 
-/* 侧边栏选中时的 NVIDIA 绿色竖条效果 */
+/* 左侧菜单：选中时的绿色竖条 */
 .nav-list-item.active > .nav-list-link {
-  color: #76b900 !important;
-  border-left: 4px solid #76b900 !important;
-  background-color: rgba(118, 185, 0, 0.1) !important;
-  padding-left: 15px !important;
+    color: #76b900 !important;
+    border-left: 4px solid #76b900 !important;
+    background-color: rgba(118, 185, 0, 0.1) !important;
+    padding-left: 15px !important;
 }
 
-/* 强制右侧目录 (TOC) 出现并靠右 */
+/* 强行将 TOC (本页内容) 移动到右侧 */
 @media (min-width: 67rem) {
-  #main-content {
-    display: flex !important;
-    flex-direction: row-reverse !important; /* 强制布局反转 */
-    justify-content: flex-end !important;
-  }
-  /* 针对 Just the Docs 的 TOC 容器 */
-  .table-of-contents, #markdown-toc {
-    display: block !important;
-    width: 250px !important;
-    position: sticky !important;
-    top: 80px !important;
-    height: fit-content !important;
-    border-left: 1px solid #333 !important;
-    padding-left: 1.5rem !important;
-    margin-left: 2rem !important;
-    font-size: 0.85em !important;
-  }
+    #main-content {
+        display: flex !important;
+        flex-direction: row-reverse !important; /* 核心：左右反转 */
+        justify-content: flex-end !important;
+    }
+    
+    /* 针对 Kramdown 自动生成的 TOC 容器 */
+    #markdown-toc {
+        display: block !important;
+        width: 250px !important;
+        position: sticky !important;
+        top: 100px !important;
+        height: fit-content !important;
+        border-left: 1px solid #333 !important;
+        padding-left: 20px !important;
+        margin-left: 30px !important;
+        font-size: 0.85em !important;
+        list-style: none !important;
+    }
 }
