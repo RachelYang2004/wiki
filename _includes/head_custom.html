@@ -11,3 +11,66 @@ document.addEventListener('keydown', function (e) {
   }
 });
 </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // 1) 找到正文里已经生成的 kramdown TOC（如果有）
+  const mdToc = document.querySelector('#markdown-toc');
+  if (!mdToc) return;
+
+  // 2) 找到 Just the Docs 的主内容包裹（更稳定）
+  const wrap = document.querySelector('.main-content-wrap');
+  if (!wrap) return;
+
+  // 3) 创建右侧 TOC 容器（如果不存在）
+  let tocBox = document.querySelector('#page-toc');
+  if (!tocBox) {
+    tocBox = document.createElement('nav');
+    tocBox.id = 'page-toc';
+    tocBox.className = 'page-toc';
+    tocBox.innerHTML = '<div class="page-toc-title">On this page</div>';
+    wrap.appendChild(tocBox);
+  }
+
+  // 4) 把正文顶部的 TOC 移到右侧容器
+  tocBox.appendChild(mdToc);
+});
+</script>
+
+
+/* 桌面端：正文左 + TOC右 */
+@media (min-width: 67rem) {
+  .main-content-wrap {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 32px;
+  }
+  .main-content {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  #page-toc.page-toc {
+    flex: 0 0 260px;
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 140px);
+    overflow: auto;
+    border-left: 1px solid rgba(255,255,255,0.10);
+    padding-left: 16px;
+  }
+  #page-toc .page-toc-title {
+    font-size: 0.85rem;
+    color: #9bb0c5;
+    margin-bottom: 10px;
+  }
+
+  /* 右侧 TOC 里的链接：默认灰白，hover 才绿 */
+  #page-toc a { color: #b8c4d1 !important; text-decoration: none; }
+  #page-toc a:hover { color: #76b900 !important; }
+}
+
+/* 小屏不显示右侧 TOC（避免挤压） */
+@media (max-width: 66.99rem) {
+  #page-toc { display: none; }
+}
