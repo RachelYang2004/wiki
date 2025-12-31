@@ -1,13 +1,12 @@
 ---
 ---
 
-/* ===== Base background (keep dark) ===== */
+/* 背景统一深色 */
 html, body, .side-bar, .main-content-wrap, .main-header {
   background-color: #000000 !important;
 }
 
-/* ===== Fix #1: body links NOT all green =====
-   Default: light gray, hover: green */
+/* 1) 正文链接不要全绿：默认灰白，hover 才绿 */
 .main-content a {
   color: #cbd5e1 !important;
   text-decoration: none;
@@ -19,7 +18,7 @@ html, body, .side-bar, .main-content-wrap, .main-header {
   text-underline-offset: 3px;
 }
 
-/* ===== Fix #2: left nav active item NOT white background ===== */
+/* 2) 左侧选中项不要白底：暗底 + 绿左边线 */
 .nav-list .nav-list-item.active > .nav-list-link,
 .nav-list .nav-list-item > .nav-list-link.active {
   background: rgba(118, 185, 0, 0.12) !important;
@@ -31,25 +30,27 @@ html, body, .side-bar, .main-content-wrap, .main-header {
   background: rgba(255,255,255,0.04) !important;
 }
 
-/* ===== Typography polish ===== */
+/* 排版微调 */
 .main-content {
   max-width: 980px;
   line-height: 1.75;
 }
-h1, h2, h3 { letter-spacing: -0.01em; }
-hr { border: 0; border-top: 1px solid rgba(255,255,255,0.08); }
 
-/* ===== Code & table ===== */
-pre { border: 1px solid rgba(255,255,255,0.10); border-radius: 10px; }
-code { border-radius: 6px; }
+/* 代码块/表格更“文档站” */
+pre {
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+}
 table {
   border: 1px solid rgba(255,255,255,0.10);
   border-radius: 10px;
   overflow: hidden;
 }
-th, td { border-bottom: 1px solid rgba(255,255,255,0.08); }
+th, td {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
 
-/* ===== Fix #3: right-side TOC layout ===== */
+/* 3) 桌面端：正文左 + 右侧 TOC */
 @media (min-width: 67rem) {
   .main-content-wrap {
     display: flex !important;
@@ -92,6 +93,7 @@ th, td { border-bottom: 1px solid rgba(255,255,255,0.08); }
   #page-toc a:hover { color: #76b900 !important; }
 }
 
+/* 小屏隐藏右侧 TOC */
 @media (max-width: 66.99rem) {
   #page-toc { display: none; }
 }
