@@ -1,10 +1,8 @@
 ---
 layout: default
+title: 渲染测试页面
+parent: 下载专区     # 必须和父级的 title 一致
+nav_order: 1
 ---
-如何下载上位机及串口助手.md
-
-282上位机
-
+# 嵌套测试内容
 {% include note_performance_graph.md %}
-
-james
