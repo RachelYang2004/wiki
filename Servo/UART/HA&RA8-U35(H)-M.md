@@ -1,3 +1,14 @@
+---
+layout: default
+title: HA8/RA8-U35H-M
+parent: UART
+grand_parent: Servo
+nav_order: 1
+toc: true
+
+
+---
+
 # UART Bus Servo 35KG Series 
 
 <img src="./UART_image/U35产品图片.png" alt="U35产品图片" style="zoom: 50%;" />

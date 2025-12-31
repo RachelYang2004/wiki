@@ -1,6 +1,6 @@
 ---
 layout: default
-title: HA8-U25(H)-M/RA8-U25(H)-M
+title: HA8-U25(H)-M | RA8-U25(H)-M
 parent: UART
 grand_parent: Servo
 nav_order: 1
