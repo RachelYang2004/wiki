@@ -1,0 +1,7 @@
+/* 自定义 NVIDIA 风格竖线条 */
+.nav-list-item.active > .nav-list-link {
+    color: #76b900 !important; /* NVIDIA 经典绿 */
+    border-left: 3px solid #76b900; /* 左侧绿色竖条 */
+    padding-left: 12px;
+    background-color: rgba(118, 185, 0, 0.05); /* 淡淡的背景色 */
+}
