@@ -1,12 +1,7 @@
-# 基础信息
 title: ServoDevelop Wiki
 remote_theme: just-the-docs/just-the-docs
 
-# 开启搜索
 search_enabled: true
-
-# 默认颜色方案
 color_scheme: nvidia-dark
 
-# 允许加载自定义的 head 内容
 head_custom: _includes/head_custom.html
