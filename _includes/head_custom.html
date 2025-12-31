@@ -1,15 +1,13 @@
 <script>
-  function toggleNvidia() {
-    const html = document.documentElement;
-    const current = html.getAttribute('data-theme');
-    const target = current === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', target);
-    localStorage.setItem('jtd-theme', target);
-  }
-</script>
+document.addEventListener('keydown', function (e) {
+  const isMac = navigator.platform.toUpperCase().includes('MAC');
+  const k = (e.key || '').toLowerCase() === 'k';
+  const mod = isMac ? e.metaKey : e.ctrlKey;
 
-<div style="position: fixed; top: 15px; right: 20px; z-index: 9999;">
-  <button onclick="toggleNvidia()" style="background:#76b900; color:white; border:none; padding:6px 15px; border-radius:20px; font-weight:bold; cursor:pointer; box-shadow: 0 0 10px rgba(118,185,0,0.5);">
-    🌓 MODE
-  </button>
-</div>
+  if (mod && k) {
+    e.preventDefault();
+    const input = document.querySelector('#search-input') || document.querySelector('input[type="search"]');
+    if (input) input.focus();
+  }
+});
+</script>
