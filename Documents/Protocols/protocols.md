@@ -1,3 +1,10 @@
+---
+layout: default
+title: 通信协议详情      # 文章在侧边栏显示的标题
+parent: 协议规范        # 它的父级是哪个“小类”
+grand_parent: 技术文档  # 它的祖父级是哪个“大类”（三层结构必须写这个）
+nav_order: 1
+---
 
 
 # UART/RS485 Bus Servo Communication Protocol
