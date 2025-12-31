@@ -1,25 +1,15 @@
-<!-- Make sure custom SCSS is actually applied -->
 <link rel="stylesheet" href="{{ '/assets/css/just-the-docs-custom.css' | relative_url }}">
 
 <script>
-/**
- * Auto-generate "On this page" TOC on every page
- * - Collects h2/h3 inside .main-content
- * - Appends a right sidebar (#page-toc) into .main-content-wrap
- */
 document.addEventListener('DOMContentLoaded', function () {
+  // Avoid duplicates
   if (document.getElementById('page-toc')) return;
 
   const main = document.querySelector('.main-content');
   const wrap = document.querySelector('.main-content-wrap');
   if (!main || !wrap) return;
 
-  // optional page-level disable: add `toc: false` in front matter
-  try {
-    const disabled = {{ page.toc == false | jsonify }};
-    if (disabled) return;
-  } catch (_) {}
-
+  // Collect headings
   const headings = Array.from(main.querySelectorAll('h2, h3'));
   if (!headings.length) return;
 
@@ -29,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
     .replace(/\-+/g, '-');
 
   const used = new Set();
-
   function ensureId(h) {
     if (h.id) return h.id;
     const base = slugify(h.textContent) || 'section';
@@ -46,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function () {
   aside.innerHTML = '<div class="page-toc-title">On this page</div><ul class="page-toc-list"></ul>';
 
   const ul = aside.querySelector('.page-toc-list');
-
   headings.forEach(h => {
     const id = ensureId(h);
     const li = document.createElement('li');
