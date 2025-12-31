@@ -1,0 +1,30 @@
+---
+---
+/* 注意：这里不需要写 @import，主题会自动把这些样式加载在最后 */
+
+/* 1. NVIDIA 纯黑背景定义 */
+$body-background-color: #000000;
+$sidebar-color: #0b0b0b;
+$code-background-color: #1a1a1a;
+
+/* 2. 侧边栏选中时的 NVIDIA 绿色竖条 */
+.nav-list-item.active > .nav-list-link {
+    color: #76b900 !important; 
+    border-left: 4px solid #76b900 !important;
+    background-color: rgba(118, 185, 0, 0.1) !important;
+    padding-left: 12px !important;
+}
+
+/* 3. 右侧导航栏 (TOC) 布局优化 */
+.table-of-contents {
+    border-left: 1px solid #333;
+    padding-left: 1rem;
+    margin-left: 1rem;
+    font-size: 0.85em;
+}
+
+/* 4. 这里的样式会覆盖主题默认深色模式 */
+body[data-theme="dark"] {
+    --body-background-color: #000000;
+    --sidebar-color: #0b0b0b;
+}
