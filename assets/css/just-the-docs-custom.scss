@@ -1,25 +1,38 @@
 ---
 ---
-/* 强制全黑底色覆盖 */
-:root {
+/* 强制全站全黑底色与 NVIDIA 绿 */
+html, body, .main-content-wrap, .side-bar {
+  background-color: #000000 !important;
   --body-background-color: #000000 !important;
-  --sidebar-color: #0b0b0b !important;
+  --sidebar-color: #0d0d0d !important;
   --link-color: #76b900 !important;
 }
 
-/* NVIDIA 绿色竖条效果 */
+/* 侧边栏选中时的 NVIDIA 绿色竖条效果 */
 .nav-list-item.active > .nav-list-link {
   color: #76b900 !important;
   border-left: 4px solid #76b900 !important;
   background-color: rgba(118, 185, 0, 0.1) !important;
+  padding-left: 15px !important;
 }
 
-/* 强制右侧目录 (TOC) 布局 */
+/* 强制右侧目录 (TOC) 出现并靠右 */
 @media (min-width: 67rem) {
-  .main-content-wrap { display: flex; flex-direction: row; }
-  .main-content { flex: 1; }
-  .table-of-contents {
-    width: 200px; order: 2; position: sticky; top: 80px;
-    border-left: 1px solid #333; padding-left: 1rem; font-size: 0.8em;
+  #main-content {
+    display: flex !important;
+    flex-direction: row-reverse !important; /* 强制布局反转 */
+    justify-content: flex-end !important;
+  }
+  /* 针对 Just the Docs 的 TOC 容器 */
+  .table-of-contents, #markdown-toc {
+    display: block !important;
+    width: 250px !important;
+    position: sticky !important;
+    top: 80px !important;
+    height: fit-content !important;
+    border-left: 1px solid #333 !important;
+    padding-left: 1.5rem !important;
+    margin-left: 2rem !important;
+    font-size: 0.85em !important;
   }
 }
