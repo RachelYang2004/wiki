@@ -9,7 +9,7 @@ nav_order: 1
 
 
 # UART/RS485 Bus Servo Communication Protocol
-
+{:toc}
 **v1.0.25**
 
 ## 1. Introduction
