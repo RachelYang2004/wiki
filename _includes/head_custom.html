@@ -1,0 +1,12 @@
+<script>
+  function toggleTheme() {
+    const body = document.body;
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  }
+</script>
+<button onclick="toggleTheme()" style="position:fixed; bottom:20px; right:20px; z-index:100; padding:10px; border-radius:50%; cursor:pointer;">
+  🌓
+</button>
