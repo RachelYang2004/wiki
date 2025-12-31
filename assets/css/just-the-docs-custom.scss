@@ -1,146 +1,116 @@
 ---
 ---
 
-/* =========================
-   Base (Dark + keep green)
-   ========================= */
+/* 背景 */
 html, body, .side-bar, .main-content-wrap, .main-header {
-  background-color: #000000 !important;
+  background-color: #000 !important;
 }
 
-/* Links: default light gray, hover green */
-.main-content a {
-  color: #cbd5e1 !important;
-  text-decoration: none;
-}
-.main-content a:hover,
-.main-content a:focus {
-  color: #76b900 !important;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* =========================
-   Left nav: active item highlight + GREEN BAR
-   ========================= */
-.nav-list .nav-list-link {
-  position: relative; /* for ::before indicator */
-}
-
-/* Active link (two selectors cover JTD variations) */
-.nav-list .nav-list-item.active > .nav-list-link,
-.nav-list .nav-list-item > .nav-list-link.active {
-  background: rgba(118, 185, 0, 0.12) !important;
-  color: #e6edf3 !important;
-}
-
-/* Force the green vertical bar (more robust than border-left) */
-.nav-list .nav-list-item.active > .nav-list-link::before,
-.nav-list .nav-list-item > .nav-list-link.active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 6px;
-  bottom: 6px;
-  width: 4px;
-  background: #76b900;
-  border-radius: 2px;
-}
-
-/* Hover background (subtle) */
-.nav-list .nav-list-item > .nav-list-link:hover {
-  background: rgba(255, 255, 255, 0.04) !important;
-}
-
-/* =========================
-   Typography / content feel
-   ========================= */
-.main-content {
-  line-height: 1.75;
-}
-
-/* Code blocks / tables: doc-site look */
-pre {
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 10px;
-}
-table {
-  border: 1px solid rgba(255,255,255,0.10);
-  border-radius: 10px;
-  overflow: hidden;
-}
-th, td {
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-/* =========================
-   Layout ratio (NVIDIA-like)
-   Goal: left nav + wide content + right toc, less weird whitespace
-   ========================= */
-
-/* Desktop */
+/* ====== 1) 修：红框大空白（内容不要被居中挤走） ====== */
 @media (min-width: 67rem) {
-
-  /* Remove the "centered narrow column" feeling */
-  .main {
-    max-width: none !important;
-  }
-
-  /* Reduce big side paddings that create huge blank space */
-  .main-content-wrap {
-    max-width: none !important;
-    padding-left: 1.75rem !important;
-    padding-right: 1.75rem !important;
-
-    /* If your TOC is in DOM as #page-toc and you want it at right */
+  .main-content-wrap{
     display: flex !important;
     align-items: flex-start !important;
+    justify-content: flex-start !important;
     gap: 28px !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
   }
 
-  /* Content column: wider than before, but still readable */
-  .main-content {
-    flex: 1 1 auto;
-    min-width: 0;
-    max-width: 1100px;  /* 核心：放宽正文宽度 */
+  .main-content{
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: 1100px !important;     /* 更接近 NVIDIA 的正文宽度 */
+    margin-left: 0 !important;        /* 关键：别 auto 居中 */
+    margin-right: 0 !important;
   }
+}
 
-  /* Right TOC column (if exists) */
-  #page-toc.page-toc {
+/* ====== 2) 修：面包屑不换行 + 超长用省略号 ====== */
+.breadcrumb-nav,
+.breadcrumb-nav-list {
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+}
+.breadcrumb-nav {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* ====== 3) 左侧导航：恢复绿竖条（文章 active） ====== */
+.nav-list .nav-list-link { position: relative; }
+
+.nav-list .nav-list-item.active > .nav-list-link,
+.nav-list .nav-list-item > .nav-list-link.active {
+  background: rgba(118,185,0,0.12) !important;
+  color: #e6edf3 !important;
+}
+.nav-list .nav-list-item.active > .nav-list-link::before,
+.nav-list .nav-list-item > .nav-list-link.active::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:6px;
+  bottom:6px;
+  width:4px;
+  background:#76b900;
+  border-radius:2px;
+}
+
+/* ====== 4) 目录项选中也要绿竖条（“展开即高亮”方案） ======
+   说明：Documents/Protocols 这种往往只是展开器，不是页面，所以不会 active。
+   我们用 :has()：只要它展开了，也给它同样的高亮。
+*/
+@supports selector(.a:has(.b)) {
+  .nav-list .nav-list-item:has(> .nav-list-expander[aria-expanded="true"]) > .nav-list-link {
+    background: rgba(118,185,0,0.10) !important;
+    color: #e6edf3 !important;
+  }
+  .nav-list .nav-list-item:has(> .nav-list-expander[aria-expanded="true"]) > .nav-list-link::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:6px;
+    bottom:6px;
+    width:4px;
+    background:#76b900;
+    border-radius:2px;
+    opacity: .8;
+  }
+}
+
+/* ====== 5) 右侧 TOC 栏 ====== */
+@media (min-width: 67rem) {
+  #page-toc{
     flex: 0 0 280px;
     position: sticky;
     top: 96px;
     max-height: calc(100vh - 140px);
     overflow: auto;
-
     border-left: 1px solid rgba(255,255,255,0.10);
     padding-left: 16px;
   }
-
-  #page-toc .page-toc-title {
-    font-size: 0.85rem;
+  #page-toc .page-toc-title{
+    font-size: .85rem;
     color: #9bb0c5;
     margin-bottom: 10px;
   }
-
-  #page-toc .page-toc-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    font-size: 0.85rem;
+  #page-toc .page-toc-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    font-size:.85rem;
   }
+  #page-toc .page-toc-list li{ margin: 8px 0; }
+  #page-toc .page-toc-list li.lvl-h3{ margin-left: 10px; }
 
-  #page-toc .page-toc-list li { margin: 8px 0; }
-  #page-toc .page-toc-list li.lvl-h3 { margin-left: 10px; }
-
-  #page-toc a {
-    color: #b8c4d1 !important;
-    text-decoration: none;
-  }
-  #page-toc a:hover { color: #76b900 !important; }
+  #page-toc a{ color:#b8c4d1 !important; text-decoration:none; }
+  #page-toc a:hover{ color:#76b900 !important; text-decoration:underline; text-underline-offset:3px; }
+}
+@media (max-width: 66.99rem){
+  #page-toc{ display:none; }
 }
 
-/* Mobile: hide right TOC */
-@media (max-width: 66.99rem) {
-  #page-toc { display: none; }
-}
+/* 正文链接不要全绿 */
+.main-content a { color: #cbd5e1 !important; text-decoration: none; }
+.main-content a:hover { color: #76b900 !important; text-decoration: underline; text-underline-offset: 3px; }
