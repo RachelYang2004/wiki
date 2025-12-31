@@ -7,7 +7,6 @@ grand_parent: Documents  # 它的祖父级是哪个“大类”（三层结构�
 nav_order: 1
 ---
 
-{% include toc.md %}
 
 # UART/RS485 Bus Servo Communication Protocol
 
