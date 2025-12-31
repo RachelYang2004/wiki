@@ -1,40 +1,25 @@
 ---
 ---
-/* NVIDIA 灵魂配色变量覆盖 */
-$body-background-color: #000000;    /* 纯黑背景 */
-$sidebar-color: #0b0b0b;           /* 侧边栏极深灰 */
-$link-color: #76b900;              /* NVIDIA 绿 */
-$nav-child-link-color: #999;       /* 未选中文字颜色 */
+/* 强制全黑底色覆盖 */
+:root {
+  --body-background-color: #000000 !important;
+  --sidebar-color: #0b0b0b !important;
+  --link-color: #76b900 !important;
+}
 
-/* 1. 左侧选中的绿色竖条效果 */
+/* NVIDIA 绿色竖条效果 */
 .nav-list-item.active > .nav-list-link {
-    color: #76b900 !important;
-    border-left: 3px solid #76b900 !important;
-    background-color: rgba(118, 185, 0, 0.1) !important;
-    padding-left: 12px !important;
+  color: #76b900 !important;
+  border-left: 4px solid #76b900 !important;
+  background-color: rgba(118, 185, 0, 0.1) !important;
 }
 
-/* 2. 强制深色模式下的底色 */
-body[data-theme="dark"] {
-    --body-background-color: #000000;
-    --sidebar-color: #0b0b0b;
-}
-
-/* 3. 实现右侧“本页内容”布局 (TOC) */
+/* 强制右侧目录 (TOC) 布局 */
 @media (min-width: 67rem) {
-    .main-content {
-        display: flex;
-        flex-direction: row-reverse; /* 将 TOC 挤到右侧 */
-        justify-content: flex-end;
-    }
-    .table-of-contents {
-        width: 250px;
-        position: sticky;
-        top: 80px;
-        height: fit-content;
-        border-left: 1px solid #222;
-        padding-left: 1.5rem;
-        margin-left: 2rem;
-        font-size: 0.85em;
-    }
+  .main-content-wrap { display: flex; flex-direction: row; }
+  .main-content { flex: 1; }
+  .table-of-contents {
+    width: 200px; order: 2; position: sticky; top: 80px;
+    border-left: 1px solid #333; padding-left: 1rem; font-size: 0.8em;
+  }
 }
