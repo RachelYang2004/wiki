@@ -5,18 +5,19 @@ theme:
   name: material
   language: en
   features:
-    - navigation.path
-    - navigation.indexes
-    - navigation.top
-    - navigation.tracking
-    - content.code.copy
-    - toc.follow
-    - navigation.tabs
-    - navigation.sections
+    - navigation.path              # 找回正文顶部的面包屑路径
+    - navigation.indexes           # 允许点击父级目录标题
+    - navigation.top               # 回到顶部按钮
+    - navigation.tracking          # 地址栏锚点同步
+    - content.code.copy           # 代码一键复制
+    - toc.follow                  # 右侧目录跟随滚动
+    # 以下两项已删除，以确保顶部无菜单且左侧可折叠
+    # - navigation.tabs
+    # - navigation.sections
 
   palette:
     - scheme: default
-      primary: custom
+      primary: custom             # 品牌色 #8641A9
       accent: custom
       toggle:
         icon: material/brightness-7
@@ -28,7 +29,7 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 
-# 本次新增修改：覆盖默认的目录标题
+# 修正右侧目录标题
 extra:
   translations:
     en:
@@ -55,4 +56,18 @@ nav:
 
 plugins:
   - search
-  - glightbox
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      zoomable: true
+      draggable: true
+
+markdown_extensions:
+  - pymdownx.snippets:
+      base_path: ["docs"]
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
