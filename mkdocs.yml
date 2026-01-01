@@ -6,33 +6,28 @@ theme:
   language: en
   features:
     - navigation.path              # 找回正文顶部的面包屑路径
-    - navigation.indexes           # 允许点击父级目录标题跳转
+    - navigation.indexes           # 允许点击父级目录标题
     - navigation.top               # 回到顶部按钮
     - navigation.tracking          # 地址栏锚点同步
-    - content.code.copy           # 代码一键复制
+    - content.code.copy            # 代码一键复制
     - toc.follow                  # 右侧目录跟随滚动
-    # 保持删除以下两项，确保顶部无菜单且左侧可折叠
-    # - navigation.tabs
-    # - navigation.sections
+    # 确保没有 navigation.tabs 和 navigation.sections 以保持极简侧边栏
 
   palette:
-    # 0: 浅色模式 (Light Mode)
     - scheme: default
-      primary: custom
+      primary: custom             # 品牌色 #8641A9
       accent: custom
       toggle:
-        # 当背景是浅色时，显示太阳
-        icon: material/weather-sunny 
+        icon: material/brightness-7
         name: Switch to dark mode
-    # 1: 深色模式 (Dark Mode)
-    - scheme: slate
+    - scheme: slate               # 深色模式
       primary: custom
       accent: custom
       toggle:
-        # 当背景是深色时，显示月亮
-        icon: material/weather-night
+        icon: material/brightness-4
         name: Switch to light mode
 
+# 翻译覆盖：保险第一层
 extra:
   translations:
     en:
