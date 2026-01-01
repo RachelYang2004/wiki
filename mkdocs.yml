@@ -16,7 +16,7 @@ theme:
     # 浅色模式
     - scheme: default
       primary: custom
-      accent: custom               # 锁定 accent 以消除系统默认蓝
+      accent: custom               # 锁定 accent 以消除蓝色
       toggle:
         icon: material/weather-night 
         name: Switch to dark mode
