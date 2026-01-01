@@ -1,4 +1,4 @@
-/* --- 品牌色定义 --- */
+/* --- 品牌主色调 --- */
 :root {
   --fs-accent: #8641A9;
   --md-primary-fg-color: var(--fs-accent);
@@ -6,56 +6,65 @@
   --md-primary-fg-color--dark: #6a3387;
 }
 
-/* --- 1. 复刻 Seeed 侧边栏层级指示线 --- */
-/* 只有激活项会显示紫色粗竖线 */
-.md-nav__item--active > .md-nav__link {
-  color: var(--fs-accent) !important;
+/* --- 1. 侧边栏整体布局优化 --- */
+.md-nav__title {
   font-weight: 700;
-  border-left: 4px solid var(--fs-accent);
-  padding-left: 12px !important;
-  margin-left: -4px;
+  letter-spacing: -0.02em;
+  color: var(--fs-accent) !important; /* 标题使用 logo 色 */
+  padding-left: 0.8rem !important;
 }
 
-/* 未激活项显示淡灰色细线 (增加层级深度感) */
+/* --- 2. 目录缩进与层级 (NVIDIA 风格) --- */
 .md-nav__link {
-  border-left: 1px solid rgba(0,0,0,0.05);
-  padding-left: 15px;
-  transition: all 0.2s;
+  padding: 0.4rem 0.8rem !important;
+  font-size: 0.75rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.05); /* 基础引导线 */
 }
 
-[data-md-color-scheme="slate"] .md-nav__link {
-  border-left-color: rgba(255,255,255,0.1);
+/* 增加每一级的缩进量 */
+.md-nav--secondary .md-nav__link, 
+.md-nav__item .md-nav {
+  margin-left: 0.5rem;
 }
 
-/* --- 2. 复刻 Seeed 右侧 TOC 面板效果 --- */
-@media screen and (min-width: 60em) {
-  .md-sidebar--secondary {
-    background: rgba(255, 255, 255, 0.02);
-    border-left: 1px solid rgba(0,0,0,0.05);
-    margin-left: 1rem;
-  }
-
-  /* 使 TOC 标题更具专业感 */
-  .md-nav--secondary .md-nav__title {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--md-default-fg-color--light);
-    padding-top: 1rem;
-  }
+/* --- 3. 激活项：带颜色的竖线 (复刻 NVIDIA) --- */
+.md-nav__item--active > .md-nav__link {
+  color: #ffffff !important;
+  font-weight: 600;
+  border-left: 3px solid var(--fs-accent) !important; /* 紫色粗竖线 */
+  background-color: rgba(134, 65, 169, 0.1);    /* 淡淡的紫色背景 */
+  padding-left: 15px !important;
 }
 
-/* --- 3. 正文宽度限制 (Seeed 风格，防止文字太长难以阅读) --- */
+/* --- 4. 目录右侧的上下箭头 (折叠指示器) --- */
+/* MkDocs Material 默认在左侧或隐藏，我们强制其在右侧并美化 */
+.md-nav__item--nested > .md-nav__link::after {
+  content: " ";
+  background-color: currentColor;
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>');
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>');
+  display: block;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 10px;
+  transition: transform 0.2s;
+}
+
+/* 展开时的箭头向下旋转 */
+.md-nav__item--active > .md-nav__link::after {
+  transform: rotate(90deg);
+}
+
+/* --- 5. 正文排版微调 --- */
+.md-typeset h1 {
+  color: var(--fs-accent); /* 标题使用 logo 色 */
+  border-bottom: 2px solid rgba(134, 65, 169, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+/* 限制内容宽度，增加两侧留白 */
 .md-content__inner {
   max-width: 54rem;
   margin: 0 auto;
-  padding: 1.5rem 2.5rem;
-}
-
-/* --- 4. 图片美化 --- */
-article img {
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto !important;
-  display: block;
 }
