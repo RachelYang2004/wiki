@@ -91,11 +91,16 @@ html, body, .side-bar, .main, .main-header, .main-content-wrap {
   stroke: var(--fs-accent) !important;
 }
 
-/* -------- Breadcrumb: keep on one line -------- */
+/* -------- Breadcrumb: keep on one line (no wrap, no truncation) -------- */
+.breadcrumb-nav,
+.breadcrumb-nav * {
+  white-space: nowrap !important;
+}
 .breadcrumb-nav {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  text-overflow: clip !important;
+  -webkit-overflow-scrolling: touch;
 }
 .breadcrumb-nav a {
   color: var(--fs-muted) !important;
@@ -104,51 +109,38 @@ html, body, .side-bar, .main, .main-header, .main-content-wrap {
   color: var(--fs-accent) !important;
 }
 
-/* -------- Content width + right TOC layout (NVIDIA docs vibe) -------- */
-
-:root{
-  --fs-page-max: 1440px;
-  --fs-toc-width: 280px;
-  --fs-toc-gap: 2rem;
-}
-
-/* Keep breadcrumb on ONE line (no wrapping) */
-.breadcrumb-nav, .breadcrumb-nav * {
-  white-space: nowrap !important;
-}
-.breadcrumb-nav {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-.breadcrumb-nav::-webkit-scrollbar { height: 0; }
-
-/* Widen the content lane a bit (reduce huge gutters) */
-@media (min-width: 62rem) {
-  .main {
-    max-width: var(--fs-page-max);
-    margin: 0 auto;
+/* -------- Content width: closer to NVIDIA docs -------- */
+@media (min-width: 67rem) {
+  /* widen the whole content lane to reduce giant empty gutter */
+  .main-content-wrap {
+    max-width: 1440px !important;
+    margin: 0 auto !important;
+    padding-left: 2.0rem !important;
+    padding-right: 2.0rem !important;
   }
 
-  /* Reserve space on the right for the fixed TOC */
+  /* reserve space for right TOC so it doesn't overlap */
   .main-content {
+    margin-right: 320px !important;
     max-width: 980px !important;
-    margin-right: calc(var(--fs-toc-width) + var(--fs-toc-gap)) !important;
   }
+}
 
-  /* Right-side TOC (fixed, doesn't disturb layout) */
+/* -------- Right-side TOC (sticky) -------- */
+#page-toc.page-toc { display: none; }
+
+@media (min-width: 67rem) {
   #page-toc.page-toc {
     display: block;
-    position: fixed;
+    position: sticky;
     top: 96px;
-    width: var(--fs-toc-width);
-    /* align to the centered page container */
-    right: clamp(1rem, calc((100vw - var(--fs-page-max))/2 + 1rem), 3rem);
+    float: right;
+    width: 280px;
+    margin-left: 2rem;
     padding-left: 16px;
     border-left: 1px solid var(--fs-border);
     max-height: calc(100vh - 140px);
     overflow: auto;
-    background: transparent;
-    z-index: 50;
   }
   #page-toc .page-toc-title {
     font-size: 0.85rem;
@@ -159,23 +151,26 @@ html, body, .side-bar, .main, .main-header, .main-content-wrap {
     list-style: none;
     padding: 0;
     margin: 0;
+    font-size: 0.85rem;
   }
   #page-toc .page-toc-list li {
-    margin: 0.25rem 0;
+    margin: 6px 0;
     line-height: 1.25;
   }
-  #page-toc .page-toc-list li.lvl-h3 { padding-left: 12px; opacity: 0.95; }
-  #page-toc .page-toc-list li.lvl-h4 { padding-left: 22px; opacity: 0.9; }
+  #page-toc .page-toc-list li.lvl-h3 {
+    margin-left: 12px;
+    opacity: 0.95;
+  }
   #page-toc a {
     color: var(--fs-muted) !important;
-    text-decoration: none !important;
-    font-size: 0.82rem;
+    text-decoration: none;
   }
-  #page-toc a:hover { color: var(--fs-accent) !important; }
-  #page-toc a.is-active { color: var(--fs-accent) !important; }
+  #page-toc a:hover {
+    color: var(--fs-accent) !important;
+  }
 }
 
-@media (max-width: 61.99rem) {
+@media (max-width: 66.99rem) {
   #page-toc.page-toc { display: none !important; }
   .main-content { margin-right: 0 !important; }
 }

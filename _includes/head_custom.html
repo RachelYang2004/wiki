@@ -1,140 +1,94 @@
-<!-- ServoDevelop Wiki — custom head -->
-<!-- Loads custom CSS + generates a right-side "On this page" TOC (desktop) -->
-
+<!-- Custom head: load compiled CSS + generate right-side TOC + nav expand highlighting -->
 <link rel="stylesheet" href="{{ '/assets/css/just-the-docs-custom.css' | relative_url }}">
 
 <script>
-(function () {
-  function slugify(text) {
-    try {
-      return (text || '')
-        .toString()
-        .trim()
-        .toLowerCase()
-        // keep letters/numbers from most scripts by using a simple whitespace->dash, then strip unsafe chars
-        .replace(/[\s\u00A0]+/g, '-')
-        .replace(/[^\p{L}\p{N}_\-]+/gu, '')
-        .replace(/\-+/g, '-')
-        .replace(/^\-+|\-+$/g, '');
-    } catch (e) {
-      // Fallback for browsers without unicode property escapes
-      return (text || '')
-        .toString()
-        .trim()
-        .toLowerCase()
-        .replace(/[\s\u00A0]+/g, '-')
-        .replace(/[^a-z0-9_\-]+/g, '')
-        .replace(/\-+/g, '-')
-        .replace(/^\-+|\-+$/g, '');
-    }
-  }
+document.addEventListener('DOMContentLoaded', function () {
 
-  function ensureId(el, idx) {
-    if (el.id) return el.id;
+  // ---------- 1) Right-side TOC (auto) ----------
+  // If you already have a TOC, don't duplicate
+  if (!document.getElementById('page-toc')) {
+    const main =
+      document.querySelector('#main-content') ||
+      document.querySelector('main.main-content') ||
+      document.querySelector('.main-content') ||
+      document.querySelector('article');
 
-    var base = slugify(el.textContent);
-    if (!base) base = 'section-' + (idx + 1);
+    if (main) {
+      const headings = Array.from(main.querySelectorAll('h2, h3, h4')).filter(h => {
+        // ignore headings inside nav/aside/footer if any
+        return !h.closest('nav, aside, footer');
+      });
 
-    var id = base;
-    var i = 2;
-    while (document.getElementById(id)) {
-      id = base + '-' + (i++);
-    }
-    el.id = id;
-    return id;
-  }
+      if (headings.length) {
+        const used = new Set();
+        const slugify = (s) => (s || '').trim().toLowerCase()
+          .replace(/[\s]+/g, '-')
+          .replace(/[^a-z0-9\-\u00A0-\uFFFF]/g, '');
 
-  function buildPageToc() {
-    // Avoid duplicate TOCs
-    if (document.getElementById('page-toc')) return;
+        const ensureId = (el) => {
+          let id = el.id && el.id.trim();
+          if (!id) {
+            id = slugify(el.textContent) || 'section';
+            let base = id, n = 2;
+            while (used.has(id) || document.getElementById(id)) id = base + '-' + (n++);
+            el.id = id;
+          }
+          used.add(id);
+          return id;
+        };
 
-    var main = document.querySelector('.main-content');
-    if (!main) return;
+        const aside = document.createElement('aside');
+        aside.id = 'page-toc';
+        aside.className = 'page-toc';
 
-    var headings = Array.prototype.slice.call(main.querySelectorAll('h2, h3, h4'));
-    if (!headings.length) return;
+        const title = document.createElement('div');
+        title.className = 'page-toc-title';
+        title.textContent = 'On this page';
+        aside.appendChild(title);
 
-    var aside = document.createElement('aside');
-    aside.id = 'page-toc';
-    aside.className = 'page-toc';
-    aside.setAttribute('aria-label', 'On this page');
+        const ul = document.createElement('ul');
+        ul.className = 'page-toc-list';
 
-    aside.innerHTML = '' +
-      '<div class="page-toc-title">On this page</div>' +
-      '<ul class="page-toc-list"></ul>';
+        headings.forEach(h => {
+          const tag = (h.tagName || '').toLowerCase();
+          const id = ensureId(h);
 
-    var ul = aside.querySelector('.page-toc-list');
+          const li = document.createElement('li');
+          li.className = 'lvl-' + tag;
 
-    headings.forEach(function (h, idx) {
-      var id = ensureId(h, idx);
-
-      var li = document.createElement('li');
-      li.className = 'lvl-' + h.tagName.toLowerCase();
-
-      var a = document.createElement('a');
-      a.href = '#' + id;
-      a.textContent = h.textContent;
-
-      li.appendChild(a);
-      ul.appendChild(li);
-    });
-
-    document.body.appendChild(aside);
-
-    // Highlight active section (nice-to-have; safe fallback)
-    try {
-      if ('IntersectionObserver' in window) {
-        var linkById = {};
-        aside.querySelectorAll('a[href^="#"]').forEach(function (a) {
-          linkById[a.getAttribute('href').slice(1)] = a;
+          const a = document.createElement('a');
+          a.href = '#' + id;
+          a.textContent = h.textContent;
+          li.appendChild(a);
+          ul.appendChild(li);
         });
 
-        var current = null;
-        var obs = new IntersectionObserver(function (entries) {
-          // Pick the top-most visible heading
-          var visible = entries
-            .filter(function (e) { return e.isIntersecting; })
-            .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+        aside.appendChild(ul);
 
-          if (!visible.length) return;
+        // Append TOC to main content area
+        main.appendChild(aside);
 
-          var id = visible[0].target.id;
-          if (!id || id === current) return;
-
-          current = id;
-          aside.querySelectorAll('a.is-active').forEach(function (a) { a.classList.remove('is-active'); });
-          if (linkById[id]) linkById[id].classList.add('is-active');
-        }, {
-          root: null,
-          rootMargin: '-20% 0px -70% 0px',
-          threshold: [0, 1]
-        });
-
-        headings.forEach(function (h) { obs.observe(h); });
+        // Only enable 2-column spacing when TOC actually exists
+        document.documentElement.classList.add('has-page-toc');
+      } else {
+        document.documentElement.classList.remove('has-page-toc');
       }
-    } catch (e) {}
+    }
   }
 
+  // ---------- 2) Sidebar: mark expanded directory items ----------
   function syncExpanded() {
-    try {
-      document.querySelectorAll('.nav-list-item').forEach(function (li) {
-        li.classList.remove('is-expanded');
-      });
-      document.querySelectorAll('.nav-list-expander[aria-expanded="true"]').forEach(function (btn) {
-        var li = btn.closest('.nav-list-item');
-        if (li) li.classList.add('is-expanded');
-      });
-    } catch (e) {}
+    document.querySelectorAll('.nav-list-item').forEach(li => {
+      if (li.querySelector(':scope > .nav-list')) li.classList.add('has-children');
+      if (li.classList.contains('active')) {
+        let p = li.parentElement;
+        while (p) {
+          if (p.classList && p.classList.contains('nav-list-item')) p.classList.add('is-expanded');
+          p = p.parentElement;
+        }
+      }
+    });
   }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    try { buildPageToc(); } catch (e) {}
-    try {
-      syncExpanded();
-      document.querySelectorAll('.nav-list-expander').forEach(function (btn) {
-        btn.addEventListener('click', function () { setTimeout(syncExpanded, 0); });
-      });
-    } catch (e) {}
-  });
-})();
+  syncExpanded();
+});
 </script>
