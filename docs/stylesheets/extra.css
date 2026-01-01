@@ -73,3 +73,72 @@
 .md-header__button.md-logo {
   display: none;
 }
+
+/* --- 右侧目录栏 (TOC) 面板化定制 --- */
+
+@media screen and (min-width: 76.25em) {
+  /* 针对大屏幕下的右侧侧边栏 */
+  .md-sidebar--secondary {
+    margin-left: 1rem; /* 与正文保持一定间距 */
+  }
+
+  .md-nav--secondary {
+    /* 1. 背景与边框：参考 Just-the-Docs 的面板感 */
+    background: rgba(255, 255, 255, 0.03); /* 极淡的透明背景 */
+    border: 1px solid rgba(255, 255, 255, 0.12); /* 细微边框 */
+    border-radius: 10px; /* 圆角 */
+    
+    /* 2. 阴影：增加立体悬浮感 */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35); 
+    
+    /* 3. 布局与间距 */
+    padding: 14px;
+    margin-top: 2rem;
+    position: sticky;
+    top: 5rem; /* 随页面滚动时固定的位置 */
+  }
+
+  /* 4. “目录”标题样式：转为全大写、低饱和度颜色 */
+  .md-nav--secondary .md-nav__title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #a9b0b8; /* 灰色字 */
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding: 0;
+  }
+
+  /* 5. 目录列表项间距 */
+  .md-nav--secondary .md-nav__list li {
+    margin-bottom: 6px;
+  }
+
+  /* 6. 激活/鼠标悬停时的紫色指示线 */
+  .md-nav--secondary .md-nav__link {
+    font-size: 0.75rem;
+    color: #c7ced8 !important;
+    border-left: 3px solid transparent; /* 默认透明 */
+    padding-left: 10px !important;
+    transition: all 0.2s ease;
+  }
+
+  /* 鼠标悬停变白 */
+  .md-nav--secondary .md-nav__link:hover {
+    color: #ffffff !important;
+    border-left-color: rgba(134, 65, 169, 0.5); /* 紫色半透明 */
+  }
+
+  /* 当前阅读到的章节：紫色实线 */
+  .md-nav--secondary .md-nav__link--active {
+    color: #ffffff !important;
+    font-weight: 600;
+    border-left-color: #8641A9 !important; /* Logo紫色 */
+  }
+}
+
+/* 适配深色模式：让面板在深色背景下更有质感 */
+[data-md-color-scheme="slate"] .md-nav--secondary {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
+}
