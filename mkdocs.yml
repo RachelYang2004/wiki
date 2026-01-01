@@ -20,6 +20,18 @@ theme:
         icon: material/brightness-4
         name: 切换至浅色模式
 
+plugins:
+  - search      # 保持默认的搜索功能
+  - glightbox:  # 开启图片灯箱插件
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      width: auto # 自动适应图片原始宽度
+      height: auto
+      zoomable: true
+      draggable: true
+
+
 markdown_extensions:
   - pymdownx.snippets:         # 开启嵌套调用功能
       base_path: ["docs"]
