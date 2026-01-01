@@ -3,7 +3,7 @@ site_url: https://servodevelop.github.io/wiki/
 
 theme:
   name: material
-  language: zh
+  language: en
   features:
     - navigation.path              # 找回正文顶部的面包屑路径
     - navigation.indexes           # 允许点击父级目录标题
