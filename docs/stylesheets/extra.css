@@ -1,54 +1,86 @@
-/* --- 1. 品牌变量设定 --- */
+/* --- 基础变量定义 (参考自 Just-the-Docs) --- */
 :root {
-  --md-primary-fg-color: #8641A9;
+  --fs-accent: #8641A9;
+  --fs-accent-rgb: 134, 65, 169;
+  --md-primary-fg-color: var(--fs-accent);
   --md-primary-fg-color--light: #a46bc3;
   --md-primary-fg-color--dark: #6a3387;
+  
+  /* 字体间距优化 */
+  --md-typeset-font-size: 0.75rem;
+  --md-typeset-line-height: 1.6;
 }
 
-/* --- 2. 侧边栏垂直指示线 (复刻图片效果) --- */
-/* 当菜单项激活时，在左侧显示粗紫色竖线 */
+/* --- 1. 侧边栏样式 (左侧指示线) --- */
+/* 未选中状态为灰色 */
+.md-nav__link {
+  color: #a9b0b8 !important;
+  transition: all 0.2s;
+}
+
+/* 悬停变白 */
+.md-nav__link:hover {
+  color: #ffffff !important;
+}
+
+/* 激活状态：白色文字 + 左侧 3px 紫色实线 (复刻参考图) */
 .md-nav__item--active > .md-nav__link {
-  color: #8641A9 !important;
-  font-weight: 700;
-  border-left: 4px solid #8641A9; /* 竖线厚度与颜色 */
-  padding-left: 12px !important;  /* 补偿竖线占用的位置 */
-  margin-left: -4px;              /* 保持对齐 */
+  color: #ffffff !important;
+  font-weight: 600;
+  border-left: 3px solid var(--fs-accent) !important;
+  padding-left: 0.75rem !important;
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
-/* 多级嵌套时的指示线（可选，增加层级感） */
-.md-nav__link--active {
-  background-color: rgba(134, 65, 169, 0.05); /* 淡淡的背景色 */
+/* --- 2. 右侧目录面板 (TOC / On this page) --- */
+/* 将 Material 默认目录改造成参考图中的“面板”风格 */
+@media screen and (min-width: 60em) {
+  .md-sidebar--secondary {
+    margin-left: 1rem;
+  }
+  
+  .md-nav--secondary {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 0.8rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    position: sticky;
+    top: 5rem;
+  }
+
+  .md-nav--secondary .md-nav__title {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #a9b0b8;
+    margin-bottom: 0.5rem;
+  }
 }
 
-/* --- 3. 正文排版与留白 (Seeed 风格) --- */
-.md-content__inner {
-  max-width: 52rem;               /* 限制内容宽度，增加阅读舒适度 */
-  margin: 0 auto;
-  padding: 1.5rem 2.5rem;         /* 增加两侧留白 */
-}
+/* --- 3. 正文排版 (Typography) --- */
+.md-typeset h1 { font-weight: 700; font-size: 1.8rem; margin-bottom: 1.5rem; }
+.md-typeset h2 { font-weight: 600; font-size: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.3rem; }
 
-/* --- 4. 图片美化 (垂直排列、居中、阴影) --- */
-article img {
-  display: block;
-  margin: 2.5rem auto !important; /* 确保上下有足够的呼吸感 */
-  max-width: 85% !important;      /* 防止图片过大 */
+/* 表格居中且圆角 */
+.md-typeset table {
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* 柔和阴影 */
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* 图片描述/标题居中样式 */
-.img-title {
-  text-align: center;
-  display: block;
-  font-weight: bold;
-  color: #666;
-  margin-top: -1.5rem;            /* 让标题贴合图片底部 */
-  margin-bottom: 2rem;
-  font-size: 0.95em;
+/* 图片阴影与圆角 */
+article img {
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin: 2rem auto !important;
 }
 
-/* --- 5. Admonition (警告/提示框) 细节美化 --- */
+/* 修正 Admonition (警告框) 样式 */
 .admonition {
-  border-radius: 6px !important;
+  border-radius: 8px !important;
   border-left-width: 0.3rem !important;
+  font-size: 0.7rem;
 }
