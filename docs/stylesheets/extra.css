@@ -1,28 +1,23 @@
-/* 全局图片美化：单栏居中、圆角、阴影 */
+/* 1. 限制整体内容的宽度，增加左右留白，看起来更像书页 */
+.md-content__inner {
+    max-width: 48rem; /* 限制文字内容宽度，提高阅读舒适度 */
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem;
+}
+
+/* 2. 图片自动居中，并限制最大显示比例，防止大图过于突兀 */
 article img {
     display: block;
-    margin: 2rem auto !important; /* 增加垂直间距，并水平居中 */
-    border-radius: 8px;           /* 柔和圆角 */
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* 柔和阴影，增加层次感 */
-    max-width: 85%;               /* 限制最大宽度，在 PC 上不会太突兀 */
-    height: auto;
+    margin: 2rem auto !important; /* 增加上下间距 */
+    max-width: 85% !important;     /* 默认不占满全屏，两边留一点空隙 */
+    border-radius: 4px;
+    transition: transform 0.3s ease;
 }
 
-/* 适配手机端 */
-@media screen and (max-width: 76.25em) {
-    article img {
-        max-width: 100%;          /* 手机端允许图片占满宽度 */
-        margin: 1.5rem auto !important;
-    }
-}
-
-/* 图片下方的文字描述样式 */
-.img-caption {
-    text-align: center;
-    display: block;
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: -1.5rem;          /* 让文字靠近图片 */
-    margin-bottom: 2rem;
-    font-weight: bold;
+/* 3. 让表格也居中且不要太宽 */
+article table {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+    min-width: 60%;
 }
