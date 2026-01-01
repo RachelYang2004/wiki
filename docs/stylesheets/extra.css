@@ -21,3 +21,13 @@ article table {
     display: table;
     min-width: 60%;
 }
+
+/* 兜底：美化普通的 blockquote 引用块 */
+article blockquote {
+    margin: 1.5rem 0;
+    padding: 0.8rem 1rem;
+    color: var(--md-default-fg-color--light);
+    background-color: var(--md-code-bg-color);
+    border-left: 0.2rem solid var(--md-typeset-a-color);
+    border-radius: 0.1rem;
+}
