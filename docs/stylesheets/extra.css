@@ -1,110 +1,99 @@
 /* ==========================================================================
-   Fashion Star Wiki - Gemini 科技感风格重构 (高对比度)
+   Fashion Star Wiki - 工业级重构 (Gemini 色调 + 最终标题锁定)
    ========================================================================== */
 
 :root {
   --fs-accent: #8641A9;
   --md-primary-fg-color: var(--fs-accent);
   
-  /* 全局间距：保持 NVIDIA 的专业感 */
+  /* 全局行间距 */
   --md-typeset-line-height: 1.8; 
   --md-typeset-font-size: 0.75rem;
 }
 
-/* --- 1. 深色模式重构 (参考 Gemini) --- */
-
+/* --- 1. 深色模式 (Gemini #131314) --- */
 [data-md-color-scheme="slate"] {
-  --md-default-bg-color: #131314;         /* 核心修改：Gemini 背景色 */
-  --md-default-bg-color--light: #1e1f20;  /* 侧边栏稍亮色 */
-  --md-default-fg-color: #e3e3e3;         /* 柔和的白字，不刺眼 */
-  --md-default-fg-color--light: #8e918f;  /* 次级文字灰 */
-  --md-code-bg-color: #1e1f20;            /* 代码块背景与侧栏对齐 */
-  --md-typeset-a-color: #a46bc3;          /* 链接颜色稍微调亮 */
+  --md-default-bg-color: #131314;
+  --md-default-bg-color--light: #1e1f20;
+  --md-default-fg-color: #e3e3e3;
+  --md-default-fg-color--light: #8e918f;
+  --md-code-bg-color: #1e1f20;
 }
 
-/* 顶部 Header */
+/* 顶部条底色 */
 .md-header {
   background-color: var(--fs-accent) !important;
-  color: #ffffff !important;
 }
 .md-header__button.md-logo { display: none; }
 
-/* --- 2. 三栏物理分割线 (Gemini 风格：极致纤细) --- */
+/* --- 2. 强制修改右侧目录标题 (保险第二层) --- */
+.md-nav--secondary .md-nav__title {
+  font-size: 0 !important; /* 隐藏原始 "Table of contents" 文字 */
+}
+.md-nav--secondary .md-nav__title::after {
+  content: "On this page";
+  font-size: 0.65rem;      /* 重新定义文字大小 */
+  visibility: visible;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8e918f;
+  display: block;
+}
+
+/* --- 3. 三栏物理分割线 (增强显示) --- */
+.md-main__inner {
+  display: flex !important;
+}
 .md-sidebar--primary {
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important; /* 更纤细透明的分割线 */
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 .md-sidebar--secondary {
   border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
   margin-left: 0 !important;
 }
 
-/* --- 3. 左侧导航栏 --- */
-.md-nav__title {
-  color: #ffffff !important;
-  font-weight: 700;
-  padding: 1rem !important;
-}
-
+/* --- 4. 左侧导航 (白色高亮 + 紫色杠) --- */
 .md-nav__item .md-nav {
   border-left: none !important;
   margin-left: 0.5rem !important; 
 }
-
 .md-nav__link {
   padding: 0.25rem 0.8rem !important;
   line-height: 1.25 !important;
-  font-size: 0.72rem;
 }
-
-/* 激活项：白色高亮文字 + 紫色指示杠 */
 .md-nav__item--active > .md-nav__link {
-  color: #ffffff !important;
+  color: #ffffff !important; /* 选中白色高亮 */
   font-weight: 700;
-  border-left: 4px solid var(--fs-accent) !important;
-  background-color: rgba(255, 255, 255, 0.04); /* 极淡的背景 */
-  padding-left: 0.8rem !important;
+  border-left: 4px solid var(--fs-accent) !important; /* 紫色竖杠 */
+  background-color: rgba(255, 255, 255, 0.04);
+  padding-left: 15px !important;
+  margin-left: -1px;
 }
 
-/* --- 4. 右侧目录 (On this page) --- */
-@media screen and (min-width: 76.25em) {
-  .md-sidebar--secondary { width: 15rem !important; }
-  .md-main__inner { max-width: 100% !important; margin: 0 1.5rem !important; }
-}
-
-.md-nav--secondary .md-nav__title {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  color: #8e918f;
-  padding: 1.2rem 0 0.5rem 0.8rem !important;
-}
-
+/* --- 5. 右侧目录间距与高亮 --- */
 .md-nav--secondary .md-nav__link {
   border-left: none !important;
-  padding: 0.25rem 1rem !important;
+  padding: 0.2rem 1rem !important;
   font-size: 0.68rem;
   line-height: 1.5 !important;
 }
-
 .md-nav--secondary .md-nav__link--active {
   color: var(--fs-accent) !important;
   font-weight: 700;
 }
 
-/* --- 5. 正文布局 --- */
+/* --- 6. 正文与面包屑路径 --- */
 .md-content__inner {
   max-width: 58rem !important;
   margin: 0 auto !important;
   padding: 0.5rem 3rem 3rem 3rem !important;
 }
-
-/* 面包屑导航样式 (正文顶部的路径) */
 .md-content__nav {
   font-size: 0.62rem;
   margin-bottom: 1.5rem;
-  color: var(--md-default-fg-color--light);
 }
-
 .md-typeset h1 {
   color: var(--fs-accent);
   font-weight: 800;
+  margin-top: 0;
 }
