@@ -5,14 +5,14 @@ theme:
   name: material
   language: zh
   features:
-    - navigation.tabs             # 开启顶部一级导航（如不需要可删除）
+    # - navigation.tabs             # 已删除：确保顶部没有菜单
+    # - navigation.sections         # 已确认删除：确保一级目录有箭头且可折叠
     - navigation.expand           # 默认展开/折叠功能
     - navigation.indexes          # 允许点击父级目录标题跳转
     - navigation.top              # 回到顶部按钮
     - content.code.copy           # 代码一键复制
     - toc.follow                  # 右侧目录跟随滚动
   
-  # 颜色方案配置：保留黑白切换逻辑
   palette:
     # 浅色模式
     - scheme: default
