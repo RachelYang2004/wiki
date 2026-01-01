@@ -109,3 +109,14 @@
 }
 
 .md-typeset h1 { margin-top: 0; font-size: 1.8rem; }
+
+/* 强制修改右侧 TOC 标题为 On this page (CSS 兜底方案) */
+.md-nav--secondary .md-nav__title {
+  visibility: hidden;
+}
+.md-nav--secondary .md-nav__title::after {
+  content: "On this page";
+  visibility: visible;
+  display: block;
+  margin-top: -1.2em;
+}
