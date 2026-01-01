@@ -5,29 +5,29 @@ theme:
   name: material
   language: en
   features:
-    - navigation.path              # 找回正文顶部的面包屑路径
+    - navigation.path              # 正文顶部面包屑路径
     - navigation.indexes           # 允许点击父级目录标题
     - navigation.top               # 回到顶部按钮
-    - navigation.tracking          # 地址栏锚点同步
-    - content.code.copy            # 代码一键复制
+    - navigation.tracking          # 锚点同步
+    - content.code.copy           # 代码复制
     - toc.follow                  # 右侧目录跟随滚动
-    # 确保没有 navigation.tabs 和 navigation.sections 以保持极简侧边栏
 
   palette:
+    # 浅色模式
     - scheme: default
-      primary: custom             # 品牌色 #8641A9
-      accent: custom
-      toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-    - scheme: slate               # 深色模式
       primary: custom
-      accent: custom
+      accent: custom               # 锁定 accent 为自定义，防止出现蓝色
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-night 
+        name: Switch to dark mode
+    # 深色模式
+    - scheme: slate
+      primary: custom
+      accent: custom               # 锁定 accent 为自定义
+      toggle:
+        icon: material/weather-sunny
         name: Switch to light mode
 
-# 翻译覆盖：保险第一层
 extra:
   translations:
     en:
