@@ -1,12 +1,10 @@
 title: ServoDevelop Wiki
-
 remote_theme: just-the-docs/just-the-docs
 color_scheme: dark
-search_enabled: true
 
-# GitHub Pages project site under /wiki
+# 确保这里的路径与你的仓库名一致
 url: "https://servodevelop.github.io"
 baseurl: "/wiki"
 
-# Load custom head (TOC + nav behaviors)
+# 加载自定义脚本
 head_custom: _includes/head_custom.html
