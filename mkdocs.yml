@@ -5,33 +5,42 @@ theme:
   name: material
   language: zh
   features:
-    - navigation.sections         # 开启分组横线（NVIDIA 风格核心）
-    - navigation.expand           # 默认全部展开（全侧边栏展示）
-    - navigation.indexes          # 允许点击父级目录
+    # - navigation.tabs           # 如果不需要顶部横向菜单可保持关闭
+    # - navigation.sections       # <--- 必须删除或注释掉这一行，一级目录才会出现箭头并可折叠
+    - navigation.expand           # 默认展开/折叠功能
+    - navigation.indexes          # 允许点击父级目录标题跳转到该目录的索引页
     - navigation.top              # 回到顶部按钮
-    - navigation.tracking         # 地址栏跟随滚动
-    - navigation.path              # 顶部显示面包屑路径
-    - content.code.copy
-  
+    - content.code.copy           # 代码复制按钮
+    - toc.follow                  # 右侧目录跟随滚动
+
   palette:
-    - scheme: slate               # 默认深色
+    # 浅色模式
+    - scheme: default
+      primary: custom             # 使用品牌色 #8641A9
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: 切换至深色模式
+    # 深色模式
+    - scheme: slate
       primary: custom
       accent: custom
       toggle:
         icon: material/brightness-4
         name: 切换至浅色模式
-    - scheme: default             # 浅色
-      primary: custom
-      accent: custom
-      toggle:
-        icon: material/brightness-7
-        name: 切换至深色模式
 
 plugins:
   - search
-  - glightbox
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      zoomable: true
+      draggable: true
 
 markdown_extensions:
+  - pymdownx.snippets:
+      base_path: ["docs"]
   - admonition
   - pymdownx.details
   - pymdownx.superfences
@@ -41,7 +50,6 @@ markdown_extensions:
 extra_css:
   - stylesheets/extra.css
 
-# 完整导航结构（包含 Robotic Arm）
 nav:
   - Home: index.md
   - UART Servo:
