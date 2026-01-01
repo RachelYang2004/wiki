@@ -119,19 +119,23 @@ html, body, .side-bar, .main, .main-header, .main-content-wrap {
     padding-right: 2.0rem !important;
   }
 
-  /* reserve space for right TOC so it doesn't overlap */
-  .main-content {
+  }
+
+@media (min-width: 67rem) {
+  /* Only reserve space when the right TOC actually exists (JS sets .has-page-toc on <html>) */
+  html.has-page-toc .main-content {
     margin-right: 320px !important;
     max-width: 980px !important;
   }
 }
 
 /* -------- Right-side TOC (sticky) -------- */
+/* Hide unless JS confirms TOC exists */
 #page-toc.page-toc { display: none; }
 
 @media (min-width: 67rem) {
-  #page-toc.page-toc {
-    display: block;
+  html.has-page-toc #page-toc.page-toc {
+    display: block !important;
     position: sticky;
     top: 96px;
     float: right;
@@ -171,8 +175,27 @@ html, body, .side-bar, .main, .main-header, .main-content-wrap {
 }
 
 @media (max-width: 66.99rem) {
-  #page-toc.page-toc { display: none !important; }
-  .main-content { margin-right: 0 !important; }
+  html.has-page-toc #page-toc.page-toc { display: none !important; }
+  html.has-page-toc .main-content { margin-right: 0 !important; }
+}
+
+
+/* -------- Breadcrumbs: keep on one line (avoid wrapping) -------- */
+.breadcrumb-nav,
+.breadcrumb-nav-list {
+  white-space: nowrap;
+}
+.breadcrumb-nav-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+  overflow: hidden;
+}
+.breadcrumb-nav-list-item {
+  flex: 0 0 auto;
+}
+.breadcrumb-nav a {
+  max-width: 100%;
 }
 
 /* -------- Headings readable -------- */
