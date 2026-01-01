@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Fashion Star Wiki - 工业级重构 (左侧导航精修版)
+   Fashion Star Wiki - 工业级重构 (左侧导航精修版 - 细化竖杠)
    ========================================================================== */
 
 :root {
@@ -21,7 +21,7 @@
 .md-header { background-color: var(--fs-accent) !important; }
 .md-header__button.md-logo { display: none; }
 
-/* --- 2. 标题与三栏线 --- */
+/* --- 2. 修正右侧目录标题 --- */
 .md-nav--secondary .md-nav__title { font-size: 0 !important; }
 .md-nav--secondary .md-nav__title::after {
   content: "On this page";
@@ -35,7 +35,7 @@
 .md-sidebar--primary { border-right: 1px solid rgba(255, 255, 255, 0.08) !important; }
 .md-sidebar--secondary { border-left: 1px solid rgba(255, 255, 255, 0.08) !important; margin-left: 0 !important; }
 
-/* --- 3. 左侧导航 (彻底去除底色，紫色文字+白色箭头) --- */
+/* --- 3. 左侧导航 (竖杠变细为 2px，保持紫色文字) --- */
 .md-nav__item .md-nav { border-left: none !important; margin-left: 0.5rem !important; }
 
 .md-nav__link { 
@@ -44,23 +44,23 @@
   transition: all 0.2s ease;
 }
 
-/* 激活项样式：去除底色，仅保留文字紫色和左侧竖杠 */
+/* 激活项：仅文字紫色 + 2px 细竖杠 */
 .md-nav__item--active > .md-nav__link {
-  color: var(--fs-accent) !important;      /* 文字设为 Logo 紫色 */
+  color: var(--fs-accent) !important;      
   font-weight: 700;
-  border-left: 4px solid var(--fs-accent) !important; /* 左侧紫色竖杠 */
-  background-color: transparent !important; /* 彻底去除区隔底色 */
-  padding-left: 12px !important;
+  /* --- 核心修改：从 4px 减为 2px --- */
+  border-left: 2px solid var(--fs-accent) !important; 
+  background-color: transparent !important; 
+  padding-left: 14px !important; /* 稍微增加内边距补偿缩短的厚度，保持文字对齐感 */
   margin-left: -1px;
 }
 
-/* 强制保留箭头为白色 (即便父级是紫色文字) */
+/* 强制保留箭头为白色 */
 .md-nav__link .md-nav__icon {
   color: #ffffff !important;
   opacity: 0.8;
 }
 
-/* 悬停效果：仅文字变白，不添加底色 */
 .md-nav__link:hover {
   color: #ffffff !important;
   background-color: transparent !important;
