@@ -1,82 +1,106 @@
 ---
 ---
-/* NVIDIA 风格 & 品牌色定制 */
-:root {
+
+/* Custom overrides for Just the Docs
+   Accent: #8641A9
+*/
+
+:root{
   --fs-accent: #8641A9;
   --fs-accent-rgb: 134,65,169;
-  --body-background-color: #0d1117; /* 接近 NV 的深色 */
+  --fs-muted: #a9b0b8;
+  --fs-panel: rgba(255,255,255,0.03);
+  --fs-border: rgba(255,255,255,0.12);
 }
 
-/* 1. 扩展页面最大宽度，模仿 NVIDIA 的宽屏感 */
-.main-content-wrap {
-  max-width: 1440px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+/* -------- Breadcrumb/path: keep in one line -------- */
+.breadcrumb-nav,
+.breadcrumb-nav-list,
+.breadcrumb-nav-list-item { white-space: nowrap !important; }
+.breadcrumb-nav { overflow: hidden !important; text-overflow: ellipsis !important; }
+
+/* -------- Sidebar nav: unselected gray; active accent -------- */
+.nav-list-link { color: var(--fs-muted) !important; }
+.nav-list-link:hover { color: #ffffff !important; }
+.nav-list-item.active > .nav-list-link,
+.nav-list-item.is-active > .nav-list-link {
+  color: #ffffff !important;
+  border-left: 3px solid var(--fs-accent) !important;
+  padding-left: 0.75rem !important;
+}
+.nav-list-item.active > .nav-list-link::after,
+.nav-list-item.is-active > .nav-list-link::after{
+  border-left-color: var(--fs-accent) !important;
 }
 
-/* 2. 实现两栏布局的核心 */
+/* -------- Two-column layout for TOC (works no matter which container got has-page-toc) -------- */
+#page-toc.page-toc { display: none; }
+
 @media (min-width: 67rem) {
-  /* 当 JS 成功注入后，此容器变为 flex */
-  .has-page-toc {
+  /* We add .has-page-toc to the container that directly holds .main-content/main */
+  .has-page-toc{
     display: flex !important;
     align-items: flex-start !important;
-    gap: 3rem !important; /* 主体与 TOC 的间距 */
+    gap: 2rem !important;
   }
 
-  .main-content {
-    flex: 1 1 0% !important;
+  /* Make sure main content stays fluid */
+  .has-page-toc .main-content,
+  .has-page-toc main{
+    flex: 1 1 auto !important;
     min-width: 0 !important;
-    padding-top: 2rem !important;
   }
 
-  /* 右侧 TOC 样式（完全参考 NVIDIA 间距） */
-  #page-toc {
-    display: block !important;
-    width: 260px !important;
-    position: sticky !important;
-    top: 100px !important; /* 距离顶部的固定位置 */
+  /* Right-side TOC */
+  .has-page-toc #page-toc.page-toc{
+    display: block;
+    position: sticky;
+    top: 96px;
+
+    width: 280px;
     max-height: calc(100vh - 120px);
-    overflow-y: auto;
-    padding-left: 1.5rem !important;
-    border-left: 1px solid rgba(255,255,255,0.1) !important;
+    overflow: auto;
+
+    padding: 14px;
+    border: 1px solid var(--fs-border);
+    border-radius: 10px;
+    background: var(--fs-panel);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
   }
 
-  .page-toc-title {
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
-    color: var(--fs-accent) !important;
-    margin-bottom: 1rem !important;
+  #page-toc .page-toc-title{
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--fs-muted);
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
   }
 
-  .page-toc-list {
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
+  #page-toc .page-toc-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85rem;
   }
 
-  .page-toc-list li {
-    margin: 10px 0 !important;
-    line-height: 1.4 !important;
-  }
+  #page-toc .page-toc-list li{ margin: 6px 0; line-height: 1.25; }
+  #page-toc .page-toc-list li.lvl-h3{ margin-left: 12px; opacity: 0.92; }
+  #page-toc .page-toc-list li.lvl-h4{ margin-left: 24px; opacity: 0.85; }
 
-  .page-toc-list a {
-    font-size: 13px !important;
-    color: #8b949e !important;
-    text-decoration: none !important;
-    transition: color 0.2s;
-  }
-
-  .page-toc-list a:hover, .page-toc-list a.active {
-    color: #ffffff !important;
-    border-left: 2px solid var(--fs-accent);
+  #page-toc a{
+    color: #c7ced8 !important;
+    text-decoration: none;
+    border-left: 3px solid transparent;
     padding-left: 8px;
-    margin-left: -10px;
+    display: block;
   }
-}
-
-/* 移动端隐藏右侧目录 */
-@media (max-width: 66.9rem) {
-  #page-toc { display: none !important; }
+  #page-toc a:hover{
+    color: #ffffff !important;
+    border-left-color: rgba(var(--fs-accent-rgb), 0.55);
+  }
+  #page-toc a.active{
+    color: #ffffff !important;
+    border-left-color: var(--fs-accent) !important;
+  }
 }
