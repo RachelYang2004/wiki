@@ -1,0 +1,22 @@
+/* 图片全局样式：圆角、阴影、居中 */
+article img {
+    display: block;
+    margin: 1.5rem auto !important; /* 自动居中并增加上下间距 */
+    border-radius: 8px;           /* 柔和圆角 */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* 极简阴影 */
+    max-width: 90%;               /* 默认不撑满屏幕，留点呼吸感 */
+}
+
+/* 并排显示网格的微调 */
+.grid.cards {
+    grid-gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-bottom: 2rem;
+}
+
+.grid.cards p {
+    margin: 0 !important; /* 去掉网格内文字的额外间距 */
+    text-align: center;   /* 文字居中 */
+    font-weight: bold;    /* 标题加粗 */
+}
