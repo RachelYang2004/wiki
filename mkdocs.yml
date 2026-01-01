@@ -49,7 +49,7 @@ nav:
   - UART Servo:
       - Datasheet:
           - HA8/RA8-U25(H)-M: uart_servo/datasheet/HA_RA8_U25(H)_M.md
-          - HA8/RA8-U35(H)-M: uart_servo/datasheet/HA&RA8-U35(H)-M.md
+          - HA8/RA8-U35(H)-M: uart_servo/datasheet/HA_RA8_U35(H)_M.md
       - CAD Files:
           - step/DWG/pdf:  uart_servo/cad_files/cad_files.md
       - Software: index.md
