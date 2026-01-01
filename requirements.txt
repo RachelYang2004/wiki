@@ -1,1 +1,2 @@
 mkdocs-material
+mkdocs-glightbox  # 新增这一行
