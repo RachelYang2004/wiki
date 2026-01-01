@@ -5,18 +5,18 @@ theme:
   name: material
   language: zh
   features:
-    # - navigation.tabs             # 已删除：确保顶部没有菜单
-    # - navigation.sections         # 已确认删除：确保一级目录有箭头且可折叠
+    - navigation.path              # 核心：找回正文顶部的面包屑路径
     - navigation.expand           # 默认展开/折叠功能
-    - navigation.indexes          # 允许点击父级目录标题跳转
-    - navigation.top              # 回到顶部按钮
-    - content.code.copy           # 代码一键复制
+    - navigation.indexes          # 允许点击父级目录标题
+    - navigation.top              # 回到顶部
+    - navigation.tracking         # 锚点跟随
+    - content.code.copy           # 代码复制
     - toc.follow                  # 右侧目录跟随滚动
-  
+
   palette:
     # 浅色模式
     - scheme: default
-      primary: custom             # 品牌色 #8641A9
+      primary: custom             # 绑定品牌色 #8641A9
       accent: custom
       toggle:
         icon: material/brightness-7
@@ -28,24 +28,6 @@ theme:
       toggle:
         icon: material/brightness-4
         name: 切换至浅色模式
-
-plugins:
-  - search
-  - glightbox:
-      touchNavigation: true
-      loop: false
-      effect: zoom
-      zoomable: true
-      draggable: true
-
-markdown_extensions:
-  - pymdownx.snippets:
-      base_path: ["docs"]
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences
-  - attr_list
-  - md_in_html
 
 extra_css:
   - stylesheets/extra.css
@@ -65,3 +47,7 @@ nav:
           - Quick Start: robotic_arm/starai_arm/index.md
       - Piper Mate: 
           - User Manual: robotic_arm/piper_mate/index.md
+
+plugins:
+  - search
+  - glightbox
