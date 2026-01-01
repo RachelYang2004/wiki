@@ -1,100 +1,110 @@
-<!-- Custom head: load compiled CSS + generate right-side TOC + nav expand highlighting -->
+<!-- Custom head: right-side "On this page" TOC (robust for different Just-the-Docs DOM versions) -->
 <link rel="stylesheet" href="{{ '/assets/css/just-the-docs-custom.css' | relative_url }}">
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+  // --------- Find main content element (robust selectors) ---------
+  const main =
+    document.querySelector('main.main-content') ||
+    document.querySelector('.main-content') ||
+    document.querySelector('main') ||
+    document.querySelector('article');
 
-  // ---------- 1) Right-side TOC (auto) ----------
-  // If you already have a TOC, don't duplicate
-  if (!document.getElementById('page-toc')) {
-    const main =
-      document.querySelector('#main-content') ||
-      document.querySelector('main.main-content') ||
-      document.querySelector('.main-content') ||
-      document.querySelector('article');
+  if (!main) return;
 
-    if (main) {
-      const headings = Array.from(main.querySelectorAll('h2, h3, h4')).filter(h => {
-        // ignore headings inside nav/aside/footer if any
-        return !h.closest('nav, aside, footer');
-      });
+  // Container where we'll create a 2-column layout
+  const container =
+    main.closest('.main-content-wrap') ||
+    main.parentElement;
 
-      if (headings.length) {
-        const used = new Set();
-        const slugify = (s) => (s || '').trim().toLowerCase()
-          .replace(/[\s]+/g, '-')
-          .replace(/[^a-z0-9\-\u00A0-\uFFFF]/g, '');
+  if (!container) return;
 
-        const ensureId = (el) => {
-          let id = el.id && el.id.trim();
-          if (!id) {
-            id = slugify(el.textContent) || 'section';
-            let base = id, n = 2;
-            while (used.has(id) || document.getElementById(id)) id = base + '-' + (n++);
-            el.id = id;
-          }
-          used.add(id);
-          return id;
-        };
+  // Avoid duplicates
+  if (document.getElementById('page-toc')) return;
 
-        const aside = document.createElement('aside');
-        aside.id = 'page-toc';
-        aside.className = 'page-toc';
+  // --------- Collect headings from within main content only ---------
+  const headings = Array.from(main.querySelectorAll('h2, h3, h4'))
+    .filter(h => h.textContent && h.textContent.trim().length > 0)
+    .filter(h => !h.closest('nav, aside, footer, header'));
 
-        const title = document.createElement('div');
-        title.className = 'page-toc-title';
-        title.textContent = 'On this page';
-        aside.appendChild(title);
+  if (!headings.length) return;
 
-        const ul = document.createElement('ul');
-        ul.className = 'page-toc-list';
+  // --------- Ensure each heading has a unique id ---------
+  const used = new Set();
+  const slugify = (s) => (s || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[\s]+/g, '-')
+    .replace(/[^\p{L}\p{N}\-]+/gu, '');
 
-        headings.forEach(h => {
-          const tag = (h.tagName || '').toLowerCase();
-          const id = ensureId(h);
+  function ensureId(el){
+    let id = (el.id || '').trim();
+    if (!id) id = slugify(el.textContent) || 'section';
+    let base = id, i = 2;
+    while (document.getElementById(id) || used.has(id)) id = base + '-' + (i++);
+    used.add(id);
+    el.id = id;
+    return id;
+  }
 
-          const li = document.createElement('li');
-          li.className = 'lvl-' + tag;
+  // --------- Build TOC DOM ---------
+  const aside = document.createElement('aside');
+  aside.id = 'page-toc';
+  aside.className = 'page-toc';
+  aside.setAttribute('aria-label', 'On this page');
 
-          const a = document.createElement('a');
-          a.href = '#' + id;
-          a.textContent = h.textContent;
-          li.appendChild(a);
-          ul.appendChild(li);
-        });
+  const title = document.createElement('div');
+  title.className = 'page-toc-title';
+  title.textContent = 'On this page';
+  aside.appendChild(title);
 
-        aside.appendChild(ul);
+  const ul = document.createElement('ul');
+  ul.className = 'page-toc-list';
 
-        // Place TOC as a sibling of the article content so it can sit on the right
-        const wrap = document.querySelector('.main-content-wrap');
-        if (wrap && main && wrap.contains(main)) {
-          wrap.appendChild(aside); // sibling of .main-content
-        } else {
-          // Fallback: put it at the top of the content
-          main.insertBefore(aside, main.firstElementChild);
-        }
+  headings.forEach(h => {
+    const tag = (h.tagName || '').toLowerCase();
+    const id = ensureId(h);
 
-        // Only enable 2-column spacing when TOC actually exists
-        document.documentElement.classList.add('has-page-toc');
-      } else {
-        document.documentElement.classList.remove('has-page-toc');
-      }
+    const li = document.createElement('li');
+    li.className = 'lvl-' + tag;
+
+    const a = document.createElement('a');
+    a.href = '#' + id;
+    a.textContent = h.textContent;
+
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  aside.appendChild(ul);
+
+  // --------- Insert TOC as a sibling of main to form a right column ---------
+  // If main is the only content, appending to its parent works across JTD versions.
+  container.classList.add('has-page-toc');
+  container.appendChild(aside);
+
+  // --------- Active section highlight ---------
+  const links = Array.from(aside.querySelectorAll('a[href^="#"]'));
+  const targets = links
+    .map(a => document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1))))
+    .filter(Boolean);
+
+  const setActive = () => {
+    let best = null;
+    let bestTop = -Infinity;
+    for (const el of targets) {
+      const top = el.getBoundingClientRect().top;
+      if (top < 120 && top > bestTop) { bestTop = top; best = el; }
     }
-  }
+    links.forEach(a => a.classList.remove('active'));
+    if (best) {
+      const sel = 'a[href="#' + CSS.escape(best.id) + '"]';
+      const activeLink = aside.querySelector(sel);
+      if (activeLink) activeLink.classList.add('active');
+    }
+  };
 
-  // ---------- 2) Sidebar: mark expanded directory items ----------
-  function syncExpanded() {
-    document.querySelectorAll('.nav-list-item').forEach(li => {
-      if (li.querySelector(':scope > .nav-list')) li.classList.add('has-children');
-      if (li.classList.contains('active')) {
-        let p = li.parentElement;
-        while (p) {
-          if (p.classList && p.classList.contains('nav-list-item')) p.classList.add('is-expanded');
-          p = p.parentElement;
-        }
-      }
-    });
-  }
-  syncExpanded();
+  setActive();
+  window.addEventListener('scroll', setActive, { passive: true });
 });
 </script>
