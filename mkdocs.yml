@@ -12,11 +12,11 @@ theme:
     - navigation.top              # 开启回到顶部按钮
     - content.code.copy           # 代码一键复制
   
-  # 颜色方案配置：保留黑白切换逻辑
+  # 颜色方案配置：保留黑白切换按钮
   palette:
     # 浅色模式
     - scheme: default
-      primary: custom             # 配合 CSS 变量使用品牌色
+      primary: custom             # 配合 CSS 变量使用品牌色 #8641A9
       accent: custom
       toggle:
         icon: material/brightness-7
@@ -46,7 +46,7 @@ markdown_extensions:
   - admonition                  # 开启彩色提示框
   - pymdownx.details            # 开启折叠块
   - pymdownx.superfences        # 开启代码高亮
-  - attr_list                   # 开启属性列表，支持 {: width="45%"}
+  - attr_list                   # 开启属性列表，支持 {: width="45%"} 调整大小
   - md_in_html                  # 允许在 HTML 容器内写 Markdown
 
 extra_css:
