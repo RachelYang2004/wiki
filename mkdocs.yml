@@ -12,14 +12,14 @@ theme:
     - content.code.copy
     - toc.follow
   palette:
-    # Light Mode: Click the moon to go Dark
+    # Light Mode: Target icon is the Moon (to go Dark)
     - scheme: default
       primary: custom
       accent: custom
       toggle:
         icon: assets/icons/tech-moon.svg
         name: Switch to dark mode
-    # Dark Mode: Click the sun to go Light
+    # Dark Mode: Target icon is the Sun (to go Light)
     - scheme: slate
       primary: custom
       accent: custom
