@@ -1,6 +1,6 @@
 
 
-# UART/RS485 Bus Servo Communication Protocol
+# UART/RS-485 Bus Servo Communication Protocol
 
 **v1.0.25**
 
