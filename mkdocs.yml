@@ -5,12 +5,12 @@ theme:
   name: material
   language: en
   features:
-    - navigation.path              # 面包屑路径
+    - navigation.path              # 顶部面包屑路径
     - navigation.top               # 回到顶部按钮
     - navigation.tracking          # 地址栏锚点同步
     - content.code.copy           # 代码复制按钮
-    - toc.follow                  # 右侧目录滚动跟随
-    # 已删除 navigation.indexes 以根除三横杠图标
+    - toc.follow                  # 右侧目录跟随滚动
+    # 已移除 navigation.indexes 以根除三横杠图标
 
   palette:
     # 浅色模式
