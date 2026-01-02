@@ -363,3 +363,63 @@
     --md-content-width: 62rem;    /* ~992px */
   }
 }
+
+
+/* =====================================================================================
+   v15.2 — NVIDIA-like 3-column proportions (wider reading area)
+   Goal (desktop): Left nav ~18rem, Content ~60rem, Right toc ~20rem, total ~96rem
+   ===================================================================================== */
+
+:root{
+  --fs-max-width: 96rem;
+  --fs-content-width: 60rem;
+  --fs-sidebar-primary: 18rem;
+  --fs-sidebar-secondary: 20rem;
+}
+
+/* Desktop / large screens */
+@media screen and (min-width: 76.25em){
+  /* Increase overall container width (MkDocs Material uses .md-grid as the clamp) */
+  .md-grid{
+    max-width: var(--fs-max-width) !important;
+  }
+
+  /* Keep main row aligned with grid */
+  .md-main__inner{
+    max-width: var(--fs-max-width) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Sidebars */
+  .md-sidebar--primary{
+    width: var(--fs-sidebar-primary) !important;
+  }
+  .md-sidebar--secondary{
+    width: var(--fs-sidebar-secondary) !important;
+  }
+
+  /* Main content column */
+  .md-content{
+    max-width: none !important;
+  }
+  .md-content__inner{
+    max-width: var(--fs-content-width) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* Medium screens (keep it roomy but avoid overflow) */
+@media screen and (min-width: 60em) and (max-width: 76.249em){
+  :root{
+    --fs-max-width: 92rem;
+    --fs-content-width: 56rem;
+    --fs-sidebar-primary: 16rem;
+    --fs-sidebar-secondary: 18rem;
+  }
+  .md-grid{ max-width: var(--fs-max-width) !important; }
+  .md-sidebar--primary{ width: var(--fs-sidebar-primary) !important; }
+  .md-sidebar--secondary{ width: var(--fs-sidebar-secondary) !important; }
+  .md-content__inner{ max-width: var(--fs-content-width) !important; }
+}
