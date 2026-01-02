@@ -174,3 +174,42 @@
   padding: 0.18rem 0 !important;
 }
 
+/* ==========================================================================
+   Right TOC (secondary sidebar) - FORCE 14.4px (with indent)
+   ========================================================================== */
+
+/* Force the whole secondary sidebar typography baseline */
+.md-sidebar--secondary,
+.md-sidebar--secondary .md-sidebar__scrollwrap,
+.md-sidebar--secondary .md-sidebar__inner{
+  font-size: 14.4px !important;
+}
+
+/* Title ("Table of contents"/"On this page") */
+.md-sidebar--secondary .md-nav--secondary .md-nav__title{
+  font-size: 14.4px !important;
+  margin-bottom: 0.4rem !important;
+}
+
+/* Any TOC link in the secondary nav */
+.md-sidebar--secondary .md-nav--secondary a.md-nav__link,
+.md-sidebar--secondary .md-nav--secondary .md-nav__link,
+.md-sidebar--secondary nav.md-nav--secondary .md-nav__link,
+.md-sidebar--secondary .md-nav--secondary .md-nav__item > .md-nav__link{
+  font-size: 14.4px !important;
+  line-height: 1.35 !important;
+  padding: 0.22rem 0 !important;
+}
+
+/* Nested TOC list indentation (2nd level and deeper) */
+.md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav{
+  padding-left: 14px !important;
+  margin-left: 0 !important;
+}
+
+/* Nested links also 14.4px (keep same size) */
+.md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav .md-nav__link{
+  font-size: 14.4px !important;
+  padding: 0.2rem 0 !important;
+}
+
