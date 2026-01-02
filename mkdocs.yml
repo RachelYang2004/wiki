@@ -4,6 +4,10 @@ site_url: https://servodevelop.github.io/wiki/
 theme:
   name: material
   language: en
+
+  # Enable theme overrides (needed for custom icons in overrides/.icons/)
+  custom_dir: overrides
+
   features:
     - navigation.path        # breadcrumb
     - navigation.indexes     # parent index pages clickable
@@ -11,20 +15,24 @@ theme:
     - navigation.tracking    # sync URL hash
     - content.code.copy      # copy code button
     - toc.follow             # right TOC follows scroll
+
   palette:
     # light
     - scheme: default
       primary: custom
       accent: custom
       toggle:
-        icon: material/weather-night
+        # uses overrides/.icons/fashion/tech-moon.svg
+        icon: fashion/tech-moon
         name: Switch to dark mode
+
     # dark
     - scheme: slate
       primary: custom
       accent: custom
       toggle:
-        icon: material/weather-sunny
+        # uses overrides/.icons/fashion/tech-sun.svg
+        icon: fashion/tech-sun
         name: Switch to light mode
 
 extra:
