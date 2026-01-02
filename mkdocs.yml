@@ -5,22 +5,19 @@ theme:
   name: material
   language: en
   features:
-    - navigation.path              # 顶部面包屑路径
-    - navigation.indexes           # 允许点击父级目录
-    - navigation.top               # 回到顶部按钮
-    - navigation.tracking          # 地址栏锚点同步
-    - content.code.copy           # 代码复制
-    - toc.follow                  # 右侧目录跟随滚动
-
+    - navigation.path        # 顶部面包屑
+    - navigation.indexes     # 允许点击父级目录
+    - navigation.top         # 回到顶部按钮
+    - navigation.tracking    # 地址栏锚点同步
+    - content.code.copy      # 代码复制按钮
+    - toc.follow             # 右侧目录跟随滚动
   palette:
-    # 浅色模式
     - scheme: default
       primary: custom
-      accent: custom               # 锁定 accent 以消除蓝色
+      accent: custom
       toggle:
-        icon: material/weather-night 
+        icon: material/weather-night
         name: Switch to dark mode
-    # 深色模式
     - scheme: slate
       primary: custom
       accent: custom
@@ -36,22 +33,22 @@ extra:
 extra_css:
   - stylesheets/extra.css
 
+plugins:
+  - search
+  - glightbox
+
 nav:
   - Home: index.md
   - UART Servo:
       - Datasheet:
-          - HA8/RA8-U25(H)-M: uart_servo/datasheet/HA_RA8_U25(H)_M.md
-          - HA8/RA8-U35(H)-M: uart_servo/datasheet/HA_RA8_U35(H)_M.md
+          - "HA8/RA8-U25(H)-M": "uart_servo/datasheet/HA_RA8_U25(H)_M.md"
+          - "HA8/RA8-U35(H)-M": "uart_servo/datasheet/HA_RA8_U35(H)_M.md"
       - CAD Files:
-          - STEP/DWG/PDF: uart_servo/cad_files/cad_files.md
-      - Software: 
-          - Configuration Tools: uart_servo/software/pc_configuration_ser_manual.md
+          - "STEP/DWG/PDF": "uart_servo/cad_files/cad_files.md"
+      - Software:
+          - "Configuration Tools": "uart_servo/software/pc_configuration_ser_manual.md"
   - Robotic Arm:
-      - StarAI Arm: 
-          - Quick Start: robotic_arm/starai_arm/index.md
-      - Piper Mate: 
-          - User Manual: robotic_arm/piper_mate/index.md
-
-plugins:
-  - search
-  - glightbox
+      - StarAI Arm:
+          - "Quick Start": "robotic_arm/starai_arm/index.md"
+      - Piper Mate:
+          - "User Manual": "robotic_arm/piper_mate/index.md"
