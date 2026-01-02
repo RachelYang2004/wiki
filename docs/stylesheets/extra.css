@@ -1,6 +1,10 @@
 /* ==========================================================================
    Fashion Star Wiki - Minimal stable overrides (V10 baseline)
-   V11: Fix double active bar on index pages (keep parent bars)
+   V13 (rev5): Primary nav alignment fix (index/section padding) + consistent bars
+   ========================================================================== */
+
+/* ==========================================================================
+   Fashion Star Wiki - Minimal stable overrides (no left vertical bars)
    Brand accent: #8641A9 | Dark bg: #131314
    ========================================================================== */
 
@@ -184,58 +188,6 @@ font-weight: 600 !important;
 .md-typeset a{
   color: var(--fs-accent);
 }
-/* ==========================================================================
-   Right TOC (secondary sidebar) - compact + 10px text
-   ========================================================================== */
-
-.md-sidebar--secondary .md-nav--secondary .md-nav__list{
-  margin-top: 0 !important;
-  padding-left: 0 !important;
-}
-
-.md-sidebar--secondary .md-nav--secondary .md-nav__link{
-  font-size: 10px !important;
-  line-height: 1.28 !important;
-  padding: 0.18rem 0 !important;
-}
-
-/* Indented (deeper) TOC items slightly smaller */
-.md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav .md-nav__link{
-  font-size: 9px !important;
-  padding: 0.14rem 0 !important;
-}
-
-/* ==========================================================================
-   Right TOC (secondary sidebar) - compact + 11px text (with indent)
-   ========================================================================== */
-.md-sidebar--secondary .md-nav--secondary .md-nav__title{
-  font-size: 11px !important;
-  margin-bottom: 0.25rem !important;
-}
-
-.md-sidebar--secondary .md-nav--secondary .md-nav__list{
-  margin-top: 0 !important;
-  padding-left: 0 !important;
-}
-
-/* All TOC links: 11px */
-.md-sidebar--secondary .md-nav--secondary .md-nav__link{
-  font-size: 11px !important;
-  line-height: 1.3 !important;
-  padding: 0.10rem 0 !important;
-}
-
-/* Nested TOC list indentation (2nd level and deeper) */
-.md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav{
-  padding-left: 12px !important;
-  margin-left: 0 !important;
-}
-
-/* Keep nested links same size but slightly tighter */
-.md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav .md-nav__link{
-  font-size: 11px !important;
-  padding: 0.18rem 0 !important;
-}
 
 /* ==========================================================================
    Right TOC (secondary sidebar) - FORCE 14.4px (with indent)
@@ -286,24 +238,6 @@ font-weight: 600 !important;
   padding: 0.10rem 0 !important;
 }
 
-/* ==========================================================================
-   Primary nav gutter for active trail bar (keep sibling alignment)
-   Bar: 3px @ left 8px, Gap: 7px, Total gutter: 18px
-   ========================================================================== */
-.md-sidebar--primary .md-nav__link,
-.md-sidebar--primary .md-nav__item .md-nav__link{
-  padding-left: 18px !important;
-  box-sizing: border-box;
-}
-
-/* Active trail bar position (inside the reserved gutter) */
-.md-sidebar--primary .md-nav__link--active:not([aria-current="page"])::before,
-.md-sidebar--primary .md-nav__item--active > .md-nav__link:not([aria-current="page"])::before,
-.md-sidebar--primary .md-nav__link[aria-current="page"]::before{
-  left: 8px !important;
-  width: 3px !important;
-}
-
 /* Right TOC active item: brand color + bold */
 .md-sidebar--secondary .md-nav--secondary .md-nav__item--active > .md-nav__link,
 .md-sidebar--secondary .md-nav--secondary .md-nav__link--active{
@@ -312,134 +246,105 @@ font-weight: 600 !important;
 }
 
 /* ==========================================================================
-   V11 Patch: Prevent "double bar" on index pages while keeping parent bars
-   - Material sometimes adds .md-nav__link--active to the current page too.
-   - This can stack with [aria-current="page"] bar => looks like double lines.
-   - We disable the bar coming from .md-nav__link--active and rely on:
-       * Parent trail: .md-nav__item--active > .md-nav__link:not([aria-current="page"])
-       * Current page: .md-nav__link[aria-current="page"]
+   V13 (rev5) - Fix primary nav alignment across levels + consistent bar gap
+   Problem:
+   - Some items (especially section/index links) get different internal padding
+     from the theme, so the text shifts but the bar doesn't, causing large gaps.
+   Strategy:
+   - We do NOT fight theme's unknown variables.
+   - We explicitly set per-depth indentation for primary nav links (a+label),
+     then place the bar at a matching per-depth x so the bar-to-text gap is constant.
+   Notes:
+   - Depth 1: left pad 18px, bar at 8px
+   - Depth 2: left pad 34px, bar at 24px
+   - Depth 3: left pad 50px, bar at 40px
+   - Depth 4: left pad 66px, bar at 56px
    ========================================================================== */
 
-/* Disable any bar drawn via .md-nav__link--active to avoid duplicates */
-.md-sidebar--primary .md-nav__link--active::before{
-  content: none !important;
+/* Helper: make sure links are bar-anchored */
+.md-sidebar--primary a.md-nav__link,
+.md-sidebar--primary label.md-nav__link{
+  position: relative;
+  box-sizing: border-box;
 }
 
-/* Re-assert bars for parent trail + current page (same geometry as V10) */
-.md-sidebar--primary .md-nav__item--active > .md-nav__link:not([aria-current="page"])::before,
-.md-sidebar--primary .md-nav__link[aria-current="page"]::before{
-  content: "" !important;
+/* ---- Depth 1 (top-level inside sidebar nav) ---- */
+.md-sidebar--primary nav.md-nav > ul.md-nav__list > li.md-nav__item > a.md-nav__link,
+.md-sidebar--primary nav.md-nav > ul.md-nav__list > li.md-nav__item > label.md-nav__link{
+  padding-left: 18px !important;
+}
+
+/* ---- Depth 2 ---- */
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list > li.md-nav__item > a.md-nav__link,
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list > li.md-nav__item > label.md-nav__link{
+  padding-left: 34px !important;
+}
+
+/* ---- Depth 3 ---- */
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list ul.md-nav__list > li.md-nav__item > a.md-nav__link,
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list ul.md-nav__list > li.md-nav__item > label.md-nav__link{
+  padding-left: 50px !important;
+}
+
+/* ---- Depth 4 ---- */
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list ul.md-nav__list ul.md-nav__list > li.md-nav__item > a.md-nav__link,
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list ul.md-nav__list ul.md-nav__list > li.md-nav__item > label.md-nav__link{
+  padding-left: 66px !important;
+}
+
+/* Current + ancestors text styling (keep as-is, but DO include .md-nav__link--active for Home) */
+.md-sidebar--primary .md-nav__link--active,
+.md-sidebar--primary .md-nav__link[aria-current="page"],
+.md-sidebar--primary .md-nav__item--active > .md-nav__link{
+  color: var(--fs-accent) !important;
+  font-weight: 600 !important;
+}
+
+/* --- Bars: current (link--active OR aria-current) --- */
+.md-sidebar--primary a.md-nav__link.md-nav__link--active::before,
+.md-sidebar--primary a.md-nav__link[aria-current="page"]::before,
+.md-sidebar--primary label.md-nav__link.md-nav__link--active::before,
+.md-sidebar--primary label.md-nav__link[aria-current="page"]::before{
+  content: "";
   position: absolute;
   top: 50%;
   height: 17.568px;
   transform: translateY(-50%);
-  left: 8px;
   width: 3px;
   background: var(--fs-accent);
   border-radius: 2px;
   pointer-events: none;
 }
 
-
-
-/* ==========================================================================
-   V13 rev4 - Primary nav active bar alignment
-   Fixes:
-   1) Restore Home active bar
-   2) Keep the bar-to-text gap consistent for nested items (e.g. StarAI Arm)
-   3) Keep parent trail bar as single bar (no double bars)
-   ========================================================================== */
-
-:root{
-  /* Primary nav geometry (Material default indent step is ~16px) */
-  --fs-nav-bar-w: 3px;
-  --fs-nav-bar-h: 17.568px;
-
-  /* text start (padding-left) by depth */
-  --fs-nav-l1: 18px;
-  --fs-nav-l2: 34px;
-  --fs-nav-l3: 50px;
-
-  /* bar position by depth (keeps ~7px gap to text) */
-  --fs-nav-bar-l1: 8px;
-  --fs-nav-bar-l2: 24px;
-  --fs-nav-bar-l3: 40px;
-}
-
-/* Ensure links/labels can host the bar */
-.md-sidebar--primary :is(a,label).md-nav__link{
-  position: relative;
-  box-sizing: border-box;
-}
-
-/* Normalize indentation by depth so same-level items always align */
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link{
-  padding-left: var(--fs-nav-l1) !important;
-}
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link{
-  padding-left: var(--fs-nav-l2) !important;
-}
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link{
-  padding-left: var(--fs-nav-l3) !important;
-}
-
-/* Helper: what counts as "active trail" in MkDocs Material (varies a bit by page type) */
-.md-sidebar--primary :is(a,label).md-nav__link--active,
-.md-sidebar--primary :is(a,label).md-nav__link[aria-current],
-.md-sidebar--primary .md-nav__item--active > :is(a,label).md-nav__link{
-  color: var(--fs-accent) !important;
-  font-weight: 600 !important;
-}
-
-/* --- Active bar: level 1 --- */
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--active > :is(a,label).md-nav__link::before,
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link--active::before,
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link[aria-current]::before{
+/* --- Bars: ancestors (single bar, no double) --- */
+.md-sidebar--primary .md-nav__item--active > a.md-nav__link:not(.md-nav__link--active):not([aria-current="page"])::before,
+.md-sidebar--primary .md-nav__item--active > label.md-nav__link:not(.md-nav__link--active):not([aria-current="page"])::before{
   content: "";
   position: absolute;
   top: 50%;
-  height: var(--fs-nav-bar-h);
+  height: 17.568px;
   transform: translateY(-50%);
-  left: var(--fs-nav-bar-l1) !important;
-  width: var(--fs-nav-bar-w) !important;
+  width: 3px;
   background: var(--fs-accent);
   border-radius: 2px;
   pointer-events: none;
 }
 
-/* --- Active bar: level 2 --- */
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item--active > :is(a,label).md-nav__link::before,
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link--active::before,
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link[aria-current]::before{
-  content: "";
-  position: absolute;
-  top: 50%;
-  height: var(--fs-nav-bar-h);
-  transform: translateY(-50%);
-  left: var(--fs-nav-bar-l2) !important;
-  width: var(--fs-nav-bar-w) !important;
-  background: var(--fs-accent);
-  border-radius: 2px;
-  pointer-events: none;
-}
+/* Place bar X by depth */
+.md-sidebar--primary nav.md-nav > ul.md-nav__list > li.md-nav__item > a.md-nav__link::before,
+.md-sidebar--primary nav.md-nav > ul.md-nav__list > li.md-nav__item > label.md-nav__link::before{ left: 8px; }
 
-/* --- Active bar: level 3 --- */
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item--active > :is(a,label).md-nav__link::before,
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link--active::before,
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link[aria-current]::before{
-  content: "";
-  position: absolute;
-  top: 50%;
-  height: var(--fs-nav-bar-h);
-  transform: translateY(-50%);
-  left: var(--fs-nav-bar-l3) !important;
-  width: var(--fs-nav-bar-w) !important;
-  background: var(--fs-accent);
-  border-radius: 2px;
-  pointer-events: none;
-}
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list > li.md-nav__item > a.md-nav__link::before,
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list > li.md-nav__item > label.md-nav__link::before{ left: 24px; }
 
-/* Safety: never draw the bar on the nav section title row */
-.md-sidebar--primary .md-nav__title::before{
-  content: none !important;
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list ul.md-nav__list > li.md-nav__item > a.md-nav__link::before,
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list ul.md-nav__list > li.md-nav__item > label.md-nav__link::before{ left: 40px; }
+
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list ul.md-nav__list ul.md-nav__list > li.md-nav__item > a.md-nav__link::before,
+.md-sidebar--primary nav.md-nav ul.md-nav__list ul.md-nav__list ul.md-nav__list ul.md-nav__list > li.md-nav__item > label.md-nav__link::before{ left: 56px; }
+
+/* Make sure section/index variants do not add extra inner spacing that breaks alignment */
+.md-sidebar--primary a.md-nav__link.md-nav__link--index{
+  padding-left: inherit !important;
+  padding-inline-start: inherit !important;
 }
