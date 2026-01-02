@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Fashion Star Wiki - 工业级稳定版 (底层逻辑优化版)
-   12px / 600加粗 / 2px竖线 / 彻底消蓝
+   Fashion Star Wiki - 工业级稳定版 (终极消蓝与悬停修复)
+   锁定 12px / 600加粗 / 2px紫色线 / 1.7rem高度
    ========================================================================== */
 
 :root {
@@ -29,12 +29,12 @@
   width: 1.1rem;
 }
 
-/* --- 3. 左侧导航栏精修 (锁定 12px / 600 / 2px) --- */
+/* --- 3. 左侧导航栏精修 --- */
 
-/* 【物理绝缘】彻底抹除所有非箭头类的图标，无论底层逻辑如何生成 */
+/* 【物理遮蔽】彻底抹除索引图标和TOC图标，确保侧边栏只有文字和箭头 */
 .md-nav__icon--index,
 .md-nav__icon--toc,
-.md-nav__link .md-icon,
+.md-nav__link .md-icon:not(.md-nav__icon),
 [for*="__toc"] .md-nav__icon { 
   display: none !important; 
   visibility: hidden !important;
@@ -47,9 +47,15 @@
   line-height: 1.25 !important;       
   font-size: 0.75rem !important;      /* 锁定 12px */
   color: var(--md-default-fg-color) !important; 
-  min-height: 1.7rem;                 /* 竖条高度：27.2px */
+  min-height: 1.7rem;                 /* 锁定高度：约 27px */
   display: flex !important;
   align-items: center;                
+  background-color: transparent !important;
+}
+
+/* 悬停效果：修复浅色模式下文字不可见的问题 */
+.md-nav__link:hover {
+  color: var(--fs-accent) !important; /* 悬停时变为品牌紫 */
   background-color: transparent !important;
 }
 
@@ -66,24 +72,16 @@
 .md-nav__link--active { color: var(--md-default-fg-color) !important; }
 .md-nav__item--active > .md-nav__link { color: var(--fs-accent) !important; }
 
-/* 仅允许文件夹的展开箭头显示（锁定为白色） */
+/* 仅保留展开箭头，并确保其在紫色背景或深色模式下清晰 */
 .md-nav__item .md-nav__icon { 
   display: block !important; 
-  color: #ffffff !important; 
+  color: currentColor !important; 
   opacity: 0.8;
-  width: auto !important;
-  height: auto !important;
 }
 
 .md-nav__item .md-nav { border-left: none !important; margin-left: 0.5rem !important; }
 
-/* 悬停效果：紫色高亮 */
-.md-nav__link:hover {
-  color: var(--fs-accent) !important;
-  background-color: transparent !important;
-}
-
-/* --- 4. 正文布局与全局消蓝 --- */
+/* --- 4. 正文布局与全站消蓝 --- */
 .md-content__inner { 
   max-width: 58rem !important; 
   margin: 0 auto !important; 
