@@ -108,7 +108,7 @@
   top: 50%;
   height: 17.568px;
   transform: translateY(-50%);
-  left: 0;  width: 4px;
+  left: 0;  width: 3px;
   background: var(--fs-accent);
   border-radius: 2px;
   pointer-events: none;
@@ -118,7 +118,7 @@
 .md-sidebar--primary .md-nav__link--active,
 .md-sidebar--primary .md-nav__item--active > .md-nav__link,
 .md-sidebar--primary .md-nav__link[aria-current="page"]{
-  padding-left: 20px !important; /* reserve space for 4px active bar */
+  padding-left: 18px !important; /* reserve space for 3px active bar */
 }
 
 /* Keep nested nav clean (no extra guide lines) */
@@ -285,3 +285,20 @@
   padding: 0.10rem 0 !important;
 }
 
+/* ==========================================================================
+   Primary nav gutter for active trail bar (keep sibling alignment)
+   Bar: 3px @ left 8px, Gap: 7px, Total gutter: 18px
+   ========================================================================== */
+.md-sidebar--primary .md-nav__link,
+.md-sidebar--primary .md-nav__item .md-nav__link{
+  padding-left: 18px !important;
+  box-sizing: border-box;
+}
+
+/* Active trail bar position (inside the reserved gutter) */
+.md-sidebar--primary .md-nav__link--active::before,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link::before,
+.md-sidebar--primary .md-nav__link[aria-current="page"]::before{
+  left: 8px !important;
+  width: 3px !important;
+}
