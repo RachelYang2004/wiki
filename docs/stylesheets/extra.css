@@ -100,8 +100,8 @@ font-weight: 600 !important;
 }
 
 /* 2px brand bar on active trail */
-.md-sidebar--primary .md-nav__link--active::before,
-.md-sidebar--primary .md-nav__item--active > .md-nav__link::before,
+.md-sidebar--primary .md-nav__link--active:not([aria-current="page"])::before,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link:not([aria-current="page"])::before,
 .md-sidebar--primary .md-nav__link[aria-current="page"]::before{
   content: "";
   position: absolute;
@@ -296,8 +296,8 @@ font-weight: 600 !important;
 }
 
 /* Active trail bar position (inside the reserved gutter) */
-.md-sidebar--primary .md-nav__link--active::before,
-.md-sidebar--primary .md-nav__item--active > .md-nav__link::before,
+.md-sidebar--primary .md-nav__link--active:not([aria-current="page"])::before,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link:not([aria-current="page"])::before,
 .md-sidebar--primary .md-nav__link[aria-current="page"]::before{
   left: 8px !important;
   width: 3px !important;
