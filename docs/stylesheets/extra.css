@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Fashion Star Wiki - 绝对对齐锁定版
-   字号: 12px | 高度: 1.5rem | 边框: 2px (全行统一)
+   Fashion Star Wiki - 完美对齐修正版
+   高度: 1.5rem | 字号: 12px | 边框: 2px (占位对齐)
    ========================================================================== */
 
 :root {
@@ -29,7 +29,7 @@
   width: 1.1rem;
 }
 
-/* --- 3. 左侧导航栏精修 (锁定 12px / 绝对对齐) --- */
+/* --- 3. 左侧导航栏精修 (锁定 12px / 对齐修复) --- */
 
 /* 物理遮蔽所有多余图标 */
 .md-nav__icon--index,
@@ -43,41 +43,36 @@
 }
 
 .md-nav__link { 
-  /* 【绝对对齐关键】固定左侧内边距，并预留 2px 透明边框作为“占位符” */
-  padding: 0.2rem 12px !important;    
-  border-left: 2px solid transparent !important; 
-  margin-left: 0 !important;          
-  
+  padding: 0.2rem 12px !important;    /* 统一左右间距 */
   line-height: 1.25 !important;       
   font-size: 0.75rem !important;      /* 锁定 12px */
   color: var(--md-default-fg-color) !important; 
-  min-height: 1.5rem;                 /* 锁定 1.5rem 高度 */
+  min-height: 1.5rem;                 /* 您要求的 1.5rem 高度 */
   display: flex !important;
   align-items: center;                
   background-color: transparent !important;
-  transition: border-color 0.2s, color 0.2s;
+  /* 【关键修复】预留 2px 透明边框作为占位符，防止文字抖动偏移 */
+  border-left: 2px solid transparent !important; 
 }
 
-/* 激活项样式：仅让“隐形边框”变色，文字物理位置绝不动弹 */
+/* 激活项样式：仅改变边框颜色，不改变物理位置 */
 .md-nav__item--active > .md-nav__link {
   color: var(--fs-accent) !important;      
   font-weight: 600 !important;         /* 锁定 600 加粗 */
-  border-left-color: var(--fs-accent) !important; 
-  /* 确保 padding 不会被重置 */
-  padding-left: 12px !important;      
+  border-left-color: var(--fs-accent) !important; /* 激活时边框显色 */
 }
 
 /* 强制消除父级目录的蓝色 */
 .md-nav__link--active { color: var(--md-default-fg-color) !important; }
 .md-nav__item--active > .md-nav__link { color: var(--fs-accent) !important; }
 
-/* 悬停效果 */
+/* 悬停效果：紫色高亮 */
 .md-nav__link:hover {
   color: var(--fs-accent) !important;
   background-color: transparent !important;
 }
 
-/* 仅保留文件夹箭头，并确保其颜色跟随文字 */
+/* 仅保留文件夹的展开箭头 */
 .md-nav__item .md-nav__icon { 
   display: block !important; 
   color: currentColor !important; 
