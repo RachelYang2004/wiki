@@ -71,7 +71,7 @@
 
 .md-sidebar--primary .md-nav__link{
   font-size: 14.4px !important;
-  line-height: 1.35 !important;
+  line-height: 1.22 !important;
 }
 
 
@@ -147,7 +147,7 @@
    ========================================================================== */
 .md-sidebar--secondary .md-nav--secondary .md-nav__title{
   font-size: 11px !important;
-  margin-bottom: 0.4rem !important;
+  margin-bottom: 0.25rem !important;
 }
 
 .md-sidebar--secondary .md-nav--secondary .md-nav__list{
@@ -159,7 +159,7 @@
 .md-sidebar--secondary .md-nav--secondary .md-nav__link{
   font-size: 11px !important;
   line-height: 1.3 !important;
-  padding: 0.2rem 0 !important;
+  padding: 0.10rem 0 !important;
 }
 
 /* Nested TOC list indentation (2nd level and deeper) */
@@ -188,7 +188,7 @@
 /* Title ("Table of contents"/"On this page") */
 .md-sidebar--secondary .md-nav--secondary .md-nav__title{
   font-size: 14.4px !important;
-  margin-bottom: 0.4rem !important;
+  margin-bottom: 0.25rem !important;
 }
 
 /* Any TOC link in the secondary nav */
@@ -197,8 +197,8 @@
 .md-sidebar--secondary nav.md-nav--secondary .md-nav__link,
 .md-sidebar--secondary .md-nav--secondary .md-nav__item > .md-nav__link{
   font-size: 14.4px !important;
-  line-height: 1.35 !important;
-  padding: 0.22rem 0 !important;
+  line-height: 1.22 !important;
+  padding: 0.12rem 0 !important;
 }
 
 /* Nested TOC list indentation (2nd level and deeper) */
@@ -210,6 +210,6 @@
 /* Nested links also 14.4px (keep same size) */
 .md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav .md-nav__link{
   font-size: 14.4px !important;
-  padding: 0.2rem 0 !important;
+  padding: 0.10rem 0 !important;
 }
 
