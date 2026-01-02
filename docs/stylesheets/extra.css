@@ -40,58 +40,24 @@
 
 /* Keep layout stable: DO NOT force .md-main__inner to flex/grid */
 
-/* Divider that won't get "covered" after JS hydration
-   Use full-height pseudo-elements so lines always reach the bottom. */
-.md-sidebar--primary,
-.md-sidebar--secondary{
-  position: relative !important;
-  z-index: 3 !important;
-  background: var(--md-default-bg-color) !important;
+
+/* Divider lines between columns (stable after JS hydration)
+   Draw lines on the middle content column so they always match content height. */
+@media screen and (min-width: 60em){
+  .md-content{
+    position: relative !important;
+    z-index: 2 !important;
+    min-height: 100vh;
+    /* Left and right dividers */
+    box-shadow:
+      inset 1px 0 0 var(--fs-divider),
+      inset -1px 0 0 var(--fs-divider) !important;
+  }
 }
 
-/* Ensure the content column can't visually sit on top of the dividers */
-.md-main__inner{
-  position: relative !important;
-  z-index: 1 !important;
-}
-
-/* Full-height dividers (more reliable than borders/scrollwrap shadows) */
-.md-sidebar--primary::after{
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 1px;
-  background: var(--fs-divider);
-  pointer-events: none;
-}
-
-.md-sidebar--secondary::before{
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 1px;
-  background: var(--fs-divider);
-  pointer-events: none;
-}
-
-/* Remove earlier border/shadow approaches (keep clean) */
-.md-sidebar--primary{
-  border-right: none !important;
-}
-.md-sidebar--secondary{
-  border-left: none !important;
-  margin-left: 0 !important;
-}
-
-/* Make sure sidebar scroll areas fill the viewport height so dividers feel continuous */
-.md-sidebar--primary .md-sidebar__scrollwrap,
-.md-sidebar--secondary .md-sidebar__scrollwrap{
-  min-height: 100vh;
-}
+/* Sidebars keep their normal stacking; no borders needed */
+.md-sidebar--primary{ border-right: none !important; }
+.md-sidebar--secondary{ border-left: none !important; margin-left: 0 !important; }
 
 
 /* Ensure the right TOC sidebar remains visible on desktop */
