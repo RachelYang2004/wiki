@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Fashion Star Wiki - V15.2
+   Fashion Star Wiki - V15
    Stable overrides (based on V14.2 + fixes) with WORKING palette toggle restored.
    - Fix: primary nav alignment for md-nav__container (index.md sections)
    - Fix: left-nav active bar vertical centering (bar follows container height)
@@ -298,66 +298,45 @@
   }
 }
 
-
-/* =========================================================
-   V15.2 - Layout width tuning (NVIDIA-like reading width)
-   Goals:
-   - Wider center content (less cramped)
-   - Slightly wider left nav and right TOC (balanced)
-   Notes:
-   - Material for MkDocs sets overall content width via .md-grid max-width.
-     We override it on larger screens (desktop/tablet landscape).
-   ========================================================= */
-
-@media screen and (min-width: 60em){
-  /* ======================================================================
-     V15.2 - Layout width tuning (match NVIDIA-like proportions)
-     Target desktop grid: ~1760px
-       - Left nav: 20rem (≈320px)
-       - Content: up to 74rem (≈1184px) but will shrink as needed
-       - Right TOC: 18rem (≈288px)
-     ====================================================================== */
-
-  /* Give the page more breathing room (your center column was being squeezed) */
-  .md-grid{
-    max-width: min(1760px, 96vw) !important;
+/* ------------------------------ */
+/* V15.3 - Layout width (NVIDIA-like proportions) */
+/* Goal:
+   - Wider reading column (center) like NVIDIA docs
+   - Left nav + right TOC keep reasonable widths
+   - Keep content aligned to the left (no big "floating center" gap)
+*/
+@media screen and (min-width: 60em) {
+  /* Overall page container */
+  .md-grid {
+    /* NVIDIA feels ~1500-1650px wide on desktop */
+    max-width: min(96rem, 96vw);
   }
 
-  /* Make article column wider (but still readable) */
-  .md-content__inner{
-    max-width: 74rem !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+  /* Sidebars */
+  .md-sidebar--primary { width: 18rem; }   /* ~288px */
+  .md-sidebar--secondary { width: 18rem; } /* ~288px */
+
+  /* Main content should not be artificially centered/narrow */
+  .md-content { max-width: none; }
+
+  /* The inner reading column */
+  .md-content__inner {
+    /* widen, but keep a readable line length */
+    max-width: 62rem;     /* ~992px */
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
-  /* Sidebars similar to NVIDIA docs */
-  .md-sidebar--primary{
-    width: 20rem !important;
-    flex: 0 0 20rem !important;
-  }
-  .md-sidebar--secondary{
-    width: 18rem !important;
-    flex: 0 0 18rem !important;
-  }
-
-  /* Let the center flex item actually take the remaining space */
-  .md-content{
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-  }
+  /* Allow large blocks (tables/images/code) to use the column */
+  .md-typeset { max-width: 100%; }
 }
 
-@media screen and (min-width: 80em){
-  /* A touch wider on very large screens */
-  .md-grid{
-    max-width: min(1840px, 97vw) !important;
-  }
-  .md-content__inner{
-    max-width: 78rem !important;
-  }
-}
-  .md-content__inner { max-width: 76rem; }
-  .md-sidebar--primary { width: 18rem; }
-  .md-sidebar--secondary { width: 18rem; }
+/* Extra-wide screens: give a little more breathing room */
+@media screen and (min-width: 90em) {
+  .md-grid { max-width: min(104rem, 96vw); }      /* ~1664px */
+  .md-sidebar--secondary { width: 19rem; }        /* slightly wider TOC */
+  .md-content__inner { max-width: 66rem; }        /* ~1056px */
 }
 
