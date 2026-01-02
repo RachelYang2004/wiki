@@ -50,12 +50,30 @@
     min-height: 100vh;
     /* Left and right dividers */
     box-shadow:
-      inset 1px 0 0 var(--fs-divider),
-      inset -1px 0 0 var(--fs-divider) !important;
+      inset 1px 0 0 var(--fs-divider) !important;
   }
 }
 
 /* Sidebars keep their normal stacking; no borders needed */
+
+/* Right divider that ends with the TOC content height (not full viewport) */
+@media screen and (min-width: 60em){
+  .md-sidebar--secondary .md-nav--secondary{
+    position: relative !important;
+    padding-left: 14px !important; /* space between line and text */
+  }
+  .md-sidebar--secondary .md-nav--secondary::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--fs-divider);
+    pointer-events: none;
+  }
+}
+
 .md-sidebar--primary{ border-right: none !important; }
 .md-sidebar--secondary{ border-left: none !important; margin-left: 0 !important; }
 
