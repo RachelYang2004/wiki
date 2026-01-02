@@ -6,11 +6,12 @@ theme:
   language: en
   features:
     - navigation.path              # 面包屑路径
-    - navigation.indexes           # 目录索引可点击
     - navigation.top               # 回到顶部按钮
     - navigation.tracking          # 地址栏锚点同步
-    - content.code.copy           # 代码复制
-    - toc.follow                  # 目录随动
+    - content.code.copy           # 代码复制按钮
+    - toc.follow                  # 右侧目录滚动跟随
+    # 已删除 navigation.indexes 以根除三横杠图标
+
   palette:
     # 浅色模式
     - scheme: default
