@@ -40,7 +40,8 @@
 
 /* Keep layout stable: DO NOT force .md-main__inner to flex/grid */
 
-/* Divider that won't get "covered" after JS hydration */
+/* Divider that won't get "covered" after JS hydration
+   Use full-height pseudo-elements so lines always reach the bottom. */
 .md-sidebar--primary,
 .md-sidebar--secondary{
   position: relative !important;
@@ -54,29 +55,43 @@
   z-index: 1 !important;
 }
 
-/* Use inset shadows on the scroll wrapper (more reliable than borders) */
+/* Full-height dividers (more reliable than borders/scrollwrap shadows) */
+.md-sidebar--primary::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  background: var(--fs-divider);
+  pointer-events: none;
+}
+
+.md-sidebar--secondary::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--fs-divider);
+  pointer-events: none;
+}
+
+/* Remove earlier border/shadow approaches (keep clean) */
 .md-sidebar--primary{
   border-right: none !important;
 }
-.md-sidebar--primary .md-sidebar__scrollwrap{
-  box-shadow: inset -1px 0 0 var(--fs-divider) !important;
-}
-
 .md-sidebar--secondary{
   border-left: none !important;
   margin-left: 0 !important;
 }
+
+/* Make sure sidebar scroll areas fill the viewport height so dividers feel continuous */
+.md-sidebar--primary .md-sidebar__scrollwrap,
 .md-sidebar--secondary .md-sidebar__scrollwrap{
-  box-shadow: inset 1px 0 0 var(--fs-divider) !important;
+  min-height: 100vh;
 }
-
-/* Add breathing room between the right divider line and TOC text */
-.md-sidebar--secondary .md-sidebar__inner{
-  padding-left: 12px !important;
-  padding-right: 10px !important;
-}
-
-
 
 
 /* Ensure the right TOC sidebar remains visible on desktop */
