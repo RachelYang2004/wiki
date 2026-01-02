@@ -1,10 +1,6 @@
 /* ==========================================================================
    Fashion Star Wiki - Minimal stable overrides (V10 baseline)
-   V13 (rev3): Restore Home bar + make bar-to-text gap consistent at ALL depths
-   - Bars: only current + ancestors (single bar)
-   - Current detection: .md-nav__link--active OR [aria-current="page"]
-   - Gutter: constant 18px padding for BOTH <a> and <label>, overrides theme/index variants
-   - Bar: 3px width, 17.568px height, left=8px (constant inside link box)
+   V11: Fix double active bar on index pages (keep parent bars)
    Brand accent: #8641A9 | Dark bg: #131314
    ========================================================================== */
 
@@ -315,93 +311,135 @@ font-weight: 600 !important;
   font-weight: 600 !important;
 }
 
-/* =========================================================
-   Hotfix: avoid double purple bars on index pages
-   - Keep ancestor bars
-   - Keep current-page bar
-   - Prevent duplicate bar when a link is both "active" and "aria-current"
-   (Safe override appended; does NOT remove existing rules)
-   ========================================================= */
+/* ==========================================================================
+   V11 Patch: Prevent "double bar" on index pages while keeping parent bars
+   - Material sometimes adds .md-nav__link--active to the current page too.
+   - This can stack with [aria-current="page"] bar => looks like double lines.
+   - We disable the bar coming from .md-nav__link--active and rely on:
+       * Parent trail: .md-nav__item--active > .md-nav__link:not([aria-current="page"])
+       * Current page: .md-nav__link[aria-current="page"]
+   ========================================================================== */
 
-/* If any previous rule draws a bar on .md-nav__link--active, disable it */
+/* Disable any bar drawn via .md-nav__link--active to avoid duplicates */
 .md-sidebar--primary .md-nav__link--active::before{
   content: none !important;
 }
 
-/* Draw bars only for active trail (excluding current page) and current page */
+/* Re-assert bars for parent trail + current page (same geometry as V10) */
 .md-sidebar--primary .md-nav__item--active > .md-nav__link:not([aria-current="page"])::before,
 .md-sidebar--primary .md-nav__link[aria-current="page"]::before{
-  content: "";
+  content: "" !important;
   position: absolute;
-  left: 8px;
-  width: 3px;
   top: 50%;
   height: 17.568px;
   transform: translateY(-50%);
-  border-radius: 999px;
+  left: 8px;
+  width: 3px;
   background: var(--fs-accent);
-  opacity: 1;
+  border-radius: 2px;
+  pointer-events: none;
 }
+
+
 
 /* ==========================================================================
-   V13 (rev3) Patch
-   Why:
-   - Home lost the bar because some pages mark current link with .md-nav__link--active (no aria-current).
-   - StarAI Arm gap grew because theme/index variants can inject extra padding that our older rules didn't override.
-   Fix:
-   - Force a constant gutter on primary nav links (a + label) with strong specificity + !important.
-   - Draw current bar on .md-nav__link--active and/or [aria-current="page"].
-   - Draw ancestor bars on .md-nav__item--active, excluding the current link to avoid double bars.
+   V13 rev4 - Primary nav active bar alignment
+   Fixes:
+   1) Restore Home active bar
+   2) Keep the bar-to-text gap consistent for nested items (e.g. StarAI Arm)
+   3) Keep parent trail bar as single bar (no double bars)
    ========================================================================== */
 
-/* 1) Constant gutter for ALL primary nav links (including index links) */
-.md-sidebar--primary a.md-nav__link,
-.md-sidebar--primary label.md-nav__link,
-.md-sidebar--primary a.md-nav__link.md-nav__link--index{
-  padding-left: 18px !important;
-  padding-inline-start: 18px !important;
-  box-sizing: border-box;
-  position: relative; /* anchor for bar */
+:root{
+  /* Primary nav geometry (Material default indent step is ~16px) */
+  --fs-nav-bar-w: 3px;
+  --fs-nav-bar-h: 17.568px;
+
+  /* text start (padding-left) by depth */
+  --fs-nav-l1: 18px;
+  --fs-nav-l2: 34px;
+  --fs-nav-l3: 50px;
+
+  /* bar position by depth (keeps ~7px gap to text) */
+  --fs-nav-bar-l1: 8px;
+  --fs-nav-bar-l2: 24px;
+  --fs-nav-bar-l3: 40px;
 }
 
-/* 2) Current page: text state (keep your V10 look) */
-.md-sidebar--primary .md-nav__link--active,
-.md-sidebar--primary .md-nav__link[aria-current="page"],
-.md-sidebar--primary .md-nav__item--active > .md-nav__link{
+/* Ensure links/labels can host the bar */
+.md-sidebar--primary :is(a,label).md-nav__link{
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Normalize indentation by depth so same-level items always align */
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link{
+  padding-left: var(--fs-nav-l1) !important;
+}
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link{
+  padding-left: var(--fs-nav-l2) !important;
+}
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link{
+  padding-left: var(--fs-nav-l3) !important;
+}
+
+/* Helper: what counts as "active trail" in MkDocs Material (varies a bit by page type) */
+.md-sidebar--primary :is(a,label).md-nav__link--active,
+.md-sidebar--primary :is(a,label).md-nav__link[aria-current],
+.md-sidebar--primary .md-nav__item--active > :is(a,label).md-nav__link{
   color: var(--fs-accent) !important;
   font-weight: 600 !important;
-  padding-left: 18px !important;
-  padding-inline-start: 18px !important;
 }
 
-/* 3) Draw current bar (works for Home and any page that uses --active) */
-.md-sidebar--primary a.md-nav__link.md-nav__link--active::before,
-.md-sidebar--primary a.md-nav__link[aria-current="page"]::before,
-.md-sidebar--primary label.md-nav__link.md-nav__link--active::before,
-.md-sidebar--primary label.md-nav__link[aria-current="page"]::before{
+/* --- Active bar: level 1 --- */
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--active > :is(a,label).md-nav__link::before,
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link--active::before,
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link[aria-current]::before{
   content: "";
   position: absolute;
   top: 50%;
-  height: 17.568px;
+  height: var(--fs-nav-bar-h);
   transform: translateY(-50%);
-  left: 8px;
-  width: 3px;
+  left: var(--fs-nav-bar-l1) !important;
+  width: var(--fs-nav-bar-w) !important;
   background: var(--fs-accent);
   border-radius: 2px;
   pointer-events: none;
 }
 
-/* 4) Draw ancestor bars (exclude current link to prevent double bars) */
-.md-sidebar--primary .md-nav__item--active > a.md-nav__link:not(.md-nav__link--active):not([aria-current="page"])::before,
-.md-sidebar--primary .md-nav__item--active > label.md-nav__link:not(.md-nav__link--active):not([aria-current="page"])::before{
+/* --- Active bar: level 2 --- */
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item--active > :is(a,label).md-nav__link::before,
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link--active::before,
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link[aria-current]::before{
   content: "";
   position: absolute;
   top: 50%;
-  height: 17.568px;
+  height: var(--fs-nav-bar-h);
   transform: translateY(-50%);
-  left: 8px;
-  width: 3px;
+  left: var(--fs-nav-bar-l2) !important;
+  width: var(--fs-nav-bar-w) !important;
   background: var(--fs-accent);
   border-radius: 2px;
   pointer-events: none;
+}
+
+/* --- Active bar: level 3 --- */
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item--active > :is(a,label).md-nav__link::before,
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link--active::before,
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > .md-nav > .md-nav__list > .md-nav__item > :is(a,label).md-nav__link[aria-current]::before{
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: var(--fs-nav-bar-h);
+  transform: translateY(-50%);
+  left: var(--fs-nav-bar-l3) !important;
+  width: var(--fs-nav-bar-w) !important;
+  background: var(--fs-accent);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Safety: never draw the bar on the nav section title row */
+.md-sidebar--primary .md-nav__title::before{
+  content: none !important;
 }
