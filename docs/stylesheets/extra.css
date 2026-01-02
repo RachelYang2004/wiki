@@ -1,13 +1,12 @@
 /* ==========================================================================
-   Fashion Star Wiki - 绝对对齐锁定版
-   字号: 12px | 高度: 1.5rem | 边框: 2px (全行统一)
+   Fashion Star Wiki - 工业级稳定版 (1.5rem 高度 + 绝对对齐修复)
    ========================================================================== */
 
 :root {
   --fs-accent: #8641A9;
   --md-primary-fg-color: var(--fs-accent);
   --md-typeset-line-height: 1.8; 
-  --md-typeset-font-size: 0.75rem;
+  --md-typeset-font-size: 0.75rem; /* 12px */
 }
 
 /* --- 1. 深色模式重构 (Gemini #131314) --- */
@@ -29,7 +28,81 @@
   width: 1.1rem;
 }
 
-/* --- 3. 左侧导航栏精修 (锁定 12px / 绝对对齐) --- */
+/* --- 3. 左侧导航栏精修 (锁定 1.5rem / 绝对对齐) --- */
 
-/* 物理遮蔽所有多余图标 */
-.md-nav__
+/* 物理隐藏所有多余图标 */
+.md-nav__icon--index,
+.md-nav__icon--toc,
+.md-nav__link .md-icon:not(.md-nav__icon),
+[for*="__toc"] .md-nav__icon { 
+  display: none !important; 
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.md-nav__link { 
+  /* 【关键对齐修复】所有行预留 2px 透明边框，锁定左边距 */
+  padding: 0.2rem 12px !important;    
+  border-left: 2px solid transparent !important; 
+  margin-left: 0 !important;          
+  
+  line-height: 1.25 !important;       
+  font-size: 0.75rem !important;      /* 12px */
+  color: var(--md-default-fg-color) !important; 
+  min-height: 1.5rem;                 /* 您要求的行间距 */
+  display: flex !important;
+  align-items: center;                
+  background-color: transparent !important;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+/* 【关键视觉恢复】激活项样式：紫色文字 + 600 加粗 + 2px 紫色细条 */
+.md-nav__item--active > .md-nav__link {
+  color: var(--fs-accent) !important;      
+  font-weight: 600 !important;         /* 找回加粗 */
+  border-left-color: var(--fs-accent) !important; /* 找回 2px 细条 */
+  padding-left: 12px !important;      /* 保持间距不变，解决位移 */
+}
+
+/* 强制消除父级目录的蓝色 */
+.md-nav__link--active { color: var(--md-default-fg-color) !important; }
+.md-nav__item--active > .md-nav__link { color: var(--fs-accent) !important; }
+
+/* 悬停效果：紫色可见 */
+.md-nav__link:hover {
+  color: var(--fs-accent) !important;
+  background-color: transparent !important;
+}
+
+/* 保留展开箭头 */
+.md-nav__item .md-nav__icon { 
+  display: block !important; 
+  color: currentColor !important; 
+  opacity: 0.8;
+}
+
+.md-nav__item .md-nav { border-left: none !important; margin-left: 0.5rem !important; }
+
+/* --- 4. 正文布局与全局消蓝 --- */
+.md-content__inner { 
+  max-width: 58rem !important; 
+  margin: 0 auto !important; 
+  padding: 0.5rem 3rem 3rem 3rem !important; 
+}
+
+.md-content__nav a { color: #8e918f !important; text-decoration: none !important; }
+.md-content__nav a:hover { color: var(--fs-accent) !important; }
+.md-typeset h1 { color: var(--fs-accent); font-weight: 800; margin-top: 0; }
+.md-typeset a { color: var(--fs-accent); }
+
+/* On this page 标题美化 */
+.md-nav--secondary .md-nav__title { font-size: 0 !important; }
+.md-nav--secondary .md-nav__title::after {
+  content: "On this page";
+  font-size: 0.65rem;
+  visibility: visible;
+  letter-spacing: 0.02em;
+  color: #8e918f;
+  display: block;
+}
