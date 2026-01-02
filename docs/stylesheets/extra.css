@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Fashion Star Wiki - V14.2 (V14 + active bar follows link height)
+   Fashion Star Wiki - V14.3 (V14.2 + tighter TOC + hide mobile logo)
    Fix: primary-nav active purple bar stretches to link height (single-line ~19.8px)
    Brand accent: #8641A9 | Dark bg: #131314
    ========================================================================== */
@@ -288,4 +288,68 @@
 /* Ensure the clickable row height matches the bar height target */
 .md-sidebar--primary .md-nav__link{
   min-height: 19.8px !important;
+}
+
+/* ==========================================================================
+   V14.3 tweaks
+   1) Right TOC: tighter line spacing for long TOCs
+   2) Mobile drawer: hide logo icon, keep only site title, reduce title bar height
+   ========================================================================== */
+
+/* 1) Right TOC spacing (desktop) */
+@media screen and (min-width: 60em){
+  /* remove extra vertical whitespace between items */
+  .md-sidebar--secondary .md-nav--secondary .md-nav__list,
+  .md-sidebar--secondary .md-nav--secondary .md-nav__item{
+    margin: 0 !important;
+  }
+
+  /* make each line more compact */
+  .md-sidebar--secondary .md-nav--secondary .md-nav__link{
+    line-height: 1.12 !important;
+    padding: 0.06rem 0 !important;
+  }
+
+  /* nested items: same compactness, keep indent */
+  .md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav{
+    padding-left: 12px !important;
+  }
+  .md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav .md-nav__link{
+    line-height: 1.12 !important;
+    padding: 0.06rem 0 !important;
+  }
+}
+
+/* 2) Mobile: hide logo icon in header & drawer title; shrink the purple title area */
+@media screen and (max-width: 59.9375em){
+  /* header logo button */
+  .md-header__button.md-logo,
+  .md-header__button.md-logo img,
+  .md-header__button.md-logo svg{
+    display: none !important;
+  }
+
+  /* drawer (left sidebar) title area often contains the logo */
+  .md-sidebar--primary .md-nav__title .md-logo,
+  .md-sidebar--primary .md-nav__title .md-nav__button.md-logo,
+  .md-sidebar--primary .md-nav__title .md-nav__button.md-logo img,
+  .md-sidebar--primary .md-nav__title .md-nav__button.md-logo svg{
+    display: none !important;
+  }
+
+  /* reduce the drawer title bar height/padding */
+  .md-sidebar--primary .md-nav__title{
+    padding: 0.6rem 0.8rem !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+  }
+
+  /* keep title text only */
+  .md-sidebar--primary .md-nav__title,
+  .md-sidebar--primary .md-nav__title a,
+  .md-sidebar--primary .md-nav__title span{
+    line-height: 1.2 !important;
+  }
 }
