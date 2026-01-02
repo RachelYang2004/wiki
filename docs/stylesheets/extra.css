@@ -86,13 +86,43 @@
   }
 }
 
-/* Remove any left "active" bars / guide lines (minimal look) */
-.md-nav__item--active > .md-nav__link{
-  border-left: none !important;
-  padding-left: inherit !important;
-  margin-left: 0 !important;
+/* NVIDIA-like active trail indicator (2px brand bar on current item + ancestors) */
+.md-sidebar--primary .md-nav__link{
+  position: relative; /* anchor for the bar */
 }
-.md-nav__item .md-nav{
+
+/* Keep active text normal (NOT brand-colored) */
+.md-sidebar--primary .md-nav__link--active,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link,
+.md-sidebar--primary .md-nav__link[aria-current="page"]{
+  color: var(--md-default-fg-color) !important;
+  font-weight: 600 !important;
+}
+
+/* 2px brand bar on active trail */
+.md-sidebar--primary .md-nav__link--active::before,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link::before,
+.md-sidebar--primary .md-nav__link[aria-current="page"]::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.18rem;
+  bottom: 0.18rem;
+  width: 2px;
+  background: var(--fs-accent);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Add a little padding so text doesn't touch the bar */
+.md-sidebar--primary .md-nav__link--active,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link,
+.md-sidebar--primary .md-nav__link[aria-current="page"]{
+  padding-left: 14px !important;
+}
+
+/* Keep nested nav clean (no extra guide lines) */
+.md-sidebar--primary .md-nav__item .md-nav{
   border-left: none !important;
 }
 
