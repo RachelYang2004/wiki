@@ -498,4 +498,40 @@
     max-width: 48px;
   }
 }
+/* ==========================================================================
+   V14.8 - Fix: Only show ONE palette icon (sun/moon) depending on scheme
+   ========================================================================== */
 
+/* Material renders one button per palette option. We hide the "other" one based on current scheme. */
+[data-md-color-scheme="default"] .md-header__button[for="__palette_1"],
+[data-md-color-scheme="default"] .md-header__button[for="__palette_2"]{
+  display: none !important;
+}
+[data-md-color-scheme="slate"] .md-header__button[for="__palette_0"]{
+  display: none !important;
+}
+
+/* ==========================================================================
+   V14.8 - Fix: Drawer section title back icon should not overlap the title text
+   ========================================================================== */
+
+@media screen and (max-width: 59.999em){
+  .md-sidebar--primary .md-nav__title{
+    position: relative !important;
+    padding-left: 48px !important;  /* reserve room for the back icon */
+    line-height: 1.2 !important;
+  }
+
+  .md-sidebar--primary .md-nav__title .md-nav__icon{
+    position: absolute !important;
+    left: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+  }
+
+  .md-sidebar--primary .md-nav__title .md-ellipsis{
+    display: block !important;
+    line-height: 1.2 !important;
+  }
+}
