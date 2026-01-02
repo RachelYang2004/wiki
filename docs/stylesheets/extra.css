@@ -7,6 +7,8 @@
 :root{
   --fs-accent: #8641A9;
 
+  --fs-divider: rgba(0,0,0,0.12);
+
   --md-primary-fg-color: var(--fs-accent);
   --md-accent-fg-color: var(--fs-accent);
   --md-accent-fg-color--transparent: rgba(134, 65, 169, 0.12);
@@ -18,6 +20,7 @@
 
 /* Dark scheme */
 [data-md-color-scheme="slate"]{
+  --fs-divider: rgba(255,255,255,0.10);
   --md-default-bg-color: #131314;
   --md-default-bg-color--light: #1e1f20;
   --md-default-fg-color: #e3e3e3;
@@ -36,13 +39,38 @@
 }
 
 /* Keep layout stable: DO NOT force .md-main__inner to flex/grid */
-.md-sidebar--primary{
-  border-right: 1px solid rgba(255,255,255,0.08) !important;
-}
+
+/* Divider that won't get "covered" after JS hydration */
+.md-sidebar--primary,
 .md-sidebar--secondary{
-  border-left: 1px solid rgba(255,255,255,0.08) !important;
+  position: relative !important;
+  z-index: 3 !important;
+  background: var(--md-default-bg-color) !important;
+}
+
+/* Ensure the content column can't visually sit on top of the dividers */
+.md-main__inner{
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Use inset shadows on the scroll wrapper (more reliable than borders) */
+.md-sidebar--primary{
+  border-right: none !important;
+}
+.md-sidebar--primary .md-sidebar__scrollwrap{
+  box-shadow: inset -1px 0 0 var(--fs-divider) !important;
+}
+
+.md-sidebar--secondary{
+  border-left: none !important;
   margin-left: 0 !important;
 }
+.md-sidebar--secondary .md-sidebar__scrollwrap{
+  box-shadow: inset 1px 0 0 var(--fs-divider) !important;
+}
+
+
 
 /* Ensure the right TOC sidebar remains visible on desktop */
 @media screen and (min-width: 60em){
