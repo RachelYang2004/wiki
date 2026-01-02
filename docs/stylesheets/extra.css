@@ -1,16 +1,16 @@
 /* ==========================================================================
-   Fashion Star Wiki - 完美对齐修正版
-   高度: 1.5rem | 字号: 12px | 边框: 2px (占位对齐)
+   Fashion Star Wiki - 工业级稳定版 (终极消蓝与悬停修复)
+   锁定 12px / 600加粗 / 2px紫色线 / 1.7rem高度
    ========================================================================== */
 
 :root {
   --fs-accent: #8641A9;
   --md-primary-fg-color: var(--fs-accent);
   --md-typeset-line-height: 1.8; 
-  --md-typeset-font-size: 0.75rem;
+  --md-typeset-font-size: 0.75rem; /* 锁定 12px */
 }
 
-/* --- 1. 深色模式重构 (Gemini #131314) --- */
+/* --- 1. 深色模式基础 (Gemini #131314) --- */
 [data-md-color-scheme="slate"] {
   --md-default-bg-color: #131314;
   --md-default-bg-color--light: #1e1f20;
@@ -29,9 +29,9 @@
   width: 1.1rem;
 }
 
-/* --- 3. 左侧导航栏精修 (锁定 12px / 对齐修复) --- */
+/* --- 3. 左侧导航栏精修 --- */
 
-/* 物理遮蔽所有多余图标 */
+/* 【物理遮蔽】彻底抹除索引图标和TOC图标，确保侧边栏只有文字和箭头 */
 .md-nav__icon--index,
 .md-nav__icon--toc,
 .md-nav__link .md-icon:not(.md-nav__icon),
@@ -43,36 +43,36 @@
 }
 
 .md-nav__link { 
-  padding: 0.2rem 12px !important;    /* 统一左右间距 */
+  padding: 0.35rem 0.8rem !important; 
   line-height: 1.25 !important;       
   font-size: 0.75rem !important;      /* 锁定 12px */
   color: var(--md-default-fg-color) !important; 
-  min-height: 1.5rem;                 /* 您要求的 1.5rem 高度 */
+  min-height: 1.5rem;                 /* 锁定高度：约 27px */
   display: flex !important;
   align-items: center;                
   background-color: transparent !important;
-  /* 【关键修复】预留 2px 透明边框作为占位符，防止文字抖动偏移 */
-  border-left: 2px solid transparent !important; 
 }
 
-/* 激活项样式：仅改变边框颜色，不改变物理位置 */
+/* 悬停效果：修复浅色模式下文字不可见的问题 */
+.md-nav__link:hover {
+  color: var(--fs-accent) !important; /* 悬停时变为品牌紫 */
+  background-color: transparent !important;
+}
+
+/* 激活项样式：锁定紫色、600加粗、2px紫色竖杠 */
 .md-nav__item--active > .md-nav__link {
   color: var(--fs-accent) !important;      
   font-weight: 600 !important;         /* 锁定 600 加粗 */
-  border-left-color: var(--fs-accent) !important; /* 激活时边框显色 */
+  border-left: 2px solid var(--fs-accent) !important; /* 锁定 2px 紫色线 */
+  padding-left: 11px !important;      
+  margin-left: -1px;
 }
 
 /* 强制消除父级目录的蓝色 */
 .md-nav__link--active { color: var(--md-default-fg-color) !important; }
 .md-nav__item--active > .md-nav__link { color: var(--fs-accent) !important; }
 
-/* 悬停效果：紫色高亮 */
-.md-nav__link:hover {
-  color: var(--fs-accent) !important;
-  background-color: transparent !important;
-}
-
-/* 仅保留文件夹的展开箭头 */
+/* 仅保留展开箭头，并确保其在紫色背景或深色模式下清晰 */
 .md-nav__item .md-nav__icon { 
   display: block !important; 
   color: currentColor !important; 
@@ -81,7 +81,7 @@
 
 .md-nav__item .md-nav { border-left: none !important; margin-left: 0.5rem !important; }
 
-/* --- 4. 正文布局与全局消蓝 --- */
+/* --- 4. 正文布局与全站消蓝 --- */
 .md-content__inner { 
   max-width: 58rem !important; 
   margin: 0 auto !important; 
