@@ -1,14 +1,9 @@
+<!-- tech-moon.svg (原创，适合做深浅色切换图标) -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-  <!-- Crescent moon matching the reference (pointed tips), color follows currentColor -->
   <path fill="currentColor" fill-rule="evenodd" d="
-    M 22 12
-    A 11 11 0 1 0 0 12
-    A 11 11 0 1 0 22 12
+    M14.9 2.3
+    A9.7 9.7 0 1 0 21.7 17.8
+    A8.0 8.0 0 1 1 14.9 2.3
     Z
-
-    M 24 12
-    A 8.2 8.2 0 1 1 7.6 12
-    A 8.2 8.2 0 1 1 24 12
-    Z
-  "/>
+  " clip-rule="evenodd"/>
 </svg>
