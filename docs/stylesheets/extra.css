@@ -97,3 +97,27 @@
 .md-typeset a{
   color: var(--fs-accent);
 }
+/* ==========================================================================
+   Right TOC (secondary sidebar) - compact + 10px text
+   ========================================================================== */
+.md-sidebar--secondary .md-nav--secondary .md-nav__title{
+  font-size: 10px !important;
+  margin-bottom: 0.35rem !important;
+}
+
+.md-sidebar--secondary .md-nav--secondary .md-nav__list{
+  margin-top: 0 !important;
+  padding-left: 0 !important;
+}
+
+.md-sidebar--secondary .md-nav--secondary .md-nav__link{
+  font-size: 10px !important;
+  line-height: 1.28 !important;
+  padding: 0.18rem 0 !important;
+}
+
+/* Indented (deeper) TOC items slightly smaller */
+.md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav .md-nav__link{
+  font-size: 9px !important;
+  padding: 0.14rem 0 !important;
+}
