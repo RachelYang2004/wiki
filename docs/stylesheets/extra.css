@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Fashion Star Wiki - 工业级稳定版 (修复浅色悬停可见性)
+   Fashion Star Wiki - 工业级稳定版 (底层逻辑优化版)
    12px / 600加粗 / 2px竖线 / 彻底消蓝
    ========================================================================== */
 
@@ -7,7 +7,7 @@
   --fs-accent: #8641A9;
   --md-primary-fg-color: var(--fs-accent);
   --md-typeset-line-height: 1.8; 
-  --md-typeset-font-size: 0.75rem; /* 12px 基础字号 */
+  --md-typeset-font-size: 0.75rem; /* 锁定 12px */
 }
 
 /* --- 1. 深色模式基础 (Gemini #131314) --- */
@@ -31,18 +31,26 @@
 
 /* --- 3. 左侧导航栏精修 (锁定 12px / 600 / 2px) --- */
 
-/* 抹除冗余的“三横杠”索引图标 */
-.md-nav__link .md-nav__icon--index,
-.md-nav__link .md-nav__icon--toc { display: none !important; width: 0 !important; }
+/* 【物理绝缘】彻底抹除所有非箭头类的图标，无论底层逻辑如何生成 */
+.md-nav__icon--index,
+.md-nav__icon--toc,
+.md-nav__link .md-icon,
+[for*="__toc"] .md-nav__icon { 
+  display: none !important; 
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+}
 
 .md-nav__link { 
   padding: 0.35rem 0.8rem !important; 
   line-height: 1.25 !important;       
   font-size: 0.75rem !important;      /* 锁定 12px */
   color: var(--md-default-fg-color) !important; 
-  min-height: 1.7rem;                 
+  min-height: 1.7rem;                 /* 竖条高度：27.2px */
   display: flex !important;
   align-items: center;                
+  background-color: transparent !important;
 }
 
 /* 激活项样式：锁定紫色、600加粗、2px紫色竖杠 */
@@ -58,10 +66,18 @@
 .md-nav__link--active { color: var(--md-default-fg-color) !important; }
 .md-nav__item--active > .md-nav__link { color: var(--fs-accent) !important; }
 
-.md-nav__item .md-nav { border-left: none !important; margin-left: 0.5rem !important; }
-.md-nav__link .md-nav__icon { color: #ffffff !important; opacity: 0.8; display: block !important; }
+/* 仅允许文件夹的展开箭头显示（锁定为白色） */
+.md-nav__item .md-nav__icon { 
+  display: block !important; 
+  color: #ffffff !important; 
+  opacity: 0.8;
+  width: auto !important;
+  height: auto !important;
+}
 
-/* 【关键修复】悬停效果：使用紫色确保在浅色模式下可见 */
+.md-nav__item .md-nav { border-left: none !important; margin-left: 0.5rem !important; }
+
+/* 悬停效果：紫色高亮 */
 .md-nav__link:hover {
   color: var(--fs-accent) !important;
   background-color: transparent !important;
