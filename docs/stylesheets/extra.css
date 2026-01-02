@@ -302,3 +302,10 @@ font-weight: 600 !important;
   left: 8px !important;
   width: 3px !important;
 }
+
+/* Right TOC active item: brand color + bold */
+.md-sidebar--secondary .md-nav--secondary .md-nav__item--active > .md-nav__link,
+.md-sidebar--secondary .md-nav--secondary .md-nav__link--active{
+  color: var(--fs-accent) !important;
+  font-weight: 600 !important;
+}
