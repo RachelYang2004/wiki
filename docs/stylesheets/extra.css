@@ -194,7 +194,7 @@
   padding: 0.06rem 0 !important;
 }
 .md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav{
-  padding-left: 6px !important;
+  padding-left: 0px !important;
   margin-left: 0 !important;
 }
 .md-sidebar--secondary .md-nav--secondary .md-nav__item .md-nav .md-nav__link{
