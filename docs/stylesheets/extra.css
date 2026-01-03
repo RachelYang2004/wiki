@@ -421,13 +421,13 @@
 /* ==========================================================================
    V18.4 patch - content/TOC typography colors
    Requirements:
-   - Left nav text color: dark #C4C7C5, light #1A1A1A
+   - Left nav text color: dark #C4C7C5, light #444746
    - Content + right TOC text color (including headings): dark #E3E3E3, light #1F1F1F
    - Keep links in brand accent; remove brand accent from headings/TOC active color
    ========================================================================== */
 
 :root{
-  --fs-leftnav-fg: #1A1A1A;   /* light scheme */
+  --fs-leftnav-fg: #444746;   /* light scheme */
   --fs-content-fg: #1F1F1F;   /* light scheme */
   --fs-toc-fg: #1F1F1F;       /* light scheme */
 }
