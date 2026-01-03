@@ -440,7 +440,7 @@
     /* Sidebar inner padding (distance from divider to content). */
     --fs-sidebar-pad: 1rem;
     /* Reserve enough space for the chevron so text never overlaps it. */
-    --fs-chevron-reserve: 2.4rem;
+    --fs-chevron-reserve: 1rem;
   }
 
   .md-sidebar--primary,
