@@ -362,3 +362,34 @@
 .md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__container{
   padding-left: 18px !important;
 }
+
+
+/* ==========================================================================
+   Font size tweaks (user request)
+   - Left sidebar nav: 16px
+   - Right TOC: 12.8px
+   ========================================================================== */
+
+/* Left sidebar (primary) */
+.md-sidebar--primary .md-nav__title,
+.md-sidebar--primary .md-nav__link,
+.md-sidebar--primary .md-nav__item .md-nav__link,
+.md-sidebar--primary .md-nav__link.md-nav__container{
+  font-size: 16px !important;
+}
+
+/* Right sidebar TOC (secondary) */
+.md-sidebar--secondary,
+.md-sidebar--secondary .md-sidebar__scrollwrap,
+.md-sidebar--secondary .md-sidebar__inner,
+.md-sidebar--secondary .md-nav--secondary .md-nav__link{
+  font-size: 12.8px !important;
+}
+
+/* If the TOC title uses a pseudo-element for "On this page", keep it consistent */
+.md-sidebar--secondary .md-nav--secondary .md-nav__title::before{
+  font-size: 12.8px !important;
+}
+.md-sidebar--secondary .md-nav--secondary .md-nav__title::after{
+  font-size: 12.8px !important;
+}
