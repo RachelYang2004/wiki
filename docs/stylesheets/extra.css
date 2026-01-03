@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Fashion Star Wiki - V18.1 (Stable)
+   Fashion Star Wiki - V18.4 (Stable)
    Base: V15.1 stable overrides + tuned desktop container width + font tweaks
    Current targets (desktop >= 60em):
    - Total container max-width: 1380px  (≈ 242 + 896 + 242)
@@ -388,6 +388,16 @@
   color: var(--fs-leftnav-fg) !important;
 }
 
+/* Left sidebar active item keeps brand accent */
+.md-sidebar--primary .md-nav__link--active,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link,
+.md-sidebar--primary .md-nav__link[aria-current="page"],
+.md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__container{
+  color: var(--fs-accent) !important;
+  font-weight: 600 !important;
+}
+
+
 /* Remove 1st-level chevrons in the left primary nav (since level-2 is always expanded) */
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link > .md-nav__icon,
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link > .md-nav__icon{
@@ -398,4 +408,59 @@
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link,
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link{
   padding-right: 16px !important;
+}
+
+/* ==========================================================================
+   V18.4 patch - content/TOC typography colors
+   Requirements:
+   - Left nav text color: dark #C4C7C5, light #1A1A1A
+   - Content + right TOC text color (including headings): dark #E3E3E3, light #1F1F1F
+   - Keep links in brand accent; remove brand accent from headings/TOC active color
+   ========================================================================== */
+
+:root{
+  --fs-leftnav-fg: #1A1A1A;   /* light scheme */
+  --fs-content-fg: #1F1F1F;   /* light scheme */
+  --fs-toc-fg: #1F1F1F;       /* light scheme */
+}
+
+[data-md-color-scheme="slate"]{
+  --fs-leftnav-fg: #C4C7C5;   /* dark scheme */
+  --fs-content-fg: #E3E3E3;   /* dark scheme */
+  --fs-toc-fg: #E3E3E3;       /* dark scheme */
+}
+
+/* Left sidebar base text color (keep existing active/hover behavior) */
+.md-sidebar--primary .md-nav__title,
+.md-sidebar--primary .md-nav__link{
+  color: var(--fs-leftnav-fg) !important;
+}
+
+/* Content body + headings (stop forcing brand accent on headings) */
+.md-typeset{
+  color: var(--fs-content-fg) !important;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6{
+  color: var(--fs-content-fg) !important;
+}
+
+/* Right TOC: title + links use the same text color; active uses weight only */
+.md-sidebar--secondary .md-nav--secondary .md-nav__title::before{
+  color: var(--fs-toc-fg) !important;
+}
+
+.md-sidebar--secondary .md-nav--secondary .md-nav__link{
+  color: var(--fs-toc-fg) !important;
+}
+
+.md-sidebar--secondary .md-nav--secondary .md-nav__item--active > .md-nav__link,
+.md-sidebar--secondary .md-nav--secondary .md-nav__link--active{
+  color: var(--fs-toc-fg) !important;
+  font-weight: 600 !important;
 }
