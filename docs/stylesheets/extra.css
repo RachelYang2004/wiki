@@ -655,3 +655,26 @@
     outline-offset: 2px;
   }
 }
+
+
+/* ==========================================================================
+   V18.17 patch — fix double hover background on items that have index.md
+   Reason: Material renders "section with index + children" as .md-nav__container
+           (outer .md-nav__link) wrapping an inner <a/label>. Both were matching
+           .md-nav__link:hover, so the hover background was painted twice.
+   ========================================================================== */
+@media screen and (min-width: 60em){
+  /* Prevent the OUTER container from getting hover background */
+  .md-sidebar--primary .md-nav__link.md-nav__container:hover{
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Apply hover background only to the INNER clickable element */
+  .md-sidebar--primary .md-nav__link.md-nav__container > a.md-nav__link:hover,
+  .md-sidebar--primary .md-nav__link.md-nav__container > label.md-nav__link:hover{
+    background: var(--fs-hover-bg) !important;
+    border-radius: 2px !important;
+    box-shadow: none !important;
+  }
+}
