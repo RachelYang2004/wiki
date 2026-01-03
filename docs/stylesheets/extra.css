@@ -24,7 +24,7 @@
   --md-typeset-font-size: 16px;
   /* Hover (Seeed-like "soft card" highlight) */
   --fs-hover-bg: rgba(0,0,0,0.04);
-  --fs-hover-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  --fs-hover-shadow: none;
 
 }
 /* Dark scheme */
@@ -37,7 +37,7 @@
   --md-code-bg-color: #1e1f20;
 
   --fs-hover-bg: rgba(255,255,255,0.06);
-  --fs-hover-shadow: 0 10px 26px rgba(0,0,0,0.35);
+  --fs-hover-shadow: none;
 }
 
 
@@ -615,7 +615,7 @@
 }
 
 /* ==========================================================================
-   V18.15 - Hover feedback (Seeed-like soft highlight)
+   V18.16 - Hover feedback (Seeed-like soft highlight)
    - No "logo color" on hover; only background + subtle shadow
    - Works only on devices that actually have hover (desktop / trackpad)
    ========================================================================== */
@@ -624,19 +624,19 @@
 
   /* LEFT NAV */
   .md-sidebar--primary .md-nav__link{
-    border-radius: 10px;
+    border-radius: 2px;
     transition: background-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
   }
   .md-sidebar--primary .md-nav__link:hover{
     background: var(--fs-hover-bg) !important;
-    box-shadow: var(--fs-hover-shadow) !important;
+    box-shadow: none !important;
     color: inherit !important;
   }
 
   /* RIGHT TOC */
   .md-sidebar--secondary .md-nav--secondary .md-nav__link{
     display: block;
-    border-radius: 10px;
+    border-radius: 2px;
     transition: background-color 140ms ease, box-shadow 140ms ease;
     /* add hit-area without moving layout (compensate with negative margins) */
     padding: 4px 8px !important;
@@ -644,7 +644,7 @@
   }
   .md-sidebar--secondary .md-nav--secondary .md-nav__link:hover{
     background: var(--fs-hover-bg) !important;
-    box-shadow: var(--fs-hover-shadow) !important;
+    box-shadow: none !important;
     color: inherit !important;
   }
 
