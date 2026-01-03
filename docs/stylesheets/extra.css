@@ -327,7 +327,7 @@
    ========================================================================== */
 @media screen and (min-width: 60em){
   .md-grid{
-    max-width: 1440px !important; /* was ~1220px default */
+    max-width: 1380px !important; /* 242 + 896 + 242 */
   }
 }
 
@@ -339,8 +339,17 @@
 .md-typeset video,
 .md-typeset iframe{
   max-width: 100% !important;
+  height: auto !important;
 }
 
+/* Extra safety: figures/tables should never overflow into the TOC column */
+.md-typeset figure,
+.md-typeset table{
+  max-width: 100% !important;
+}
+.md-typeset__scrollwrap{
+  overflow-x: auto !important;
+}
 /* ==========================================================================
    Fix #1: restore TOC text ↔ divider padding (in case something overrides)
    Fix #2: restore left active bar ↔ title spacing (in case something overrides)
