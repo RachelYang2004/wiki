@@ -353,6 +353,7 @@
   font-weight: 600 !important;
 }
 
+@media screen and (min-width: 60em){
 /* 2) Always show level-2 items (children of the level-1 items) */
 .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--nested > .md-nav{
   display: block !important;
@@ -369,6 +370,9 @@
   display: block !important;
 }
 
+
+
+}
 
 /* ==========================================================================
    V18.3 patch
@@ -398,6 +402,7 @@
 }
 
 
+@media screen and (min-width: 60em){
 /* Remove 1st-level chevrons in the left primary nav (since level-2 is always expanded) */
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link > .md-nav__icon,
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link > .md-nav__icon{
@@ -408,6 +413,9 @@
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link,
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link{
   padding-right: 16px !important;
+}
+
+
 }
 
 /* ==========================================================================
