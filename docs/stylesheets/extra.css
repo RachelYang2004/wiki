@@ -582,3 +582,27 @@
 .md-typeset h6{
   font-weight: 700 !important;
 }
+
+/* ======================================================================
+   V18.14 patch - restore LEFT NAV active trail color (logo accent)
+   Fixes:
+   1) When a child page (e.g., "Get Ready") is selected, its parents (e.g., "Piper Mate")
+      must also show accent color.
+   Cause:
+   - Later base-color rules re-applied left-nav colors with !important,
+     overriding the earlier active selectors.
+   ====================================================================== */
+
+/* Make current page + active ancestors use accent (applies to both link and container wrappers) */
+.md-sidebar--primary .md-nav__link[aria-current="page"],
+.md-sidebar--primary .md-nav__link[aria-current="page"] > a.md-nav__link,
+.md-sidebar--primary .md-nav__link--active,
+.md-sidebar--primary .md-nav__link--active > a.md-nav__link,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link,
+.md-sidebar--primary .md-nav__item--active > label.md-nav__link,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__container,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__container > a.md-nav__link,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__container > label.md-nav__link{
+  color: var(--fs-accent) !important;
+  font-weight: 600 !important;
+}
