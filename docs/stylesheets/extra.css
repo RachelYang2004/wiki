@@ -320,3 +320,49 @@
     padding-left: 16px !important;
   }
 }
+
+
+/* ==========================================================================
+   Layout width tuning patch (based on V15.1)
+   Goal:
+   - Keep BOTH sidebars at 242px (your measured harmonious width)
+   - Expand the middle content column to ~1080px when the viewport allows
+   Notes:
+   - On viewports narrower than (242 + 1080 + 242) = 1564px, the layout will
+     gracefully shrink; content width becomes (available grid width - 484px).
+   ========================================================================== */
+
+:root{
+  /* Measured “good looking” sidebar width on your V15.1 screenshots */
+  --fs-sidebar-w: 242px;
+
+  /* Target middle column width (when viewport is wide enough) */
+  --fs-content-w: 1080px;
+
+  /* Total container max-width = 242 + 1080 + 242 = 1564px */
+  --fs-grid-max: calc(var(--fs-sidebar-w) * 2 + var(--fs-content-w));
+}
+
+@media screen and (min-width: 60em){
+
+  /* 1) Let the whole 3-column grid expand (capped) instead of being stuck at ~1220px */
+  .md-grid{
+    max-width: var(--fs-grid-max) !important;
+  }
+
+  /* 2) Lock sidebar widths in the “Material-native” way (variables), with fallback */
+  :root{
+    --md-sidebar-width: var(--fs-sidebar-w);
+    --md-sidebar-width--small: var(--fs-sidebar-w);
+  }
+  .md-sidebar--primary,
+  .md-sidebar--secondary{
+    width: var(--fs-sidebar-w) !important; /* fallback, should match the vars */
+  }
+
+  /* 3) Ensure the content column can actually use its full width */
+  .md-content__inner{
+    max-width: none !important;
+    width: 100% !important;
+  }
+}
