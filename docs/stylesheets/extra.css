@@ -733,3 +733,65 @@
     margin: 0 !important;
   }
 }
+
+
+
+/* ==========================================================================
+   V18.19 patch - Left nav hover/background should cover chevron + fix nested row spacing
+   - In MkDocs Material, a nested section with index.md renders as: <a> + <label> (toggle).
+     We make the LI a flex row so link + toggle sit on one line,
+     then apply hover/active background to BOTH pieces.
+   ========================================================================== */
+
+@media screen and (min-width: 60em){
+
+  /* Put the link + toggle chevron in one flex row, and keep the nested list below */
+  .md-sidebar--primary .md-nav__item--nested{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+  }
+  .md-sidebar--primary .md-nav__item--nested > a.md-nav__link{
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  .md-sidebar--primary .md-nav__item--nested > label.md-nav__link{
+    flex: 0 0 auto !important;
+  }
+  .md-sidebar--primary .md-nav__item--nested > .md-nav{
+    width: 100% !important;
+  }
+
+  /* Normalize row height/padding across ALL levels (prevents Piper Mate/StarAI Arm looking “taller”) */
+  .md-sidebar--primary .md-nav__link{
+    padding-top: 0.18rem !important;
+    padding-bottom: 0.18rem !important;
+  }
+
+  /* Hover background: simple, flat rectangle (no shadow) */
+  .md-sidebar--primary .md-nav__item:hover > a.md-nav__link,
+  .md-sidebar--primary .md-nav__item:hover > label.md-nav__link{
+    background: var(--fs-hover-bg) !important;
+  }
+
+  /* Make the hover background look like ONE block across link+chevron */
+  .md-sidebar--primary .md-nav__item--nested:hover > a.md-nav__link{
+    border-radius: 2px 0 0 2px !important;
+  }
+  .md-sidebar--primary .md-nav__item--nested:hover > label.md-nav__link{
+    border-radius: 0 2px 2px 0 !important;
+  }
+  /* Non-nested items: normal small radius rectangle */
+  .md-sidebar--primary .md-nav__item:not(.md-nav__item--nested):hover > .md-nav__link{
+    border-radius: 2px !important;
+  }
+
+  /* Ensure the toggle label doesn't shrink and stays aligned to the right */
+  .md-sidebar--primary .md-nav__item--nested > label.md-nav__link{
+    padding-left: 6px !important;
+    padding-right: 10px !important;
+  }
+  .md-sidebar--primary .md-nav__item--nested > a.md-nav__link{
+    padding-right: 8px !important;
+  }
+}
