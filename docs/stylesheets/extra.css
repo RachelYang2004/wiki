@@ -22,8 +22,11 @@
   --md-typeset-a-color: var(--fs-accent);
   --md-typeset-line-height: 1.6;
   --md-typeset-font-size: 16px;
-}
+  /* Hover (Seeed-like "soft card" highlight) */
+  --fs-hover-bg: rgba(0,0,0,0.04);
+  --fs-hover-shadow: 0 8px 20px rgba(0,0,0,0.08);
 
+}
 /* Dark scheme */
 [data-md-color-scheme="slate"]{
   --fs-divider: rgba(255,255,255,0.10);
@@ -32,7 +35,11 @@
   --md-default-fg-color: #e3e3e3;
   --md-default-fg-color--light: #8e918f;
   --md-code-bg-color: #1e1f20;
+
+  --fs-hover-bg: rgba(255,255,255,0.06);
+  --fs-hover-shadow: 0 10px 26px rgba(0,0,0,0.35);
 }
+
 
 /* Header */
 .md-header{
@@ -605,4 +612,46 @@
 .md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__container > label.md-nav__link{
   color: var(--fs-accent) !important;
   font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   V18.15 - Hover feedback (Seeed-like soft highlight)
+   - No "logo color" on hover; only background + subtle shadow
+   - Works only on devices that actually have hover (desktop / trackpad)
+   ========================================================================== */
+
+@media (hover: hover) and (pointer: fine){
+
+  /* LEFT NAV */
+  .md-sidebar--primary .md-nav__link{
+    border-radius: 10px;
+    transition: background-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+  }
+  .md-sidebar--primary .md-nav__link:hover{
+    background: var(--fs-hover-bg) !important;
+    box-shadow: var(--fs-hover-shadow) !important;
+    color: inherit !important;
+  }
+
+  /* RIGHT TOC */
+  .md-sidebar--secondary .md-nav--secondary .md-nav__link{
+    display: block;
+    border-radius: 10px;
+    transition: background-color 140ms ease, box-shadow 140ms ease;
+    /* add hit-area without moving layout (compensate with negative margins) */
+    padding: 4px 8px !important;
+    margin: 0 -8px !important;
+  }
+  .md-sidebar--secondary .md-nav--secondary .md-nav__link:hover{
+    background: var(--fs-hover-bg) !important;
+    box-shadow: var(--fs-hover-shadow) !important;
+    color: inherit !important;
+  }
+
+  /* Keyboard focus (optional but nice) */
+  .md-sidebar--primary .md-nav__link:focus-visible,
+  .md-sidebar--secondary .md-nav--secondary .md-nav__link:focus-visible{
+    outline: 2px solid rgba(134, 65, 169, 0.35);
+    outline-offset: 2px;
+  }
 }
