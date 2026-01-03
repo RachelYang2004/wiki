@@ -533,3 +533,47 @@
     background: var(--fs-toc-hover-bg) !important;
   }
 }
+
+
+
+/* ==========================================================================
+   V18.4.3 patch - Fix hover/active background overlap for items that have index.md
+   (Material renders a wrapper: .md-nav__link.md-nav__container containing <a> + <label>)
+   Goal: ONE background spanning the whole row (including chevron), no double blocks.
+   ========================================================================== */
+@media screen and (min-width: 60em){
+  /* Make the container a real flex row so it owns the full-width hover background */
+  .md-sidebar--primary .md-nav__link.md-nav__container{
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+  }
+  /* Let the text link take remaining space; keep icon label at the right */
+  .md-sidebar--primary .md-nav__link.md-nav__container > a.md-nav__link{
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  .md-sidebar--primary .md-nav__link.md-nav__container > label.md-nav__link{
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding: 0 !important; /* container already has padding */
+  }
+
+  /* Background should be applied ONLY once: on the container */
+  .md-sidebar--primary .md-nav__link.md-nav__container:hover{
+    background: var(--fs-nav-hover-bg-strong) !important;
+  }
+  .md-sidebar--primary .md-nav__link.md-nav__container > a.md-nav__link:hover,
+  .md-sidebar--primary .md-nav__link.md-nav__container > label.md-nav__link:hover{
+    background: transparent !important;
+  }
+
+  /* Same idea for keyboard focus */
+  .md-sidebar--primary .md-nav__link.md-nav__container:focus-within{
+    background: var(--fs-nav-hover-bg-strong) !important;
+  }
+  .md-sidebar--primary .md-nav__link.md-nav__container > a.md-nav__link:focus,
+  .md-sidebar--primary .md-nav__link.md-nav__container > label.md-nav__link:focus{
+    background: transparent !important;
+  }
+}
