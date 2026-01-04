@@ -1541,3 +1541,28 @@ Fashion Star Wiki - V20.0 (Stable Base)
   font-size: 13px !important;      /* Inline Code in table */
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+/* ==========================================================================
+   V20.0 patch - nav.indexes active chain should also be LOGO color
+   Covers active <a>, active <label>, and active container wrappers
+   NOTE: keep this at the very end of the file to win specificity/order.
+   ========================================================================== */
+
+:root { --fs-accent: #8641A9; }
+
+/* Make sure the active chain text (including index-promoted parents) is purple */
+.md-sidebar--primary .md-nav__link[aria-current="page"],
+.md-sidebar--primary a.md-nav__link--active,
+.md-sidebar--primary li.md-nav__item--active > a.md-nav__link,
+.md-sidebar--primary li.md-nav__item--active > label.md-nav__link,
+.md-sidebar--primary li.md-nav__item--active > .md-nav__link.md-nav__container {
+  color: var(--fs-accent) !important;
+}
+
+/* Material often renders the visible text inside .md-ellipsis; force it to inherit */
+.md-sidebar--primary .md-nav__link[aria-current="page"] .md-ellipsis,
+.md-sidebar--primary a.md-nav__link--active .md-ellipsis,
+.md-sidebar--primary li.md-nav__item--active > a.md-nav__link .md-ellipsis,
+.md-sidebar--primary li.md-nav__item--active > label.md-nav__link .md-ellipsis,
+.md-sidebar--primary li.md-nav__item--active > .md-nav__link.md-nav__container .md-ellipsis {
+  color: inherit !important;
+}
