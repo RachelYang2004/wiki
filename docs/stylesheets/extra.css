@@ -466,7 +466,7 @@
 
 .md-sidebar--secondary .md-nav--secondary .md-nav__item--active > .md-nav__link,
 .md-sidebar--secondary .md-nav--secondary .md-nav__link--active{
-  color: var(--fs-toc-fg) !important;
+  color: var(--fs-accent) !important;
   font-weight: 600 !important;
 }
 
@@ -601,5 +601,24 @@
   .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link > .md-nav__icon,
   .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link > .md-nav__icon{
     display: inline-flex !important;
+  }
+}
+
+/* ==========================================================================
+   V18.4.5 hotfix - TOC active item must be BRAND color
+   - Some Material builds use aria-current on the TOC link (instead of md-nav__link--active)
+   - Keep hover NOT using brand color; only active should be brand color
+   ========================================================================== */
+
+@media screen and (min-width: 60em){
+  /* Highest specificity against theme defaults */
+  .md-sidebar--secondary [data-md-component="toc"] .md-nav__link--active,
+  .md-sidebar--secondary [data-md-component="toc"] .md-nav__item--active > .md-nav__link,
+  .md-sidebar--secondary [data-md-component="toc"] .md-nav__link[aria-current],
+  .md-sidebar--secondary .md-nav--secondary .md-nav__link[aria-current="true"],
+  .md-sidebar--secondary .md-nav--secondary .md-nav__link[aria-current="location"],
+  .md-sidebar--secondary .md-nav--secondary .md-nav__link[aria-current="page"]{
+    color: var(--fs-accent) !important;
+    font-weight: 600 !important;
   }
 }
