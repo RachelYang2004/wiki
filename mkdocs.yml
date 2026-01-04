@@ -66,8 +66,14 @@ nav:
           - HP6/RP6-U15H-M: uart_bus_servo/specifications/HP_RP6_U15H_M.md
           - RP6-U18H-M: uart_bus_servo/specifications/RP6_U18H_M.md
           - HA8/RA8-U25(H)-M: uart_bus_servo/specifications/HA_RA8_U25_H_M.md
+          - HX8/RX8-U28H-M: uart_bus_servo/specifications/HX_RX8_U28H_M.md
+          - HX8/RX8-U29H-M: uart_bus_servo/specifications/HX_RX8_U29H_M.md
           - HA8/RA8-U35(H)-M: uart_bus_servo/specifications/HA_RA8_U35_H_M.md
           - HA8/RA8-U45(H)-M: uart_bus_servo/specifications/HA_RA8_U45_H_M.md
+          - HX8/RX8-U50H-M: uart_bus_servo/specifications/HX_RX8_U50H_M.md
+          - HX8/RX8-U51H-M: uart_bus_servo/specifications/HX_RX8_U51H_M.md
+          - RX18-U100H-M: uart_bus_servo/specifications/RX18_U100H_M.md
+          - RX18-U101H-M: uart_bus_servo/specifications/RX18_U101H_M.md
       - CAD Files:
           - STEP/DWG/PDF: uart_bus_servo/cad_files/cad_files.md
       - Software:
