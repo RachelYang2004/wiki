@@ -59,19 +59,30 @@ plugins:
 nav:
   - Home: index.md
   - Bus Servo:
-      - Protocol: bus_servo/protocols/uart_rs_485_protocol.md
+      - Protocol: uart_bus_servo/protocols/uart_rs_485_protocol.md
       - Specifications:
-          - HA8/RA8-U25H-M: bus_servo/specifications/HA_RA8_U25_H_M.md
-          - HA8/RA8-U35(H)-M: bus_servo/specifications/HA_RA8_U35(H)_M.md
+          - RP6-U12H-M: uart_bus_servo/specifications/RP6_U12H_M.md
+          - RX6-U12H-M: uart_bus_servo/specifications/RX6_U12H_M.md
+          - HP6/RP6-U15H-M: uart_bus_servo/specifications/HP_RP6_U15H_M.md
+          - RP6-U18H-M: uart_bus_servo/specifications/RP6_U18H_M.md
+          - HA8/RA8-U25(H)-M: uart_bus_servo/specifications/HA_RA8_U25_H_M.md
+          - HX8/RX8-U28H-M: uart_bus_servo/specifications/HX_RX8_U28H_M.md
+          - HX8/RX8-U29H-M: uart_bus_servo/specifications/HX_RX8_U29H_M.md
+          - HA8/RA8-U35(H)-M: uart_bus_servo/specifications/HA_RA8_U35_H_M.md
+          - HA8/RA8-U45(H)-M: uart_bus_servo/specifications/HA_RA8_U45_H_M.md
+          - HX8/RX8-U50H-M: uart_bus_servo/specifications/HX_RX8_U50H_M.md
+          - HX8/RX8-U51H-M: uart_bus_servo/specifications/HX_RX8_U51H_M.md
+          - RX18-U100H-M: uart_bus_servo/specifications/RX18_U100H_M.md
+          - RX18-U101H-M: uart_bus_servo/specifications/RX18_U101H_M.md
       - CAD Files:
-          - STEP/DWG/PDF: bus_servo/cad_files/cad_files.md
+          - STEP/DWG/PDF: uart_bus_servo/cad_files/cad_files.md
       - Software:
-          - Configuration Tools: bus_servo/software/pc_configuration_ser_manual.md
+          - Configuration Tools: uart_bus_servo/software/pc_configuration_ser_manual.md
       - SDK:
           - PLC: 
-              - Sinamens: bus_servo/software/pc_configuration_ser_manual.md
-              - Codesys: bus_servo/cad_files/cad_files.md
-          - Stm: bus_servo/software/pc_configuration_ser_manual.md
+              - Sinamics: uart_bus_servo/sdk/plc/sinamics_tia_portal_v19.md
+              - Codesys: uart_bus_servo/sdk/plc/codesys.md
+          - stm32f103: uart_bus_servo/sdk/stm32f103_sdk.md
   - Robotic Arm:
       - StarAI Arm:
           - robotic_arm/piper_mate/index.md
