@@ -637,3 +637,39 @@
   font-weight: 700 !important;
 }
 
+
+/* ========================================================================== 
+   GitHub-style callouts (Typora/GitHub alerts) 
+   - Supports: NOTE / TIP / IMPORTANT / WARNING / CAUTION 
+   - NOTE, TIP, WARNING, DANGER are styled by MkDocs Material.
+   - IMPORTANT is a custom admonition type we style here.
+   ========================================================================== */
+
+:root {
+  --fs-callout-important: #a371f7; /* GitHub purple */
+}
+
+/* IMPORTANT (custom type) */
+.md-typeset .admonition.important,
+.md-typeset details.important {
+  border-left-color: var(--fs-callout-important) !important;
+}
+
+.md-typeset .important > .admonition-title,
+.md-typeset details.important > summary {
+  background-color: rgba(163, 113, 247, 0.12) !important;
+  border-bottom-color: rgba(163, 113, 247, 0.25) !important;
+}
+
+.md-typeset .important > .admonition-title,
+.md-typeset details.important > summary,
+.md-typeset .important > .admonition-title::before,
+.md-typeset details.important > summary::before {
+  color: var(--fs-callout-important) !important;
+}
+
+/* Keep the body neutral; only give a very soft tint */
+.md-typeset .admonition.important,
+.md-typeset details.important {
+  background-color: rgba(163, 113, 247, 0.04) !important;
+}

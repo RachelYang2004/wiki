@@ -23,13 +23,18 @@ from __future__ import annotations
 import re
 from typing import List, Optional
 
-# Map GitHub alert type -> Material admonition type
+# Map GitHub alert type -> MkDocs Material admonition type.
+#
+# NOTE/TIP/WARNING are built-in in Material.
+# GitHub's CAUTION is closer to Material's "danger" (red) than "warning" (orange).
+# IMPORTANT is kept as a custom type so we can style it as purple without
+# affecting any third-party docs that may use "info"/"success".
 TYPE_MAP = {
-    "NOTE": "note",
-    "TIP": "tip",
-    "IMPORTANT": "important",
-    "WARNING": "warning",
-    "CAUTION": "caution",  # keep distinct from WARNING
+    "NOTE": ("note", None),
+    "TIP": ("tip", None),
+    "IMPORTANT": ("important", "Important"),
+    "WARNING": ("warning", None),
+    "CAUTION": ("danger", "Caution"),
 }
 
 # Start of a GitHub alert blockquote
@@ -90,7 +95,10 @@ def on_page_markdown(markdown: str, *, page, config, files) -> str:
 
         gh_type = m.group(1)
         title = m.group(2) or ""
-        adm_type = TYPE_MAP.get(gh_type, "note")
+
+        adm_type, default_title = TYPE_MAP.get(gh_type, ("note", None))
+        if (not title.strip()) and default_title:
+            title = default_title
 
         # Consume the full blockquote for this alert (marker line included)
         block, next_i = _consume_blockquote(lines, i)
