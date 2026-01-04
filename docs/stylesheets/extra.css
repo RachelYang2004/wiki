@@ -1484,3 +1484,32 @@
 .md-typeset .md-typeset__scrollwrap {
   overflow-x: auto;
 }
+
+/* ============================================================
+   V19.8 - Table typography (per spec)
+   - Body text inside tables: 14px (0.875rem)
+   - Header text: 14px + bold (700)
+   - Inline code inside tables: 13px (0.8125rem) monospace
+   Scope: markdown tables only (.md-typeset table:not([class]))
+   ============================================================ */
+
+.md-typeset table:not([class]){
+  font-size: 0.875rem;
+}
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td{
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.md-typeset table:not([class]) thead th{
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.md-typeset table:not([class]) th code,
+.md-typeset table:not([class]) td code{
+  font-size: 0.8125rem;
+  font-family: var(--md-code-font-family, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+}
