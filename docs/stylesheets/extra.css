@@ -1,7 +1,7 @@
 /* ==========================================================================
-   Fashion Star Wiki - V18.4 (Stable)
+   Fashion Star Wiki - V18.4.4 (Desktop expanded, Mobile native)
    Base: V15.1 stable overrides + tuned desktop container width + font tweaks
-   Current targets (desktop >= 60em):
+   Current targets (desktop >= 60em) / mobile uses native drawer logic:
    - Total container max-width: 1380px  (≈ 242 + 896 + 242)
    - Left nav font: 16px
    - Right TOC font (ALL levels + title): 12.8px
@@ -353,20 +353,23 @@
   font-weight: 600 !important;
 }
 
-/* 2) Always show level-2 items (children of the level-1 items) */
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--nested > .md-nav{
-  display: block !important;
-  height: auto !important;
-  max-height: none !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-}
+/* 2) Always show level-2 items (DESKTOP only) */
+@media screen and (min-width: 60em){
+  /* 2) Always show level-2 items (children of the level-1 items) */
+  .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--nested > .md-nav{
+    display: block !important;
+    height: auto !important;
+    max-height: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
 
-/* Some Material versions animate/collapse via the sibling selector:
-   input ~ .md-nav / input:checked ~ .md-nav. Force open in both states. */
-.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--nested > input ~ .md-nav{
-  display: block !important;
+  /* Some Material versions animate/collapse via the sibling selector:
+     input ~ .md-nav / input:checked ~ .md-nav. Force open in both states. */
+  .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--nested > input ~ .md-nav{
+    display: block !important;
+  }
 }
 
 
@@ -398,16 +401,18 @@
 }
 
 
-/* Remove 1st-level chevrons in the left primary nav (since level-2 is always expanded) */
-.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link > .md-nav__icon,
-.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link > .md-nav__icon{
-  display: none !important;
-}
+@media screen and (min-width: 60em){
+  /* Remove 1st-level chevrons in the left primary nav (since level-2 is always expanded) */
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link > .md-nav__icon,
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link > .md-nav__icon{
+    display: none !important;
+  }
 
-/* Avoid reserving extra space for the removed icon */
-.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link,
-.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link{
-  padding-right: 16px !important;
+  /* Avoid reserving extra space for the removed icon */
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link,
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link{
+    padding-right: 16px !important;
+  }
 }
 
 /* ==========================================================================
@@ -575,5 +580,26 @@
   .md-sidebar--primary .md-nav__link.md-nav__container > a.md-nav__link:focus,
   .md-sidebar--primary .md-nav__link.md-nav__container > label.md-nav__link:focus{
     background: transparent !important;
+  }
+}
+
+/* ==========================================================================
+   V18.4.4 - Mobile drawer logic safety
+   Goal: Keep DESKTOP nav always-expanded + no level-1 chevrons,
+         but let MOBILE/iPad drawer use Material's native collapse/expand logic.
+   (The forced-open + chevron-hiding rules are desktop-only above.)
+   ========================================================================== */
+@media screen and (max-width: 59.9375em){
+  /* Ensure nested nav follows the built-in checkbox/animation behavior */
+  .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--nested > .md-nav{
+    display: none;
+  }
+  .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--nested > input:checked ~ .md-nav{
+    display: block;
+  }
+  /* Restore level-1 chevrons in the drawer (desktop hides them) */
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > label.md-nav__link > .md-nav__icon,
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item > a.md-nav__link > .md-nav__icon{
+    display: inline-flex !important;
   }
 }
