@@ -1631,3 +1631,81 @@ Fashion Star Wiki - V20.0 (Stable Base)
   color: var(--fs-accent, #8641A9);
   font-weight: 600;
 }
+
+
+/* =========================
+   V20.4 – Fix nav active-path + stop sibling bolding
+   - Only the current page + its ancestors are bold + logo color + left bar
+   - Siblings (same level) stay normal weight/color
+   - Keep hover as background-only (no logo color on hover)
+   ========================= */
+
+/* Brand variable (safe even if already defined) */
+:root{
+  --fs-logo: #8641A9;
+}
+
+/* 1) Reset any over-broad bold rules in primary nav */
+.md-nav--primary .md-nav__item > :is(a.md-nav__link, label.md-nav__link){
+  font-weight: 400 !important;
+  color: var(--md-default-fg-color) !important;
+}
+
+/* Level-1 (top of left nav) stays bold (Home/Bus Servo/Robotic Arm...) */
+.md-nav--primary > .md-nav__list > .md-nav__item > :is(a.md-nav__link, label.md-nav__link){
+  font-weight: 700 !important;
+}
+
+/* 2) Active page + ancestors: bold + logo color */
+.md-nav--primary .md-nav__item--active > :is(a.md-nav__link, label.md-nav__link),
+.md-nav--primary .md-nav__link--active{
+  font-weight: 700 !important;
+  color: var(--fs-logo) !important;
+}
+
+/* 3) Left logo bar only for active page + ancestors */
+.md-nav--primary .md-nav__item--active > :is(a.md-nav__link, label.md-nav__link),
+.md-nav--primary .md-nav__link--active{
+  position: relative;
+}
+
+.md-nav--primary .md-nav__item--active > :is(a.md-nav__link, label.md-nav__link)::before,
+.md-nav--primary .md-nav__link--active::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .35rem;
+  bottom: .35rem;
+  width: 4px;
+  background: var(--fs-logo);
+  border-radius: 2px;
+  opacity: 1;
+}
+
+/* 4) Hover: keep background/shape only, never force logo color on hover */
+.md-nav--primary .md-nav__item:not(.md-nav__item--active) > :is(a.md-nav__link, label.md-nav__link):hover{
+  color: var(--md-default-fg-color) !important;
+}
+
+/* 5) Mobile header title: ensure current page title is visible (no empty bar) */
+@media (max-width: 76.1875em){
+  .md-header__title{
+    display: flex !important;
+    align-items: center;
+    min-width: 0;
+  }
+  .md-header__title .md-header__topic{
+    display: none !important;
+  }
+  .md-header__title .md-header__topic--active{
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    max-width: 100%;
+  }
+  .md-header__title .md-header__topic--active .md-ellipsis{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
