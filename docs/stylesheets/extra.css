@@ -107,6 +107,15 @@ Fashion Star Wiki - V20.0 (Stable Base)
   font-weight: 600 !important;
 }
 
+
+/* Active trail color for sections rendered via navigation.indexes (index.md containers)
+   When a child page is active, the parent section may be "active" on the <li>,
+   while the clickable index link lives INSIDE .md-nav__container. */
+.md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__container > a.md-nav__link,
+.md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__container > label.md-nav__link{
+  color: var(--fs-accent) !important;
+  font-weight: 600 !important;
+}
 /* Primary nav gutter (reserve space for the bar; keep sibling alignment) */
 .md-sidebar--primary .md-nav__link,
 .md-sidebar--primary .md-nav__item .md-nav__link,
