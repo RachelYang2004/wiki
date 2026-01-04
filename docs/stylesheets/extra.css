@@ -1513,3 +1513,32 @@
   font-size: 0.8125rem;
   font-family: var(--md-code-font-family, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
 }
+
+
+
+/* =========================
+   V19.8.1 HOTFIX — Table typography (force px sizes)
+   Reason: previous rem-based sizes inherit a larger root font-size on some breakpoints,
+   resulting in ~17.5px instead of the intended 14px.
+   ========================= */
+.md-typeset table:not([class]),
+.md-typeset .md-typeset__table > table:not([class]),
+.md-typeset .md-typeset__scrollwrap > table:not([class]) {
+  font-size: 14px !important;      /* Table Body */
+  line-height: 1.45;
+}
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  font-size: 14px !important;      /* keep header/body aligned */
+}
+
+.md-typeset table:not([class]) thead th {
+  font-weight: 700 !important;     /* Table Header bold */
+}
+
+.md-typeset table:not([class]) th code,
+.md-typeset table:not([class]) td code {
+  font-size: 13px !important;      /* Inline Code in table */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
