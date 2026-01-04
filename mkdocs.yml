@@ -59,19 +59,19 @@ plugins:
 nav:
   - Home: index.md
   - Bus Servo:
-      - Protocol: bus_servo/protocols/uart_rs_485_protocol.md
+      - Protocol: uart_bus_servo/protocols/uart_rs_485_protocol.md
       - Specifications:
-          - HA8/RA8-U25H-M: bus_servo/specifications/HA_RA8_U25_H_M.md
-          - HA8/RA8-U35(H)-M: bus_servo/specifications/HA_RA8_U35(H)_M.md
+          - HA8/RA8-U25H-M: uart_bus_servo/specifications/HA_RA8_U25_H_M.md
+          - HA8/RA8-U35(H)-M: uart_bus_servo/specifications/HA_RA8_U35(H)_M.md
       - CAD Files:
-          - STEP/DWG/PDF: bus_servo/cad_files/cad_files.md
+          - STEP/DWG/PDF: uart_bus_servo/cad_files/cad_files.md
       - Software:
-          - Configuration Tools: bus_servo/software/pc_configuration_ser_manual.md
+          - Configuration Tools: uart_bus_servo/software/pc_configuration_ser_manual.md
       - SDK:
           - PLC: 
-              - Sinamens: bus_servo/software/pc_configuration_ser_manual.md
-              - Codesys: bus_servo/cad_files/cad_files.md
-          - Stm: bus_servo/software/pc_configuration_ser_manual.md
+              - Sinamens: uart_bus_servo/software/pc_configuration_ser_manual.md
+              - Codesys: uart_bus_servo/cad_files/cad_files.md
+          - Stm: uart_bus_servo/software/pc_configuration_ser_manual.md
   - Robotic Arm:
       - StarAI Arm:
           - robotic_arm/piper_mate/index.md
