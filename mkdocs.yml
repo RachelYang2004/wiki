@@ -103,7 +103,6 @@ nav:
       - Document: uart_bus_servo/documents/uc01_insrtuction_manual.md    
   - Robotic Arm:
       - StarAI Arm:
-          - robotic_arm/piper_mate/index.md
           - Quick Start: robotic_arm/starai_arm/index.md
       - Piper Mate:
           - robotic_arm/piper_mate/index.md
