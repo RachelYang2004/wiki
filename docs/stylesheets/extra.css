@@ -1345,3 +1345,72 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+
+
+/* ============================================================
+   V19.3 + Table polish (Seeed-ish, minimal side-effects)
+   - Only affects markdown tables inside content (.md-typeset)
+   - Keep headings/colors/layout untouched
+   ============================================================ */
+
+/* Ensure tables can scroll on small screens without breaking layout */
+.md-typeset__table{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Core table look */
+.md-typeset table:not([class]){
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--fs-divider);
+  border-radius: 2px;              /* more squared, more “tech” */
+  background: transparent;
+}
+
+/* Cell borders: avoid missing right edge */
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td{
+  padding: 12px 16px;
+  border-right: 1px solid var(--fs-divider);
+  border-bottom: 1px solid var(--fs-divider);
+  vertical-align: top;
+}
+
+/* Remove outer duplicate borders */
+.md-typeset table:not([class]) tr:last-child td{
+  border-bottom: 0;
+}
+.md-typeset table:not([class]) th:last-child,
+.md-typeset table:not([class]) td:last-child{
+  border-right: 0;
+}
+
+/* Header row */
+.md-typeset table:not([class]) thead th{
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Subtle zebra for readability (but not too “web2.0”) */
+.md-typeset table:not([class]) tbody tr:nth-child(2n) td{
+  background: rgba(0,0,0,0.02);
+}
+
+/* Scheme-specific tweaks */
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) thead th{
+  background: rgba(255,255,255,0.04);
+}
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tbody tr:nth-child(2n) td{
+  background: rgba(255,255,255,0.03);
+}
+[data-md-color-scheme="default"] .md-typeset table:not([class]) thead th{
+  background: rgba(0,0,0,0.03);
+}
+
+/* Keep long values readable */
+.md-typeset table:not([class]) td{
+  word-break: break-word;
+}
