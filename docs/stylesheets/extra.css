@@ -1726,3 +1726,27 @@ Fashion Star Wiki - V21.0 (Stable Base)
   transform: translateY(-50%);
   margin: 0 !important;
 }
+
+
+
+/* ===========================
+   V23.8 – Primary section chevron alignment (mobile + desktop)
+   Problem: top-level (index/section) rows used a smaller right padding, so the
+   chevron column didn't line up with nested rows on mobile.
+   Fix: reserve the same icon gutter as nested rows and anchor the icon to it.
+   =========================== */
+
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--section > label.md-nav__link,
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--section > a.md-nav__link {
+  position: relative;
+  padding-right: 2.4rem !important; /* match nested rows */
+}
+
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--section > label.md-nav__link span.md-nav__icon,
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--section > a.md-nav__link span.md-nav__icon {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 !important;
+}
