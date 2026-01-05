@@ -287,12 +287,14 @@ Fashion Star Wiki - V21.0 (Stable Base)
     line-height: 1.15 !important;
     padding: 0 !important;
   }
-  /* Keep only site name line */
-  .md-header__topic + .md-header__topic{
-    display: none !important;
-  }
 
-  /* Drawer title row: reserve space for back arrow so it never overlaps text */
+/* Respect Material's header topic toggling (prevents blank title on scroll) */
+.md-header__topic[hidden],
+.md-header__topic[aria-hidden="true"]{
+  display: none !important;
+}
+  /* Header: show site title at top, page title after scroll (Material default) */
+/* Drawer title row: reserve space for back arrow so it never overlaps text */
   .md-sidebar--primary .md-nav__title{
     position: relative !important;
     display: flex !important;
