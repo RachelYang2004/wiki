@@ -1682,3 +1682,38 @@ Fashion Star Wiki - V21.0 (Stable Base)
     fill: currentColor;
   }
 }
+
+/* ===================== V23.15 (B) — Desktop L1 chevrons restore (no width squeeze) ===================== */
+/* Goal:
+   1) Show expand chevrons for 1st-level (desktop) again
+   2) Align L1 chevrons with child chevrons
+   3) Avoid big padding-right like 2.2rem that forces extra wrapping
+*/
+@media screen and (min-width: 60em){
+  /* Re-enable chevrons (overrides earlier "display:none" rules) */
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > label.md-nav__link > .md-nav__icon,
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > a.md-nav__link > .md-nav__icon{
+    display: inline-flex !important;
+  }
+
+  /* Use a consistent flex layout so the chevron sits at the same right edge across levels */
+  .md-sidebar--primary nav.md-nav--primary .md-nav__item--nested > label.md-nav__link,
+  .md-sidebar--primary nav.md-nav--primary .md-nav__item--nested > a.md-nav__link{
+    display: flex !important;
+    align-items: center;
+    gap: .35rem;
+    padding-right: 16px !important; /* minimal, avoids squeezing titles */
+  }
+
+  .md-sidebar--primary nav.md-nav--primary .md-nav__item--nested > label.md-nav__link > .md-ellipsis,
+  .md-sidebar--primary nav.md-nav--primary .md-nav__item--nested > a.md-nav__link > .md-ellipsis{
+    flex: 1 1 auto;
+    min-width: 0; /* enable ellipsis and prevent weird wrapping */
+  }
+
+  .md-sidebar--primary nav.md-nav--primary .md-nav__item--nested > label.md-nav__link > .md-nav__icon,
+  .md-sidebar--primary nav.md-nav--primary .md-nav__item--nested > a.md-nav__link > .md-nav__icon{
+    margin-left: auto;
+    flex: 0 0 auto;
+  }
+}
