@@ -1647,3 +1647,10 @@ Fashion Star Wiki - V21.0 (Stable Base)
 .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item--nested > input:checked ~ .md-nav{
   display: block !important;
 }
+
+/* Mobile drawer header title contrast (light mode only) */
+@media (max-width: 59.9375em) {
+  [data-md-color-scheme="default"] .md-nav--primary .md-nav__title[for="__drawer"] {
+    color: #fff !important;
+  }
+}
