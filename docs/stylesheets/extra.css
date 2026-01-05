@@ -1713,3 +1713,35 @@ Fashion Star Wiki - V21.0 (Stable Base)
     margin: 0;
   }
 }
+
+/* ========================================================================== 
+   V23.13 (desktop sidebar)
+   Fix: Level-1 chevrons + chevron alignment
+   - Restore chevrons for level-1 nested items (some earlier rules hid them)
+   - Align level-1 chevrons with child-level chevrons (same right edge)
+   ========================================================================== */
+
+@media screen and (min-width: 60em) {
+  /* Make nav links full-width & reserve space for chevrons */
+  .md-sidebar--primary nav.md-nav--primary .md-nav__link,
+  .md-sidebar--primary nav.md-nav--primary label.md-nav__link {
+    display: block;
+    position: relative;
+    padding-right: 2.6rem !important; /* space for the chevron */
+  }
+
+  /* Force chevrons visible (override earlier "display:none") */
+  .md-sidebar--primary nav.md-nav--primary .md-nav__icon {
+    display: inline-flex !important;
+  }
+
+  /* Pin chevrons to the same right edge for all levels */
+  .md-sidebar--primary nav.md-nav--primary .md-nav__link .md-nav__icon,
+  .md-sidebar--primary nav.md-nav--primary label.md-nav__link .md-nav__icon {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 !important;
+  }
+}
