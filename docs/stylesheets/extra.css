@@ -1684,27 +1684,32 @@ Fashion Star Wiki - V21.0 (Stable Base)
 }
 
 
-/* ============================
-   V23.5 Arrow Restore + Align (Desktop)
-   - Restore 1st-level section chevrons (previously hidden)
-   - Align chevrons with child-level chevrons (right edge)
-   - Desktop only (keep mobile untouched)
-   ============================ */
-@media screen and (min-width: 60em) {
-  /* Restore chevrons for 1st-level expandable sections */
-  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--section > label.md-nav__link > .md-nav__icon,
-  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--section > a.md-nav__link > .md-nav__icon {
+/* =========================
+   V23.12: Restore 1st-level chevrons (desktop) + align with child chevrons
+   Reason: V18.3 patch removed top-level .md-nav__icon and reduced padding-right.
+   Scope: Desktop only (>= 60em). Mobile unaffected.
+   ========================= */
+@media screen and (min-width: 60em){
+  /* Re-enable chevrons ONLY for 1st-level items that actually have children */
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > label.md-nav__link > .md-nav__icon,
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > a.md-nav__link > .md-nav__icon{
     display: inline-flex !important;
-    margin-left: auto; /* push to the right in flex layouts */
   }
 
-  /* Make 1st-level section links behave like other nav rows so the icon sits at the same right position */
-  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--section > label.md-nav__link,
-  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--section > a.md-nav__link {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    /* match typical MkDocs Material nav padding on the right */
-    padding-right: 1.2rem !important;
+  /* Ensure the link reserves space for the chevron and provides a stable alignment target */
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > label.md-nav__link,
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > a.md-nav__link{
+    position: relative;
+    padding-right: 2.2rem !important; /* matches the visual right gutter used by nested items */
+  }
+
+  /* Align chevron to the same right edge as other levels */
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > label.md-nav__link > .md-nav__icon,
+  .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > a.md-nav__link > .md-nav__icon{
+    position: absolute;
+    right: .6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
   }
 }
