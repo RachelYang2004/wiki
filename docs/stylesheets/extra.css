@@ -1704,3 +1704,25 @@ Fashion Star Wiki - V21.0 (Stable Base)
 .md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > a.md-nav__link{
   justify-content: space-between;
 }
+
+/* ===== v23.7: Align 1st-level chevrons to the same right edge as lower levels =====
+   In some setups, top-level (1st level) chevrons sit slightly left.
+   Force the chevron icon to be positioned at a consistent right offset.
+*/
+
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > label.md-nav__link,
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > a.md-nav__link {
+  position: relative;            /* anchor for absolutely-positioned icon */
+  padding-right: 2.4rem;         /* reserve space so text never overlaps icon */
+}
+
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > label.md-nav__link > .md-nav__icon,
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > a.md-nav__link > .md-nav__icon,
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > label.md-nav__link span.md-nav__icon,
+.md-sidebar--primary nav.md-nav--primary > ul.md-nav__list > li.md-nav__item--nested > a.md-nav__link span.md-nav__icon {
+  position: absolute;
+  right: 0.8rem;                 /* match Material's typical icon gutter */
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 !important;
+}
