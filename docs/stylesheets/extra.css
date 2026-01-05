@@ -1654,3 +1654,31 @@ Fashion Star Wiki - V21.0 (Stable Base)
     color: #fff !important;
   }
 }
+
+
+/* =====================
+   v23.5 node patch
+   - Mobile drawer header title contrast (light mode only)
+   ===================== */
+
+/* v21.3.1 — Mobile drawer “Fashion Star Wiki” title contrast fix (light mode only)
+   Goal: ONLY affect the drawer header title on mobile, keep desktop styles untouched. */
+
+@media screen and (max-width: 76.1875em) {
+  /* Light scheme (default): make drawer header title use the “on-primary” color (same behavior as slate). */
+  [data-md-color-scheme="default"] .md-nav--primary .md-nav__title[for="__drawer"] {
+    color: var(--md-primary-bg-color);
+  }
+
+  /* Title text + icon inside the drawer header */
+  [data-md-color-scheme="default"] .md-nav--primary .md-nav__title[for="__drawer"] a,
+  [data-md-color-scheme="default"] .md-nav--primary .md-nav__title[for="__drawer"] span,
+  [data-md-color-scheme="default"] .md-nav--primary .md-nav__title[for="__drawer"] .md-nav__button {
+    color: var(--md-primary-bg-color);
+  }
+
+  /* Ensure SVG logo/icon follows the same color */
+  [data-md-color-scheme="default"] .md-nav--primary .md-nav__title[for="__drawer"] svg {
+    fill: currentColor;
+  }
+}
