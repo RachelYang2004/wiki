@@ -57,7 +57,7 @@ plugins:
 
 nav:
   - Home: index.md
-  - Bus Servo:
+  - Uart Bus Servo:
       - Protocol: uart_bus_servo/protocols/uart_rs_485_protocol.md
       - Specifications:
           - RP6-U12H-M: uart_bus_servo/specifications/RP6_U12H_M.md
