@@ -4,6 +4,7 @@ site_url: https://wiki.fashionstar.com.hk/
 theme:
   name: material
   language: en
+  favicon: assets/favicon.png
 
   # Theme overrides directory (keep it under /docs so Actions sparse-checkout won't miss it)
   custom_dir: docs/overrides
