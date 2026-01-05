@@ -1,5 +1,5 @@
 site_name: Fashion Star Wiki
-site_url: https://servodevelop.github.io/wiki/
+site_url: https://wiki.fashionstar.com.hk/
 
 theme:
   name: material
@@ -56,7 +56,7 @@ plugins:
   - glightbox
 
 nav:
-  - Home: https://servodevelop.github.io/wiki/index.md
+  - Home: index.md
   - Uart Bus Servo:
       - Protocol: uart_bus_servo/protocols/uart_rs_485_protocol.md
       - Specifications:
