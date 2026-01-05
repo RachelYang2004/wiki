@@ -1570,3 +1570,50 @@ Fashion Star Wiki - V21.0 (Stable Base)
   font-size: 13px !important;      /* Inline Code in table */
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+
+
+/* ===========================
+   V21.1 – Table: prevent word/number breaking
+   Goal:
+   1) Words should not break into multiple lines (except explicit hyphen '-' / soft-hyphen).
+   2) Numbers should not break.
+   Tables are horizontally scrollable on small screens, so overflow is acceptable.
+   =========================== */
+
+/* Baseline: stop the browser from "emergency wrapping" inside words */
+.md-typeset table td,
+.md-typeset table th {
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: manual !important; /* do not auto-hyphenate */
+}
+
+/* Never break tokens commonly used in specs/protocols */
+.md-typeset table code,
+.md-typeset table kbd,
+.md-typeset table samp {
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: manual !important;
+}
+
+/* For common spec tables: keep first columns (names/length/type) on one line.
+   - Works well with horizontal scroll on mobile.
+   - Doesn't affect "Description" column wrapping.
+*/
+.md-typeset table th:nth-child(1),
+.md-typeset table td:nth-child(1),
+.md-typeset table th:nth-child(2),
+.md-typeset table td:nth-child(2),
+.md-typeset table th:nth-child(3),
+.md-typeset table td:nth-child(3) {
+  white-space: nowrap !important;
+}
+
+/* Numbers: discourage line breaks around digits and common separators */
+.md-typeset table td,
+.md-typeset table th {
+  font-variant-numeric: tabular-nums;
+}
+
