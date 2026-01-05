@@ -56,7 +56,7 @@ plugins:
   - glightbox
 
 nav:
-  - Home: index.md
+  - Home: https://servodevelop.github.io/wiki/index.md
   - Uart Bus Servo:
       - Protocol: uart_bus_servo/protocols/uart_rs_485_protocol.md
       - Specifications:
