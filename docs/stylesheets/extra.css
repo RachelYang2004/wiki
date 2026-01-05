@@ -287,12 +287,7 @@ Fashion Star Wiki - V21.0 (Stable Base)
     line-height: 1.15 !important;
     padding: 0 !important;
   }
-  /* Keep only site name line */
-  .md-header__topic + .md-header__topic{
-    display: none !important;
-  }
-
-  /* Drawer title row: reserve space for back arrow so it never overlaps text */
+/* Drawer title row: reserve space for back arrow so it never overlaps text */
   .md-sidebar--primary .md-nav__title{
     position: relative !important;
     display: flex !important;
@@ -926,12 +921,7 @@ Fashion Star Wiki - V21.0 (Stable Base)
     line-height: 1.15 !important;
     padding: 0 !important;
   }
-  /* Keep only site name line */
-  .md-header__topic + .md-header__topic{
-    display: none !important;
-  }
-
-  /* Drawer title row: reserve space for back arrow so it never overlaps text */
+/* Drawer title row: reserve space for back arrow so it never overlaps text */
   .md-sidebar--primary .md-nav__title{
     position: relative !important;
     display: flex !important;
