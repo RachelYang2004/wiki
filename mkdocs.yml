@@ -5,27 +5,18 @@ theme:
   name: material
   language: en
   favicon: assets/favicon.png
-  # 修正：将自定义目录指向 overrides 根目录（通常是 overrides）
-  custom_dir: docs/overrides
-  
-  # 修正：合并为一个 features 列表
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - content.action.edit
-    - content.action.view
-    - i18n                    # 开启多语言功能
-    - navigation.path         # breadcrumb
-    - navigation.indexes      # parent index pages clickable
-    - navigation.top          # back-to-top
-    - navigation.tracking     # sync URL hash
-    - content.code.copy       # copy code button
-    - toc.follow              # right TOC follows scroll
 
-  # 修正：将 alternate 放在 icon 节点下
-  icon:
-    alternate: ""             # 允许插件定义的图标覆盖顶部 Top Bar
-    
+  # Theme overrides directory (keep it under /docs so Actions sparse-checkout won't miss it)
+  custom_dir: docs/overrides
+
+  features:
+    - navigation.path        # breadcrumb
+    - navigation.indexes     # parent index pages clickable
+    - navigation.top         # back-to-top
+    - navigation.tracking    # sync URL hash
+    - content.code.copy      # copy code button
+    - toc.follow             # right TOC follows scroll
+
   palette:
     # light
     - scheme: default
@@ -201,4 +192,3 @@ nav:
           - Quick Start: robotic_arm/starai_arm/quick_start.md
       - Piper Mate:
           - Get Ready: robotic_arm/piper_mate/get_ready.md
-
