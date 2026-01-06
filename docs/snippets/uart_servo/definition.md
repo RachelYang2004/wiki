@@ -14,7 +14,9 @@ Authoring note:
 
 Key points:
 - Operating voltage: 6–8.4 V
+
 - Stall torque: 25 kg·cm (example)
+
 - Absolute encoder: 12-bit
 
 <!--end:model_intro-->
