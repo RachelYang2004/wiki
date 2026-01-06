@@ -62,15 +62,26 @@ plugins:
       default_language: en
       languages:
         - locale: en
-          name: English
+          name: "🇺🇸 English"
           default: true
           build: true
+          icon: material/alpha-e-box
         - locale: es
-          name: Español
+          name: "🇪🇸 Español"
           build: true
+          icon: material/alpha-s-box
+        - locale: de
+          name: "🇩🇪 Deutsch"
+          build: true
+          icon: material/alpha-d-box
+        - locale: fr
+          name: "🇫🇷 Français"
+          build: true
+          icon: material/alpha-f-box
         - locale: ja
-          name: 日本語
+          name: "🇯🇵 日本語"
           build: true
+          icon: material/alpha-j-box
 
 nav:
   - Home: index.md
