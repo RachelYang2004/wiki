@@ -1,2 +1,3 @@
 mkdocs-material
 mkdocs-glightbox  # 新增这一行
+mkdocs-include-markdown-plugin # 增加include-markdown 插件
