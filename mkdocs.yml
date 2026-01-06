@@ -157,8 +157,8 @@ nav:
         - HX8/RX8 C Series: can_servo/cad_files/hx8-rx8-c-series.md
         - HX18 C Series: can_servo/cad_files/hx18-c-series.md
     - Software:
-        - PC Configuration Tool: can_servo/software/pc_servo_configuration_tool.md
-        - Web Configuration Tool: can_servo/software/web_servo_configuration_tool.md
+        - PC Configuration Tool: can_servo/software/pc_configuration_tool.md
+        - Web Configuration Tool: can_servo/software/web_configuration_tool.md
     - SDK:
         - PLC:
             - Sinamics: can_servo/sdk/plc/sinamics_tia_portal_v19.md
