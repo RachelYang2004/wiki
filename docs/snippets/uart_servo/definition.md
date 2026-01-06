@@ -13,10 +13,18 @@ Authoring note:
 ![Torque / Speed curve](images/torque_speed_curve.png)
 
 Key points:
+
 - Operating voltage: 6–8.4 V
+
 - Stall torque: 25 kg·cm (example)
+
 - Absolute encoder: 12-bit
+
 <!--end:model_intro-->
+
+
+
+
 
 <!--start:pinout-->
 ### Pinout (example)
