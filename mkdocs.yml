@@ -43,7 +43,6 @@ extra:
 
 extra_css:
   - stylesheets/extra.css
-  - stylesheets/toc_ab_test.css
 
 markdown_extensions:
   - admonition
