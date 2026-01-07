@@ -1,0 +1,31 @@
+/* ==========================================================================
+   A/B test: restore mobile drawer TOC button (ONLY mobile)
+   Place this file AFTER extra.css in mkdocs.yml (extra_css) so it overrides.
+   ========================================================================== */
+
+@media screen and (max-width: 59.9375em){
+
+  /* Keep title row reserved space for buttons */
+  .md-sidebar--primary .md-nav__title{
+    padding: 0 56px 0 56px !important; /* left+right reserve */
+    position: relative !important;
+  }
+
+  /* Put the drawer/back button on the left */
+  .md-sidebar--primary .md-nav__title .md-nav__button[for="__drawer"]{
+    position: absolute !important;
+    left: 12px !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  /* Put the TOC button on the right */
+  .md-sidebar--primary .md-nav__title .md-nav__button[for="__toc"]{
+    position: absolute !important;
+    right: 12px !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+}
