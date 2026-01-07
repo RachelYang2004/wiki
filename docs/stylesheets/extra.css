@@ -23,6 +23,11 @@ Fashion Star Wiki - V21.0 (Stable Base)
   --md-typeset-font-size: 16px;
 }
 
+
+.md-header__button.md-logo{
+  display: none !important;
+}
+
 /* Dark scheme */
 [data-md-color-scheme="slate"]{
   --fs-divider: rgba(255,255,255,0.10);
@@ -39,10 +44,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
 }
 
 /* Hide the logo button everywhere (you only want “Fashion Star Wiki”) */
-.md-header__button.md-logo{
-  display: none !important;
-}
-
 /* ==========================================================================
    Desktop layout + dividers
    ========================================================================== */
@@ -260,58 +261,7 @@ Fashion Star Wiki - V21.0 (Stable Base)
    Mobile fixes: header title centering + drawer back arrow overlap
    (DO NOT touch palette toggle visibility; let theme handle it)
    ========================================================================== */
-@media screen and (max-width: 59.9375em){
 
-  /* Header height + true vertical centering */
-  .md-header__inner{
-    display: flex !important;
-    align-items: center !important;
-    min-height: 48px !important;
-    padding: 0 12px !important;
-  }
-  .md-header__title{
-    position: static !important;
-    display: flex !important;
-    align-items: center !important;
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    padding: 0 12px !important;
-  }
-  .md-header__ellipsis,
-  .md-header__topic,
-  .md-header__topic .md-ellipsis{
-    display: flex !important;
-    align-items: center !important;
-    height: 100% !important;
-    line-height: 1.15 !important;
-    padding: 0 !important;
-  }
-/* Drawer title row: reserve space for back arrow so it never overlaps text */
-  .md-sidebar--primary .md-nav__title{
-    position: relative !important;
-    display: flex !important;
-    align-items: center !important;
-    min-height: 48px !important;
-    height: 48px !important;
-    box-sizing: border-box !important;
-    padding: 0 16px 0 56px !important; /* left padding reserves back icon */
-  }
-  /* Back button placement */
-  .md-sidebar--primary .md-nav__title .md-nav__button{
-    position: absolute !important;
-    left: 12px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    margin: 0 !important;
-  }
-
-  /* Ensure the title text is centered within its own line box */
-  .md-sidebar--primary .md-nav__title .md-ellipsis{
-    line-height: 1.15 !important;
-    padding: 0 !important;
-  }
-}
 
 /* ==========================================================================
    Mobile: hide logo icon everywhere (keep title only)
@@ -532,7 +482,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
     background: var(--fs-toc-hover-bg) !important;
   }
 }
-
 
 
 /* ==========================================================================
@@ -673,10 +622,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
 }
 
 /* Hide the logo button everywhere (you only want “Fashion Star Wiki”) */
-.md-header__button.md-logo{
-  display: none !important;
-}
-
 /* ==========================================================================
    Desktop layout + dividers
    ========================================================================== */
@@ -894,58 +839,7 @@ Fashion Star Wiki - V21.0 (Stable Base)
    Mobile fixes: header title centering + drawer back arrow overlap
    (DO NOT touch palette toggle visibility; let theme handle it)
    ========================================================================== */
-@media screen and (max-width: 59.9375em){
 
-  /* Header height + true vertical centering */
-  .md-header__inner{
-    display: flex !important;
-    align-items: center !important;
-    min-height: 48px !important;
-    padding: 0 12px !important;
-  }
-  .md-header__title{
-    position: static !important;
-    display: flex !important;
-    align-items: center !important;
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    padding: 0 12px !important;
-  }
-  .md-header__ellipsis,
-  .md-header__topic,
-  .md-header__topic .md-ellipsis{
-    display: flex !important;
-    align-items: center !important;
-    height: 100% !important;
-    line-height: 1.15 !important;
-    padding: 0 !important;
-  }
-/* Drawer title row: reserve space for back arrow so it never overlaps text */
-  .md-sidebar--primary .md-nav__title{
-    position: relative !important;
-    display: flex !important;
-    align-items: center !important;
-    min-height: 48px !important;
-    height: 48px !important;
-    box-sizing: border-box !important;
-    padding: 0 16px 0 56px !important; /* left padding reserves back icon */
-  }
-  /* Back button placement */
-  .md-sidebar--primary .md-nav__title .md-nav__button{
-    position: absolute !important;
-    left: 12px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    margin: 0 !important;
-  }
-
-  /* Ensure the title text is centered within its own line box */
-  .md-sidebar--primary .md-nav__title .md-ellipsis{
-    line-height: 1.15 !important;
-    padding: 0 !important;
-  }
-}
 
 /* ==========================================================================
    Mobile: hide logo icon everywhere (keep title only)
@@ -1166,7 +1060,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
     background: var(--fs-toc-hover-bg) !important;
   }
 }
-
 
 
 /* ==========================================================================
@@ -1336,7 +1229,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
 }
 
 
-
 /* ============================================================
    V19.3 + Table polish (Seeed-ish, minimal side-effects)
    - Only affects markdown tables inside content (.md-typeset)
@@ -1502,7 +1394,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
   font-size: 0.8125rem;
   font-family: var(--md-code-font-family, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
 }
-
 
 
 /* =========================
