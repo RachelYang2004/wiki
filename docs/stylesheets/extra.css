@@ -1722,20 +1722,14 @@ Fashion Star Wiki - V21.0 (Stable Base)
   .md-sidebar--primary .md-nav__link[for="__toc"]{ display:flex !important; }
 
   /* Make the icon feel like a real button (no weird extra text) */
-  
-.md-sidebar--primary label.md-nav__link[for="__toc"]::after{
-    /* Hamburger icon (robust across fonts) */
-    content: "";
-    display: inline-block;
-    width: 20px;
-    height: 2px;
-    background: currentColor;
-    border-radius: 1px;
-    box-shadow: 0 6px 0 currentColor, 0 12px 0 currentColor;
-    margin-left: auto;
-    opacity: 1;
-}
-/* Avoid duplicating any existing icon glyphs */
+  .md-sidebar--primary label.md-nav__link[for="__toc"]::after{
+    content: "☰" !important;
+    font-size: 22px !important;
+    line-height: 1 !important;
+    color: var(--md-primary-fg-color, #8641A9) !important;
+    margin-left: auto !important;
+  }
+  /* Avoid duplicating any existing icon glyphs */
   .md-sidebar--primary label.md-nav__link[for="__toc"] svg,
   .md-sidebar--primary label.md-nav__link[for="__toc"] .md-nav__icon{
     display: none !important;
@@ -1786,18 +1780,69 @@ Fashion Star Wiki - V21.0 (Stable Base)
 
 
 
+/* =========================
+   HOTFIX: Mobile TOC button + back arrow + icon
+   (append-only overrides)
+   ========================= */
 
-/* v24 hotfix: prevent duplicate built-in icon inside TOC toggle */
+/* 1) Don't let desktop "hide title text" rules break mobile back arrow */
 @media screen and (max-width: 59.9375em){
-  .md-sidebar--primary label.md-nav__link[for="__toc"] .md-nav__icon,
-  .md-sidebar--primary label.md-nav__link[for="__toc"] svg{ display:none !important; }
+  /* Restore the TOC title row so the built-in back button remains visible */
+  .md-sidebar--secondary .md-nav__title{
+    font-size: 0.9rem !important;
+    color: var(--md-default-fg-color) !important;
+    line-height: 1.2 !important;
+  }
+  .md-sidebar--secondary .md-nav__title .md-nav__button,
+  .md-sidebar--secondary .md-nav__title .md-nav__button .md-icon,
+  .md-sidebar--secondary .md-nav__title .md-nav__button .md-icon::before,
+  .md-sidebar--secondary .md-nav__title .md-nav__button .md-icon::after{
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-flex !important;
+  }
+
+  /* 2) Off-canvas secondary sidebar (TOC) on mobile: hidden by default, slides in when __toc is checked */
+  .md-sidebar--secondary{
+    display: block !important; /* override theme's display:none on mobile */
+    position: fixed !important;
+    top: var(--md-header-height, 56px) !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: min(82vw, 320px) !important;
+    max-width: 320px !important;
+    transform: translateX(100%) !important;
+    transition: transform 180ms ease !important;
+    z-index: 205 !important;
+    background: var(--md-default-bg-color) !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,.18) !important;
+    overflow: auto !important;
+  }
+  /* checked => visible */
+  .md-toggle[data-md-toggle="toc"]:checked ~ .md-container .md-sidebar--secondary{
+    transform: translateX(0) !important;
+  }
+
+  /* 3) Prevent our "active item arrow" pseudo from hijacking the TOC toggle icon */
+  label.md-nav__link[for="__toc"]::after,
+  label.md-nav__link[for="__toc"].md-nav__link--active::after,
+  a.md-nav__link[href="#__toc"]::after,
+  a.md-nav__link[href="#__toc"].md-nav__link--active::after{
+    content: none !important;
+  }
 }
 
-/* =========================================================
-   HARD KILL:
-   禁止 md-nav__icon 自己生成任何 ::after 图标
-   ========================================================= */
-
-span.md-nav__icon.md-icon::after {
-  content: none !important;
+/* 4) Desktop-only: if you replace the title with "On this page", scope it to desktop */
+@media screen and (min-width: 60em){
+  /* If any earlier rule hides title text globally, keep that behavior on desktop only */
+  .md-sidebar--secondary .md-nav__title[data-md-component="toc"]{
+    font-size: 0 !important;
+    color: transparent !important;
+  }
+  .md-sidebar--secondary .md-nav__title[data-md-component="toc"]::before{
+    content: "On this page" !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: var(--md-default-fg-color) !important;
+  }
 }
