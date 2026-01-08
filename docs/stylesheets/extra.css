@@ -1708,7 +1708,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
   }
 }
 
-/* --- Mobile TOC patch (keep colors) --- */
 /* Mobile TOC slide-out fix (Material for MkDocs)
    - Does NOT touch your theme colors / left-nav highlight styles.
    - Only restores a working TOC panel on small screens using the built-in __toc checkbox.
@@ -1767,5 +1766,45 @@ Fashion Star Wiki - V21.0 (Stable Base)
   .md-sidebar--secondary[style*="inset"],
   .md-sidebar--secondary[style*="left"]{
     left: auto !important;
+  }
+}
+
+/* === Mobile TOC button: re-enable in left drawer (was hidden by theme tweaks) === */
+@media screen and (max-width: 59.9375em){
+  /* The theme CSS hides the TOC toggle link in the primary (left) sidebar.
+     Bring it back ONLY on mobile so it behaves like Material's native UX. */
+  .md-sidebar--primary label.md-nav__link[for="__toc"],
+  .md-sidebar--primary a.md-nav__link[href="#__toc"],
+  .md-sidebar--primary .md-nav__icon--toc,
+  .md-sidebar--primary .md-nav__link[for="__toc"],
+  .md-sidebar--primary .md-nav__link[href="#__toc"]{
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0 !important;
+    margin-left: auto;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Put the TOC button at the far right of the active page row inside the drawer */
+  .md-sidebar--primary .md-nav__item--active > :is(label.md-nav__link[for="__toc"], a.md-nav__link[href="#__toc"]),
+  .md-sidebar--primary .md-nav__item--active :is(label.md-nav__link[for="__toc"], a.md-nav__link[href="#__toc"]){
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Make sure the active row can host the absolute positioned button */
+  .md-sidebar--primary .md-nav__item--active{
+    position: relative;
+  }
+
+  /* Optional: ensure the icon uses brand color (inherits from link color) */
+  .md-sidebar--primary :is(label.md-nav__link[for="__toc"], a.md-nav__link[href="#__toc"]){
+    color: var(--md-primary-fg-color, #8641A9) !important;
   }
 }
