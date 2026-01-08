@@ -1598,3 +1598,143 @@ Fashion Star Wiki - V21.0 (Stable Base)
     flex: 0 0 auto;
   }
 }
+
+/* ==========================================================================
+   Mobile TOC restore (Material __toc toggle)
+   ========================================================================== */
+
+/* Some pages render TOC but the secondary sidebar is hidden by base CSS.
+   We restore the native toggle and slide-in panel on small screens. */
+@media screen and (max-width: 59.9375em){
+  /* Re-enable the built-in TOC toggle entry (if theme renders it in the drawer) */
+  .md-sidebar--primary label.md-nav__link[for="__toc"],
+  .md-sidebar--primary a.md-nav__link[for="__toc"]{
+    display: flex !important;
+  }
+
+  /* Re-enable the header TOC button (theme uses a label[for=__toc]) */
+  .md-header__button[for="__toc"]{
+    display: inline-flex !important;
+  }
+
+  /* Make the secondary sidebar a slide-in panel on mobile */
+  .md-sidebar--secondary{
+    display: block !important;
+    position: fixed !important;
+    top: var(--md-header-height, 56px) !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: min(82vw, 320px) !important;
+    max-width: 320px !important;
+    background: var(--md-default-bg-color, #fff) !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,.22) !important;
+    transform: translateX(100%) !important;
+    transition: transform .2s ease !important;
+    z-index: 3 !important;
+    border-left: 1px solid rgba(0,0,0,.08) !important;
+  }
+
+  .md-sidebar--secondary .md-sidebar__scrollwrap{
+    height: 100% !important;
+  }
+
+  /* Show panel when TOC toggle is checked */
+  #__toc:checked ~ .md-container .md-sidebar--secondary{
+    transform: translateX(0) !important;
+  }
+
+  /* Dim overlay when TOC is open (Material uses .md-overlay) */
+  #__toc:checked ~ .md-overlay{
+    display: block !important;
+  }
+}
+
+/* ==========================================================================
+   Active item bar fallback (some pages don't get .md-nav__link--active)
+   ========================================================================== */
+.md-sidebar--primary a.md-nav__link[aria-current]::before{
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--fs-accent);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.md-sidebar--primary a.md-nav__link[aria-current]{
+  color: var(--fs-accent) !important;
+  font-weight: 600 !important;
+}
+
+/* ==========================================================================
+   Mobile TOC restore (Material __toc toggle)
+   ========================================================================== */
+
+@media screen and (max-width: 59.9375em){
+  /* Re-enable the built-in TOC toggle entry (we previously hid it) */
+  .md-sidebar--primary label.md-nav__link[for='__toc']{
+    display: flex !important;
+    align-items: center;
+  }
+
+  /* Ensure the header TOC button is visible (Material uses label[for='__toc']) */
+  .md-header__button[for='__toc']{
+    display: inline-flex !important;
+  }
+
+  /* Make secondary sidebar available as a slide-in panel */
+  .md-sidebar--secondary{
+    display: block !important;
+    position: fixed !important;
+    top: 56px !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: min(320px, 86vw) !important;
+    max-width: 86vw !important;
+    background: var(--md-default-bg-color) !important;
+    border-left: 1px solid rgba(0,0,0,.08);
+    box-shadow: 0 8px 28px rgba(0,0,0,.22);
+    /* Fallback: keep TOC visible on mobile.
+       If the theme's built-in TOC toggle (#__toc) exists, it can still slide.
+       But even if it doesn't, users can access the TOC instead of it being hidden. */
+    transform: translateX(0) !important;
+    transition: transform .2s ease;
+    z-index: 200 !important;
+    pointer-events: auto !important;
+  }
+  .md-sidebar--secondary .md-sidebar__scrollwrap{
+    height: 100% !important;
+  }
+
+  /* Slide in when TOC checkbox is checked */
+  #__toc:checked ~ .md-container .md-sidebar--secondary{
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  /* Also allow the overlay to show so user can tap outside to close */
+  #__toc:checked ~ .md-overlay{
+    display: block;
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Active item indicator robustness
+   (Some pages use aria-current without "page"; cover all)
+   ========================================================================== */
+
+.md-sidebar--primary a.md-nav__link[aria-current]::before,
+.md-sidebar--primary .md-nav__item--active > a.md-nav__link::before{
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--fs-brand);
+}
