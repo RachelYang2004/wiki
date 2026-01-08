@@ -1,29 +1,36 @@
-
 /* =====================================================
-   Mobile TOC clean fix (no white bar residue)
+   Mobile TOC FIX – non destructive
+   Append this at the END of your existing extra.css
    ===================================================== */
 
 @media screen and (max-width: 59.9375em) {
 
+  /* Secondary sidebar (TOC) – hidden by default */
   .md-sidebar--secondary {
     display: block !important;
     visibility: visible !important;
+
     position: fixed !important;
     top: 56px !important;
     right: 0 !important;
+
     width: 260px !important;
     height: calc(100vh - 56px) !important;
-    background: #fff !important;
-    z-index: 9999 !important;
 
+    background: #fff !important;
+    z-index: 1000 !important;
+
+    /* fully off-canvas to avoid the “white bar” */
     transform: translateX(100%) !important;
     pointer-events: none !important;
 
-    box-shadow: -8px 0 30px rgba(0,0,0,.25) !important;
     overflow-y: auto !important;
+    box-shadow: -8px 0 24px rgba(0,0,0,.25) !important;
+
     transition: transform .25s ease !important;
   }
 
+  /* When TOC toggle is ON */
   .md-toggle[data-md-toggle="toc"]:checked
   ~ .md-container
   .md-sidebar--secondary {
@@ -31,12 +38,9 @@
     pointer-events: auto !important;
   }
 
+  /* Ensure toc content visible */
   .md-sidebar--secondary [data-md-component="toc"] {
     display: block !important;
     visibility: visible !important;
-  }
-
-  .md-main__inner {
-    overflow-x: visible !important;
   }
 }
