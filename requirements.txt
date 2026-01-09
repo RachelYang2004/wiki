@@ -1,5 +1,5 @@
 mkdocs-material
-mkdocs-sitemap
+mkdocs-sitemap-plugin
 mkdocs-glightbox  # 新增这一行
 mkdocs-include-markdown-plugin # 增加include-markdown 插件
 mkdocs-static-i18n # 增加mkdocs-static-i18n 插件

@@ -54,10 +54,7 @@ hooks:
 
 plugins:
   - search
-  - sitemap:
-      changefreq: weekly
-      priority: 0.5
-      use_directory_urls: true
+  - sitemap
   - glightbox
   - include-markdown:
       rewrite_relative_urls: true
