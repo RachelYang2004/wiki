@@ -1,5 +1,4 @@
 mkdocs-material==9.7.1
-mkdocs-sitemap
 mkdocs-glightbox
 mkdocs-include-markdown-plugin
 mkdocs-static-i18n

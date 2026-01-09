@@ -55,9 +55,6 @@ hooks:
 plugins:
   - search
   - glightbox
-  - sitemap:
-      changefreq: weekly
-      priority: 0.5
   - include-markdown:
       rewrite_relative_urls: true
       dedent: true
