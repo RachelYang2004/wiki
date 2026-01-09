@@ -21,8 +21,6 @@ theme:
 
 plugins:
   - search
-  - sitemap:
-      hostname: https://servodevelop.github.io/wiki/
   - i18n:
       default_language: zh
       languages:
