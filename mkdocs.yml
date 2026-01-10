@@ -149,37 +149,37 @@ nav:
           - Ros: uart_servo/sdk/ros_sdk.md
       - Document: uart_servo/documents/uc01_instruction_manual.md
   - RS485 Bus Servo:
-    - Protocol: rs485_servo/protocols/uart_rs485_protocol.md
-    - Specifications:
-        - HX8-R28H-M: rs485_servo/specs/hx8-r28h-m.md
-        - HX8-R29H-M: rs485_servo/specs/hx8-r29h-m.md
-        - HX8-R50H-M: rs485_servo/specs/hx8-r50h-m.md
-        - HX8-R51H-M: rs485_servo/specs/hx8-r51h-m.md
-        - RX18-R100H-M: rs485_servo/specs/rx18-r100h-m.md
-        - RX18-R101H-M: rs485_servo/specs/rx18-r101h-m.md
-    - CAD Files:
-        - HX8/RX8 R Series: rs485_servo/cad_files/hx8-rx8-r-series.md
-        - HX18 R Series: rs485_servo/cad_files/hx18-r-series.md
-    - Software:
-        - PC Configuration Tool: rs485_servo/software/pc_configuration_tool.md
-        - Web Configuration Tool: rs485_servo/software/web_configuration_tool.md
-    - SDK:
-        - PLC:
-            - Sinamics: rs485_servo/sdk/plc/sinamics_tia_portal_v19.md
-            - Codesys: rs485_servo/sdk/plc/codesys.md
-            - Inovance: rs485_servo/sdk/plc/inovance.md
-            - Inoproshop: rs485_servo/sdk/plc/inovance_inoproshop.md
-            - GX Works: rs485_servo/sdk/plc/mitsubishi_gx_works2.md
-            - Step7 MicroWin: rs485_servo/sdk/plc/step7_microwin_smart.md
-        - Stm32f103: rs485_servo/sdk/stm32f103_sdk.md
-        - Stm32f407: rs485_servo/sdk/stm32f407_sdk.md
-        - Arduino: rs485_servo/sdk/arduino_sdk.md
-        - Python: rs485_servo/sdk/python_sdk.md
-        - Micro Python: rs485_servo/sdk/micropython_sdk.md
-        - C++: rs485_servo/sdk/cpp_sdk.md
-        - "C#": rs485_servo/sdk/csharp_sdk.md
-        - Ros: rs485_servo/sdk/ros_sdk.md
-    - Document: rs485_servo/documents/uc01_instruction_manual.md
+      - Protocol: rs485_servo/protocols/uart_rs485_protocol.md
+      - Specifications:
+          - HX8-R28H-M: rs485_servo/specs/hx8-r28h-m.md
+          - HX8-R29H-M: rs485_servo/specs/hx8-r29h-m.md
+          - HX8-R50H-M: rs485_servo/specs/hx8-r50h-m.md
+          - HX8-R51H-M: rs485_servo/specs/hx8-r51h-m.md
+          - RX18-R100H-M: rs485_servo/specs/rx18-r100h-m.md
+          - RX18-R101H-M: rs485_servo/specs/rx18-r101h-m.md
+      - CAD Files:
+          - HX8/RX8 R Series: rs485_servo/cad_files/hx8-rx8-r-series.md
+          - HX18 R Series: rs485_servo/cad_files/hx18-r-series.md
+      - Software:
+          - PC Configuration Tool: rs485_servo/software/pc_configuration_tool.md
+          - Web Configuration Tool: rs485_servo/software/web_configuration_tool.md
+      - SDK:
+          - PLC:
+              - Sinamics: rs485_servo/sdk/plc/sinamics_tia_portal_v19.md
+              - Codesys: rs485_servo/sdk/plc/codesys.md
+              - Inovance: rs485_servo/sdk/plc/inovance.md
+              - Inoproshop: rs485_servo/sdk/plc/inovance_inoproshop.md
+              - GX Works: rs485_servo/sdk/plc/mitsubishi_gx_works2.md
+              - Step7 MicroWin: rs485_servo/sdk/plc/step7_microwin_smart.md
+          - Stm32f103: rs485_servo/sdk/stm32f103_sdk.md
+          - Stm32f407: rs485_servo/sdk/stm32f407_sdk.md
+          - Arduino: rs485_servo/sdk/arduino_sdk.md
+          - Python: rs485_servo/sdk/python_sdk.md
+          - Micro Python: rs485_servo/sdk/micropython_sdk.md
+          - C++: rs485_servo/sdk/cpp_sdk.md
+          - "C#": rs485_servo/sdk/csharp_sdk.md
+          - Ros: rs485_servo/sdk/ros_sdk.md
+      - Document: rs485_servo/documents/uc01_instruction_manual.md
   - CAN Bus Servo:
     - Protocol: can_servo/protocols/can_protocol.md
     - Specifications:
