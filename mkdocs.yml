@@ -5,7 +5,11 @@ use_directory_urls: true
 
 theme:
   name: material
-  # language: en（注释掉为了On this Page可以跟着语系调整显示）
+  language: en               # 告诉主题：默认的基础语系是英文 (SEO 核心)
+  font:
+    text: Roboto             # 官方推荐字体，阅读感最好
+    code: Roboto Mono        # 代码等宽字体
+  logo: assets/favicon.png
   favicon: assets/favicon.png
   custom_dir: docs/overrides  # Theme overrides directory (keep it under /docs so Actions sparse-checkout won't miss it)
 
