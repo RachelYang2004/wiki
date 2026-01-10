@@ -62,7 +62,7 @@ plugins:
   - i18n:
       default_language: en
       reconfigure_material: true  # <--- 核心修复：修正 JS/CSS 路径请求
-      fallback_to_default: true
+      link_to_preferred_support: true  # <--- 添加这一行
       languages:
         - locale: en
           name: "🇺🇸 English"
