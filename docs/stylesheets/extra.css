@@ -1,10 +1,10 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V29.3 (Full - Industrial Table & Typography)
-- 专项：H1 颜色去紫化，正文所有标题 (H1-H6) 统一为正文色 + 700 字重
-- 表格：整合 Seeed 风格，包含奇偶行变色、强制换行 (Break-all) 及 100% 宽度
-- 导航：维持 700 字重与 3px 满高选中竖线，保持 Gemini 风格一致性
-- 清理：全端 Logo 暴力清理，右侧 TOC 多语言支持
+Fashion Star Wiki - V29.4 (Full - Precise Table Border & Alignment)
+- 专项：修复表格边框缺失问题，强制表格宽度与正文文字 100% 对齐
+- 表格：增加实线边框 (1px solid)、奇偶行变色、以及强制换行保护
+- 标题：H1-H6 统一为正文色 + 700 字重，彻底去紫色化
+- 版本：全量提供，版本号严格递增
 ==========================================================================
 */
 
@@ -12,7 +12,7 @@ Fashion Star Wiki - V29.3 (Full - Industrial Table & Typography)
 :root {
   --fs-accent: #8641A9;
   --fs-accent-light: rgba(134, 65, 169, 0.4); 
-  --fs-divider: rgba(0,0,0,0.12);
+  --fs-divider: rgba(0,0,0,0.15); /* 稍微加深分割线颜色 */
   --md-primary-fg-color: var(--fs-accent);
   --md-accent-fg-color: var(--fs-accent);
   --fs-leftnav-fg: #444746;
@@ -20,7 +20,7 @@ Fashion Star Wiki - V29.3 (Full - Industrial Table & Typography)
 }
 
 [data-md-color-scheme="slate"] {
-  --fs-divider: rgba(255,255,255,0.10);
+  --fs-divider: rgba(255,255,255,0.15);
   --md-default-bg-color: #131314;
   --md-default-bg-color--light: #1e1f20;
   --md-default-fg-color: #e3e3e3;
@@ -28,7 +28,7 @@ Fashion Star Wiki - V29.3 (Full - Industrial Table & Typography)
   --fs-content-fg: #E3E3E3;
 }
 
-/* 2. 顶部导航与 Logo 清理 (暴力物理移除) */
+/* 2. 顶部导航与 Logo 清理 */
 .md-logo, [class*="md-logo"], .md-header__button.md-logo, 
 .md-nav__title .md-logo, .md-nav__title[for="__drawer"] .md-icon,
 [class*="md-logo"] svg, [class*="md-logo"] img {
@@ -39,12 +39,12 @@ Fashion Star Wiki - V29.3 (Full - Industrial Table & Typography)
 .md-header__title { margin-left: 0 !important; }
 .md-header__ellipsis { padding-left: 0.5rem !important; }
 
-/* 3. 稳健版滚动条 (V29 风格) */
+/* 3. 稳健版滚动条 */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航 (Navigation) - 700 字重 & 3px 竖线 */
+/* 4. 左侧导航 (700 字重) */
 .md-sidebar--primary .md-nav__link {
   font-size: 16px !important;
   color: var(--fs-leftnav-fg) !important;
@@ -67,7 +67,7 @@ Fashion Star Wiki - V29.3 (Full - Industrial Table & Typography)
   width: 3px; background: var(--fs-accent);
 }
 
-/* 5. 右侧目录 (TOC) - 多语言 */
+/* 5. 右侧目录 (TOC) 多语言支持 */
 .md-sidebar--secondary .md-nav__title[for="__toc"] {
   font-size: 0 !important; color: transparent !important;
 }
@@ -79,10 +79,7 @@ Fashion Star Wiki - V29.3 (Full - Industrial Table & Typography)
 [lang="en"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "On this page"; }
 [lang="zh"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "本页目录"; }
 
-/* 6. 正文排版 (Industrial Typography Upgrade) */
-.md-typeset { color: var(--fs-content-fg); }
-
-/* H1-H6 统一正文色 + 700 字重 */
+/* 6. 正文标题 (Industrial 700) */
 .md-typeset h1, .md-typeset h2, .md-typeset h3, 
 .md-typeset h4, .md-typeset h5, .md-typeset h6 {
   color: var(--fs-content-fg) !important; 
@@ -91,41 +88,38 @@ Fashion Star Wiki - V29.3 (Full - Industrial Table & Typography)
 }
 .md-typeset h1 { margin-top: 2rem !important; }
 
-/* 7. 表格规范化 (Seeed Studio Style) */
+/* 7. 表格终极优化 (Strict Border & Full Width) */
 .md-typeset table:not([class]) {
-  display: table !important; /* 强制表格行为 */
-  width: 100% !important;   /* 铺满正文 */
-  border-collapse: collapse !important;
-  border: 1px solid var(--fs-divider) !important;
+  width: 100% !important;        /* 强制与正文等宽 */
+  border-collapse: collapse !important; 
+  border: 1px solid var(--fs-divider) !important; /* 外部大边框 */
   font-size: 14px !important;
-  margin: 1rem 0 !important;
-  overflow: hidden !important;
-  word-break: break-all !important; /* 强制长字符换行，保护布局 */
+  margin: 1.5rem 0 !important;
+  table-layout: auto !important;
 }
 
-/* 表头强化 */
+.md-typeset table:not([class]) th, 
+.md-typeset table:not([class]) td {
+  border: 1px solid var(--fs-divider) !important; /* 内部单元格边框 */
+  padding: 12px 15px !important;
+  word-break: break-all !important; /* 防止撑破 */
+}
+
 .md-typeset table:not([class]) th {
   background-color: var(--md-default-bg-color--light) !important;
   font-weight: 700 !important;
-  padding: 12px !important;
-  border: 1px solid var(--fs-divider) !important;
+  text-align: left !important;
 }
 
-/* 单元格及奇偶行变色 */
-.md-typeset table:not([class]) td {
-  padding: 10px 12px !important;
-  border: 1px solid var(--fs-divider) !important;
-  line-height: 1.5 !important;
-}
-
+/* 奇偶行背景 */
 .md-typeset table:not([class]) tr:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.02) !important; /* 浅色模式偶数行极淡背景 */
+  background-color: rgba(0, 0, 0, 0.02) !important;
 }
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.03) !important; /* 深色模式偶数行极淡背景 */
+  background-color: rgba(255, 255, 255, 0.03) !important;
 }
 
-/* 8. 布局 */
+/* 8. 布局平衡 */
 @media screen and (min-width: 60em) {
   .md-grid { max-width: 1380px !important; }
   .md-content { box-shadow: inset 1px 0 0 var(--fs-divider) !important; }
