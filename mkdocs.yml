@@ -52,6 +52,11 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.caret  # 支持插入符号和下标
+  - pymdownx.tilde  # 支持删除线
 
 hooks:
   - docs/hooks/gh_alerts.py
