@@ -60,6 +60,8 @@ plugins:
       dedent: true
   - i18n:
       default_language: en
+      reconfigure_material: true  # <--- 核心修复：修正 JS/CSS 路径请求
+      fallback_to_default: true
       languages:
         - locale: en
           name: "🇺🇸 English"
