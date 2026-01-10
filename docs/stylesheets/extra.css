@@ -1,8 +1,10 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V25.2 (Integrated)
+Fashion Star Wiki - V25.5 (Final Clean & Integrated)
 - 整合：1380px 宽度、3px 悬浮竖线、FS 专属深黑模式
-- 增强：深浅色文字对比度、右侧 TOC 多语言联动
+- 修复：强制隐藏 YAML 关不掉的默认 Material 图标占位符
+- 增强：正文、侧边栏多模式色彩对比度均衡
+- 翻译：右侧 TOC 多语言自动修复
 ==========================================================================
 */
 
@@ -36,7 +38,18 @@ Fashion Star Wiki - V25.2 (Integrated)
   --fs-bg-active: rgba(134, 65, 169, 0.15);
 }
 
-/* 2. 布局 (Layout) - 1380px 黄金宽度与分割线 */
+/* 2. 顶部导航栏清理 (Header Clean-up) */
+/* 隐藏 YAML 设置为 false 后依然残留的默认 Material 图标 */
+.md-header__button.md-logo .md-icon {
+  display: none !important;
+}
+
+/* 调整站点名称位置，填补图标消失后的空白 */
+.md-header__title {
+  margin-left: 0.4rem !important;
+}
+
+/* 3. 布局 (Layout) - 1380px 黄金宽度与分割线 */
 @media screen and (min-width: 60em) {
   .md-grid {
     max-width: 1380px !important;
@@ -48,7 +61,7 @@ Fashion Star Wiki - V25.2 (Integrated)
   }
 }
 
-/* 3. 左侧导航 (Navigation) - 3px 悬浮圆角竖线 */
+/* 4. 左侧导航 (Navigation) - 3px 悬浮圆角竖线 */
 .md-sidebar--primary .md-nav__link {
   font-size: 16px !important;
   color: var(--fs-leftnav-fg) !important;
@@ -76,7 +89,7 @@ Fashion Star Wiki - V25.2 (Integrated)
   border-radius: 2px;
 }
 
-/* 4. 右侧目录 (TOC) - 多语言标题修复 */
+/* 5. 右侧目录 (TOC) - 多语言标题修复 */
 .md-sidebar--secondary .md-nav__title[for="__toc"] {
   font-size: 0 !important;
   line-height: 0 !important;
@@ -113,7 +126,7 @@ Fashion Star Wiki - V25.2 (Integrated)
   font-weight: 600;
 }
 
-/* 5. 正文排版 (Typography) - H1-H6 细节 */
+/* 6. 正文排版 (Typography) - H1-H6 细节 */
 .md-typeset {
   color: var(--fs-content-fg);
 }
@@ -128,7 +141,7 @@ Fashion Star Wiki - V25.2 (Integrated)
   color: var(--fs-accent) !important; 
 }
 
-/* 6. 表格 (Tables) - Seeed 风格优化 */
+/* 7. 表格 (Tables) - Seeed 风格优化 */
 .md-typeset table:not([class]) {
   font-size: 14px !important;
   border: 1px solid var(--fs-divider) !important;
