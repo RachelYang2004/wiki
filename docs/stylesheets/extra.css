@@ -1,20 +1,21 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V27.3 (Full - 3px Precise Alignment)
-- 专项：滚动条严格锁定 3px 宽度，直角设计，1:1 对标导航竖线
-- 修复：V26.8 验证成功的全一级目录（含 Home）加粗逻辑
-- 修复：全端（桌面+移动端）物理级移除默认 Logo
-- 优化：正文阅读排版与表格 Seeed 风格样式
+Fashion Star Wiki - V27.5 (Full Consolidated Version)
+- 整合：1380px 宽度、3px 满高选中竖线、FS 专属深黑模式
+- 专项：滚动条 3px 直角硬核对齐，确保与左侧竖线视觉一致
+- 修复：全一级目录（含 Home）加粗，且全端 Logo 暴力清理
+- 包含：右侧 TOC 多语言修复、表格 Seeed 风格优化、正文阅读感提升
 ==========================================================================
 */
 
-/* 1. 核心变量 (Variables) */
+/* 1. 核心变量与多模式适配 (Variables) */
 :root {
   --fs-accent: #8641A9;
   --fs-accent-light: rgba(134, 65, 169, 0.4); 
   --fs-divider: rgba(0,0,0,0.12);
   --md-primary-fg-color: var(--fs-accent);
   --md-accent-fg-color: var(--fs-accent);
+  
   --fs-leftnav-fg: #444746;
   --fs-content-fg: #1F1F1F;
   --fs-toc-fg: #616161;
@@ -27,25 +28,26 @@ Fashion Star Wiki - V27.3 (Full - 3px Precise Alignment)
   --md-default-fg-color: #e3e3e3;
   --md-default-fg-color--light: #8e918f;
   --md-code-bg-color: #1e1f20;
+  
   --fs-leftnav-fg: #C4C7C5;
   --fs-content-fg: #E3E3E3;
   --fs-toc-fg: #8E918F;
 }
 
-/* 2. 顶部导航与 Logo 清理 (暴力物理移除) */
+/* 2. 顶部导航栏与 Logo 暴力清理 (Aggressive Removal) */
 .md-logo, [class*="md-logo"], .md-header__button.md-logo, 
 .md-nav__title .md-logo, .md-nav__title[for="__drawer"] .md-icon,
 [class*="md-logo"] svg, [class*="md-logo"] img {
   display: none !important; width: 0 !important; height: 0 !important;
-  position: absolute !important; pointer-events: none !important; opacity: 0 !important;
-  margin: 0 !important; padding: 0 !important;
+  position: absolute !important; pointer-events: none !important; 
+  opacity: 0 !important; margin: 0 !important; padding: 0 !important;
 }
 .md-header__title { margin-left: 0 !important; }
 .md-header__ellipsis { padding-left: 0.5rem !important; }
 
-/* 3. 极简自定义滚动条 (Precise 3px Edition) */
+/* 3. 极简 3px 直角滚动条 (Scrollbar Precision) */
 ::-webkit-scrollbar {
-  width: 3px !important;  /* 强制锁定 3px */
+  width: 3px !important;    /* 强制 3px */
   height: 3px !important;
 }
 ::-webkit-scrollbar-track {
@@ -53,9 +55,10 @@ Fashion Star Wiki - V27.3 (Full - 3px Precise Alignment)
 }
 ::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.05); 
-  border-radius: 0; /* 直角，对标竖线 */
+  border-radius: 0 !important; /* 强制直角，对标左侧竖线 */
+  border: none !important;
 }
-/* 交互状态：进入页面即显现淡紫色 */
+/* 交互显现 */
 body:hover::-webkit-scrollbar-thumb,
 .md-sidebar__scrollwrap:hover::-webkit-scrollbar-thumb,
 .md-content__inner:hover::-webkit-scrollbar-thumb {
@@ -74,7 +77,7 @@ body:hover::-webkit-scrollbar-thumb,
   transition: color 0.25s;
 }
 
-/* 核心加粗逻辑 (来自 V26.8) */
+/* 顶级目录（Home等）强力加粗逻辑 */
 .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link,
 .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link span,
 .md-nav__item--level--1 .md-nav__link,
@@ -82,24 +85,30 @@ body:hover::-webkit-scrollbar-thumb,
   font-weight: 800 !important;
 }
 
-/* 选中状态：紫色 + 无背景 */
+/* 选中状态：紫色 + 3px 满高直角竖线 */
 .md-sidebar--primary .md-nav__item--active > .md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 800 !important;
   background-color: transparent !important;
 }
-/* 3px 满高竖线实现 */
 .md-sidebar--primary .md-nav__item--active > .md-nav__link::before {
   content: "";
   position: absolute;
   left: 0; top: 0; bottom: 0;
-  width: 3px; /* 我们的对标基准 */
+  width: 3px; 
   background: var(--fs-accent);
 }
 
-/* 5. 右侧目录 (TOC) - 标题修复 */
+/* 5. 布局与分割线 (Layout) */
+@media screen and (min-width: 60em) {
+  .md-grid { max-width: 1380px !important; }
+  .md-content { box-shadow: inset 1px 0 0 var(--fs-divider) !important; }
+}
+
+/* 6. 右侧目录 (TOC) - 多语言支持 */
 .md-sidebar--secondary .md-nav__title[for="__toc"] {
   font-size: 0 !important;
+  line-height: 0 !important;
   color: transparent !important;
   padding: 0.8rem 0 !important;
 }
@@ -107,9 +116,13 @@ body:hover::-webkit-scrollbar-thumb,
   font-size: 12.8px !important;
   font-weight: 700 !important;
   color: var(--md-default-fg-color--light) !important;
-  content: "On this page";
-  display: block;
+  display: block !important;
 }
+/* TOC 标题多语言回退机制 */
+[lang="en"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "On this page"; }
+[lang="zh"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "本页目录"; }
+[lang="ja"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "このページの内容"; }
+
 .md-sidebar--secondary .md-nav__link {
   color: var(--fs-toc-fg);
   font-size: 12.8px;
@@ -119,16 +132,15 @@ body:hover::-webkit-scrollbar-thumb,
   font-weight: 600;
 }
 
-/* 6. 正文排版 (Typography) */
+/* 7. 正文排版 (Typography) */
 .md-typeset { color: var(--fs-content-fg); line-height: 1.65; }
-.md-typeset h1, .md-typeset h2, .md-typeset h3, 
-.md-typeset h4, .md-typeset h5, .md-typeset h6 {
+.md-typeset h1, .md-typeset h2, .md-typeset h3 {
   font-weight: 700 !important;
   color: var(--fs-content-fg) !important;
 }
 .md-typeset h1 { color: var(--fs-accent) !important; }
 
-/* 7. 表格 (Tables) - Seeed 风格 */
+/* 8. 表格优化 (Tables) */
 .md-typeset table:not([class]) {
   font-size: 14px !important;
   border: 1px solid var(--fs-divider) !important;
