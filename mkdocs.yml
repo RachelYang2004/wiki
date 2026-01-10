@@ -41,18 +41,6 @@ theme:
         icon: fashion/tech-moon
         name: Switch to dark mode
 
-extra:
-  translations:
-    en:
-      toc.title: "On this page"
-    es:
-      toc.title: "En esta página"
-    fr:
-      toc.title: "Sur cette page"
-    de:
-      toc.title: "Auf dieser Seite"
-    ja:
-      toc.title: "このページの内容"
 
 extra_css:
   - stylesheets/extra.css
