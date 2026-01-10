@@ -70,10 +70,9 @@ plugins:
       rewrite_relative_urls: true
       dedent: true
   - i18n:
-      default_language: en
-      reconfigure_material: true
-      # 开启此项可以让 SEO 爬虫在不同语言间无缝切换，并自动引导用户到首选语言
-      link_to_preferred_support: true 
+      default_locale: en          # 将 default_language 改为 default_locale
+      reconfigure_material: true  # 开启此项可以让 SEO 爬虫在不同语言间无缝切换，并自动引导用户到首选语言
+      fallback_to_default: true   # 将 link_to_preferred_support 改为 fallback_to_default
       languages:
         # 1. 英语 (默认)
         - locale: en
