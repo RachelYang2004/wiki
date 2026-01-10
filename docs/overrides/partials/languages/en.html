@@ -1,5 +1,9 @@
 {% extends "partials/languages/en.html" %}
+
 {% block translations %}
   {{ super() }}
-  {% set _ = translations.update({ "toc.title": "On this page" }) %}
+  {% set translations = translations or {} %}
+  {% set _ = translations.update({
+    "toc.title": "On this page"
+  }) %}
 {% endblock %}
