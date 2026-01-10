@@ -92,8 +92,6 @@ plugins:
           name: "🇯🇵 日本語"
           default: false
           build: true
-  - sitemap:
-    filename: sitemap.xml
 
 
 nav:
