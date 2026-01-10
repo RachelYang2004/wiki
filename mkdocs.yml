@@ -59,27 +59,42 @@ plugins:
   - include-markdown:
       rewrite_relative_urls: true
       dedent: true
+  plugins:
   - i18n:
       default_language: en
       reconfigure_material: true
-      # 暂时保持 fallback 为 true，直到我们确认 404 消失
-      fallback_to_default: true
+      # 开启此项可以让 SEO 爬虫在不同语言间无缝切换，并自动引导用户到首选语言
+      link_to_preferred_support: true 
       languages:
+        # 1. 英语 (默认)
         - locale: en
           name: "🇺🇸 English"
-          default: true   # 显式指定 en 为默认
+          default: true
           build: true
-          icon: material/alpha-e-box
+        # 2. 西班牙语
         - locale: es
           name: "🇪🇸 Español"
-          default: false  # 显式指定 es 不是默认
+          default: false
           build: true
-          icon: material/alpha-s-box
+        # 3. 法语
+        - locale: fr
+          name: "🇫🇷 Français"
+          default: false
+          build: true
+        # 4. 德语
+        - locale: de
+          name: "🇩🇪 Deutsch"
+          default: false
+          build: true
+        # 5. 日语
         - locale: ja
           name: "🇯🇵 日本語"
           default: false
           build: true
-          icon: material/alpha-j-box
+  
+  # 必须放在 i18n 后面，确保它能抓取到所有语言子目录下的页面，生成完整的地图
+  - sitemap:
+      hostname: https://wiki.fashionstar.com.hk/
 
 nav:
   - Home: index.md
