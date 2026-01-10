@@ -59,7 +59,6 @@ plugins:
   - include-markdown:
       rewrite_relative_urls: true
       dedent: true
-  plugins:
   - i18n:
       default_language: en
       reconfigure_material: true
