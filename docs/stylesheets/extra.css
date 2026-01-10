@@ -1,11 +1,12 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V30.5 (Home & Navigation Fix)
-- 导航：[修复] 恢复 V29.2 中对一级顶级目录（如 Home）的 700 加粗锁定
-- 导航：[增强] 兼容所有带下拉折叠 (nested) 的项目强制 700 加粗
-- 导航：[精修] 仅非一级、非下拉的末级文章标题设为 14.5px
-- 表格：维持 0.5px 极细线，延续 V29.2 的原始对齐逻辑
-- 图片：维持 block 居中，无额外 padding 干扰
+Fashion Star Wiki - V30.6 (Home Boldness & Nav Precision)
+- 导航：[专项修复] 强制锁定导航第一层级（含 Home）的加粗，提高选择器优先级
+- 导航：[结构] 维持所有带下拉箭头的父级目录 700 加粗
+- 导航：[精修] 仅非第一层、且非下拉的纯文章标题设为 14.5px
+- 表格：回归 V29.2 对齐逻辑，维持 0.5px 极细线
+- 图片：保持 block 居中，无额外 padding
+- 风格：H1-H6 统一 700 字重正文色，去紫色化
 ==========================================================================
 */
 
@@ -45,16 +46,19 @@ Fashion Star Wiki - V30.5 (Home & Navigation Fix)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航 (综合层级控制) */
+/* 4. 左侧导航 (综合层级控制 - V30.6 强化版) */
+
+/* 通用颜色与间距 */
 .md-sidebar--primary .md-nav__link {
   color: var(--fs-leftnav-fg) !important;
   position: relative;
   padding-left: 20px !important; 
 }
 
-/* [核心修正] 锁定一级顶级目录（如 Home）及所有带下拉的项目为 700 加粗 */
-.md-nav__item--level--1 > .md-nav__link,
-.md-nav__item--level--1 > .md-nav__link span,
+/* [核心修正] 暴力锁定：第一层级的所有链接（含 Home）以及所有带下拉的项目 */
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link,
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link span,
+.md-nav--primary > .md-nav__list > .md-nav__item > label.md-nav__link,
 .md-nav__item--nested > .md-nav__link,
 .md-nav__item--nested > .md-nav__link span,
 .md-nav__item--nested > label.md-nav__link {
@@ -62,8 +66,10 @@ Fashion Star Wiki - V30.5 (Home & Navigation Fix)
   font-size: 16px !important;
 }
 
-/* [核心修正] 仅针对非一级且非下拉的文章标题：14.5px，恢复正常字重 */
-.md-nav__item:not(.md-nav__item--nested):not(.md-nav__item--level--1) > .md-nav__link {
+/* [核心修正] 仅针对深层级（Level 2+）且非下拉的文章：14.5px，恢复正常字重 */
+.md-nav__item--level--2:not(.md-nav__item--nested) > .md-nav__link,
+.md-nav__item--level--3:not(.md-nav__item--nested) > .md-nav__link,
+.md-nav__item--level--4:not(.md-nav__item--nested) > .md-nav__link {
   font-size: 14.5px !important;
   font-weight: 400 !important; 
 }
