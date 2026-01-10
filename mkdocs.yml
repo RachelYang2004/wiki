@@ -1,5 +1,6 @@
 site_name: Fashion Star Wiki
 site_url: https://wiki.fashionstar.com.hk/
+use_directory_urls: true
 
 theme:
   name: material
