@@ -1,19 +1,19 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V30.4 (Alignment Fix & Nav Refinement)
-- 核心：对比 V29.2 检查后，移除所有可能导致表格错位的 margin/padding 强制约束
-- 导航：[修正] 凡是带下拉折叠 (nested) 的目录强制 700 字重
-- 导航：[修正] 末级文章标题字号改为 14.5px，字重恢复 400
-- 表格：保持 0.5px 极细线，其余布局逻辑回归 V29.2 原始对齐状态
-- 包含：Logo 暴力清理及右侧 TOC 多语言支持
+Fashion Star Wiki - V30.5 (Home & Navigation Fix)
+- 导航：[修复] 恢复 V29.2 中对一级顶级目录（如 Home）的 700 加粗锁定
+- 导航：[增强] 兼容所有带下拉折叠 (nested) 的项目强制 700 加粗
+- 导航：[精修] 仅非一级、非下拉的末级文章标题设为 14.5px
+- 表格：维持 0.5px 极细线，延续 V29.2 的原始对齐逻辑
+- 图片：维持 block 居中，无额外 padding 干扰
 ==========================================================================
 */
 
-/* 1. 核心变量 (Variables) */
+/* 1. 核心变量 */
 :root {
   --fs-accent: #8641A9;
   --fs-accent-light: rgba(134, 65, 169, 0.4); 
-  --fs-divider: rgba(0,0,0,0.15); /* 回归 V29.2 的清淡分割线 */
+  --fs-divider: rgba(0,0,0,0.15); 
   --md-primary-fg-color: var(--fs-accent);
   --md-accent-fg-color: var(--fs-accent);
   --fs-leftnav-fg: #444746;
@@ -40,19 +40,21 @@ Fashion Star Wiki - V30.4 (Alignment Fix & Nav Refinement)
 .md-header__title { margin-left: 0 !important; }
 .md-header__ellipsis { padding-left: 0.5rem !important; }
 
-/* 3. 自定义滚动条 */
+/* 3. 滚动条 */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航 (精准层级控制) */
+/* 4. 左侧导航 (综合层级控制) */
 .md-sidebar--primary .md-nav__link {
   color: var(--fs-leftnav-fg) !important;
   position: relative;
   padding-left: 20px !important; 
 }
 
-/* 规则 A: 所有带子目录（下拉箭头）的项目 -> 700 加粗 */
+/* [核心修正] 锁定一级顶级目录（如 Home）及所有带下拉的项目为 700 加粗 */
+.md-nav__item--level--1 > .md-nav__link,
+.md-nav__item--level--1 > .md-nav__link span,
 .md-nav__item--nested > .md-nav__link,
 .md-nav__item--nested > .md-nav__link span,
 .md-nav__item--nested > label.md-nav__link {
@@ -60,8 +62,8 @@ Fashion Star Wiki - V30.4 (Alignment Fix & Nav Refinement)
   font-size: 16px !important;
 }
 
-/* 规则 B: 非下拉的文章标题 -> 14.5px, 恢复正常字重 */
-.md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
+/* [核心修正] 仅针对非一级且非下拉的文章标题：14.5px，恢复正常字重 */
+.md-nav__item:not(.md-nav__item--nested):not(.md-nav__item--level--1) > .md-nav__link {
   font-size: 14.5px !important;
   font-weight: 400 !important; 
 }
@@ -88,9 +90,8 @@ Fashion Star Wiki - V30.4 (Alignment Fix & Nav Refinement)
 [lang="en"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "On this page"; }
 [lang="zh"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "本页目录"; }
 
-/* 6. 正文排版 (回归 V29.2 风格) */
+/* 6. 正文排版 */
 .md-typeset { color: var(--fs-content-fg); }
-
 .md-typeset h1, .md-typeset h2, .md-typeset h3, 
 .md-typeset h4, .md-typeset h5, .md-typeset h6 {
   color: var(--fs-content-fg) !important; 
@@ -98,34 +99,29 @@ Fashion Star Wiki - V30.4 (Alignment Fix & Nav Refinement)
   margin-top: 1.6rem !important;
 }
 
-/* 7. 图片居中 (不设 padding 以免影响对齐感知) */
+/* 7. 图片居中 */
 .md-typeset img {
   display: block !important;
   margin: 1.5rem auto !important;
 }
 
-/* 8. 表格细节修正 (0.5px 极细线，还原 V29.2 容器逻辑) */
+/* 8. 表格细节 (0.5px 极细线) */
 .md-typeset__table {
   overflow-x: auto !important;
-  /* 移除 V30.x 尝试过的所有 padding/margin 强制重置 */
 }
-
 .md-typeset table:not([class]) {
   border-collapse: collapse !important;
   border: 0.5px solid var(--fs-divider) !important; 
   font-size: 14px !important;
 }
-
 .md-typeset table:not([class]) th, 
 .md-typeset table:not([class]) td {
   border: 0.5px solid var(--fs-divider) !important;
   padding: 10px 15px !important;
 }
-
 .md-typeset table:not([class]) th {
   background-color: var(--md-default-bg-color--light) !important;
   font-weight: 700 !important;
-  text-align: left !important;
 }
 
 /* 9. 布局平衡 */
