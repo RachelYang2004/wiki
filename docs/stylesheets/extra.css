@@ -1623,41 +1623,35 @@ Fashion Star Wiki - V21.0 (Stable Base)
 
 
 /* =============以下是显示Table of contents 变更为对应的On this page以及对应语言的修改==== */
-/* --- 终极多语言标题替换方案 --- */
+/* --- 精准多语言 TOC 标题修复 --- */
 
-/* 1. 针对所有语言：先隐藏原始的文字节点 */
+/* 1. 针对右侧目录标题容器 */
 .md-nav--secondary .md-nav__title[for="__toc"] {
-    font-size: 0 !important; /* 隐藏原始文本节点 */
+    font-size: 0 !important;          /* 彻底隐藏原生文字 */
+    color: transparent !important;    /* 确保任何残留文字透明 */
+    line-height: 0 !important;        /* 消除占位空隙 */
 }
 
-/* 2. 保持图标 span 可见 */
+/* 2. 处理那个“怪符号”（图标 span） */
+/* 我们把它彻底隐藏，因为右侧 TOC 标题通常不需要那个图标 */
 .md-nav--secondary .md-nav__title[for="__toc"] .md-nav__icon {
-    font-size: 1.2rem !important; /* 恢复图标大小 */
-    margin-right: 0.5rem;
-    vertical-align: middle;
+    display: none !important;         /* 隐藏它，符号就消失了 */
 }
 
-/* 3. 注入通用的新文字（默认英文） */
+/* 3. 重新注入纯净的文字 */
 .md-nav--secondary .md-nav__title[for="__toc"]::after {
-    content: "On this page";
-    font-size: 0.64rem; /* 恢复文字大小 */
-    font-weight: 700;
-    vertical-align: middle;
+    font-size: 0.64rem !important;    /* 恢复正常字号 (约12.8px) */
+    font-weight: 700 !important;      /* 加粗 */
+    color: var(--md-default-fg-color--light) !important; /* 恢复颜色 */
+    text-transform: none !important;  /* 防止全大写转换 */
+    line-height: 1.5 !important;
+    display: block !important;        /* 让它独占一行，位置更正 */
+    visibility: visible !important;
 }
 
-/* 4. 根据 HTML 的 lang 属性自动切换翻译 */
-[lang="es"] .md-nav--secondary .md-nav__title[for="__toc"]::after {
-    content: "En esta página";
-}
-
-[lang="fr"] .md-nav--secondary .md-nav__title[for="__toc"]::after {
-    content: "Sur cette page";
-}
-
-[lang="de"] .md-nav--secondary .md-nav__title[for="__toc"]::after {
-    content: "Auf dieser Seite";
-}
-
-[lang="ja"] .md-nav--secondary .md-nav__title[for="__toc"]::after {
-    content: "このページの内容";
-}
+/* 4. 多语言自动映射 */
+[lang="en"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "On this page"; }
+[lang="es"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "En esta página"; }
+[lang="fr"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "Sur cette page"; }
+[lang="de"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "Auf dieser Seite"; }
+[lang="ja"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "このページの内容"; }
