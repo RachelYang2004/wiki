@@ -14,7 +14,7 @@ Fashion Star Wiki - V25.2 (Integrated)
   --md-accent-fg-color: var(--fs-accent);
   
   /* 浅色模式文字颜色 */
-  --fs-leftnav-fg: #1A1A1A;     /* 左侧：深灰黑 */
+  --fs-leftnav-fg: #444746;     /* 左侧：Gemini灰黑 */
   --fs-content-fg: #1F1F1F;     /* 正文：纯深黑 */
   --fs-toc-fg: #616161;         /* 右侧：中灰 */
   --fs-bg-active: rgba(134, 65, 169, 0.05); 
