@@ -1623,34 +1623,41 @@ Fashion Star Wiki - V21.0 (Stable Base)
 
 
 /* =============以下是显示Table of contents 变更为对应的On this page以及对应语言的修改==== */
-/* 1. 针对右侧目录标题容器：隐藏原始文字流 */
+/* --- 终极多语言标题替换方案 --- */
+
+/* 1. 针对所有语言：先隐藏原始的文字节点 */
 .md-nav--secondary .md-nav__title[for="__toc"] {
-    font-size: 0 !important;
-    line-height: 0 !important;
+    font-size: 0 !important; /* 隐藏原始文本节点 */
 }
 
-/* 2. 恢复图标 span 的显示（它是 label 的第一个子元素） */
+/* 2. 保持图标 span 可见 */
 .md-nav--secondary .md-nav__title[for="__toc"] .md-nav__icon {
-    font-size: 1.1rem !important;
-    line-height: 1.5 !important;
-    display: inline-block !important;
-    vertical-align: middle;
+    font-size: 1.2rem !important; /* 恢复图标大小 */
     margin-right: 0.5rem;
-}
-
-/* 3. 注入新文字：利用 ::after 模拟原生文字节点 */
-.md-nav--secondary .md-nav__title[for="__toc"]::after {
-    font-size: 0.64rem !important; /* 恢复正常字号 */
-    font-weight: 700 !important;
     vertical-align: middle;
-    display: inline-block !important;
-    line-height: 1.5 !important;
 }
 
-/* 4. 根据页面语言精准匹配内容 */
-/* 这里的 [lang="xx"] 会自动识别 i18n 插件生成的页面语种 */
-[lang="en"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "On this page"; }
-[lang="es"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "En esta página"; }
-[lang="fr"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "Sur cette page"; }
-[lang="de"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "Auf dieser Seite"; }
-[lang="ja"] .md-nav--secondary .md-nav__title[for="__toc"]::after { content: "このページの内容"; }
+/* 3. 注入通用的新文字（默认英文） */
+.md-nav--secondary .md-nav__title[for="__toc"]::after {
+    content: "On this page";
+    font-size: 0.64rem; /* 恢复文字大小 */
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+/* 4. 根据 HTML 的 lang 属性自动切换翻译 */
+[lang="es"] .md-nav--secondary .md-nav__title[for="__toc"]::after {
+    content: "En esta página";
+}
+
+[lang="fr"] .md-nav--secondary .md-nav__title[for="__toc"]::after {
+    content: "Sur cette page";
+}
+
+[lang="de"] .md-nav--secondary .md-nav__title[for="__toc"]::after {
+    content: "Auf dieser Seite";
+}
+
+[lang="ja"] .md-nav--secondary .md-nav__title[for="__toc"]::after {
+    content: "このページの内容";
+}
