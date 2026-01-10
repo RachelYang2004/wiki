@@ -1,8 +1,8 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
+Fashion Star Wiki - V25.8 (Universal Clean - Multi-Device Fix)
 - 整合：1380px 宽度、3px 悬浮竖线、FS 专属深黑模式
-- 修复：针对 DevTools 发现的 SVG path 进行定点爆破，彻底移除默认 Logo
+- 修复：全端同步爆破默认 Logo（涵盖桌面 Header 与移动端 Nav Drawer）
 - 翻译：右侧 TOC 多语言自动修复
 ==========================================================================
 */
@@ -15,51 +15,56 @@ Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
   --md-accent-fg-color: var(--fs-accent);
   
   /* 浅色模式文字颜色 */
-  --fs-leftnav-fg: #444746;     /* 左侧：Gemini灰黑 */
-  --fs-content-fg: #1F1F1F;     /* 正文：纯深黑 */
-  --fs-toc-fg: #616161;         /* 右侧：中灰 */
+  --fs-leftnav-fg: #444746;
+  --fs-content-fg: #1F1F1F;
+  --fs-toc-fg: #616161;
   --fs-bg-active: rgba(134, 65, 169, 0.05); 
 }
 
 /* 深色模式 (Slate Scheme) 变量覆盖 */
 [data-md-color-scheme="slate"] {
   --fs-divider: rgba(255,255,255,0.10);
-  --md-default-bg-color: #131314;        /* 极黑背景 */
+  --md-default-bg-color: #131314;
   --md-default-bg-color--light: #1e1f20;
   --md-default-fg-color: #e3e3e3;
   --md-default-fg-color--light: #8e918f;
   --md-code-bg-color: #1e1f20;
   
   /* 深色模式文字颜色 */
-  --fs-leftnav-fg: #C4C7C5;     /* 左侧：浅灰 */
-  --fs-content-fg: #E3E3E3;     /* 正文：近白 */
-  --fs-toc-fg: #8E918F;         /* 右侧：中灰 */
+  --fs-leftnav-fg: #C4C7C5;
+  --fs-content-fg: #E3E3E3;
+  --fs-toc-fg: #8E918F;
   --fs-bg-active: rgba(134, 65, 169, 0.15);
 }
 
-/* 2. 顶部导航栏清理 (Ultra Header Clean-up) */
-/* 针对你通过 DevTool 发现的 path 及其父级 svg 进行深度隐藏 */
+/* 2. 顶部导航栏与移动端抽屉清理 (Universal Header Clean-up) */
+/* 1. 桌面端 Logo 容器 
+   2. 桌面端 SVG 及 Path
+   3. 移动端侧边栏顶部的图标 (md-nav__title 里的图标)
+*/
+.md-header__button.md-logo,
 .md-header__button.md-logo svg,
 .md-header__button.md-logo path,
-.md-header__button.md-logo .md-icon {
+.md-nav__title[for="__drawer"] .md-nav__icon,
+.md-nav__title .md-logo svg,
+.md-nav__title .md-logo img {
   display: none !important;
   visibility: hidden !important;
-  opacity: 0 !important;
   width: 0 !important;
   height: 0 !important;
 }
 
-/* 移除 Logo 区域的占位宽度和间距 */
-.md-header__button.md-logo {
-  display: none !important; /* 尝试直接关掉整个 Logo 按钮容器 */
-}
-
-/* 让站点名称直接左对齐 */
+/* 修正间距：让站点名称在所有端都自然左对齐 */
 .md-header__title {
   margin-left: 0 !important;
 }
 .md-header__ellipsis {
-  padding-left: 0 !important;
+  padding-left: 0.5rem !important; /* 桌面端文字微调 */
+}
+
+/* 特别修复移动端：去掉侧边栏顶部文字前面的空白 */
+.md-nav__title .md-logo {
+  display: none !important;
 }
 
 /* 3. 布局 (Layout) - 1380px 黄金宽度与分割线 */
@@ -67,8 +72,6 @@ Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
   .md-grid {
     max-width: 1380px !important;
   }
-  
-  /* 内容区左侧微阴影分割线 - 增强空间感 */
   .md-content {
     box-shadow: inset 1px 0 0 var(--fs-divider) !important;
   }
@@ -83,14 +86,12 @@ Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
   transition: background-color 0.25s, color 0.25s;
 }
 
-/* 选中状态文字高亮与背景 */
 .md-sidebar--primary .md-nav__item--active > .md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
   background-color: var(--fs-bg-active);
 }
 
-/* 3px 悬浮竖线实现 */
 .md-sidebar--primary .md-nav__item--active > .md-nav__link::before {
   content: "";
   position: absolute;
@@ -122,12 +123,10 @@ Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
   visibility: visible !important;
 }
 
-/* 多语言映射 */
 [lang="en"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "On this page"; }
 [lang="es"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "En esta página"; }
 [lang="ja"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "このページの内容"; }
 
-/* 右侧 TOC 链接颜色控制 */
 .md-sidebar--secondary .md-nav__link {
   color: var(--fs-toc-fg);
   font-size: 12.8px;
@@ -141,13 +140,11 @@ Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
 .md-typeset {
   color: var(--fs-content-fg);
 }
-
 .md-typeset h1, .md-typeset h2, .md-typeset h3, 
 .md-typeset h4, .md-typeset h5, .md-typeset h6 {
   font-weight: 700 !important;
   color: var(--fs-content-fg) !important;
 }
-
 .md-typeset h1 { 
   color: var(--fs-accent) !important; 
 }
@@ -158,7 +155,6 @@ Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
   border: 1px solid var(--fs-divider) !important;
   width: 100%;
 }
-
 .md-typeset table:not([class]) th, 
 .md-typeset table:not([class]) td {
   word-break: keep-all !important; 
@@ -166,7 +162,6 @@ Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
   padding: 10px 12px !important;
   border-right: 1px solid var(--fs-divider) !important;
 }
-
 .md-typeset table:not([class]) th {
   background-color: var(--md-default-bg-color--lightest);
 }
