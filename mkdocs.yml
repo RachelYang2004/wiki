@@ -17,6 +17,7 @@ theme:
     - navigation.tracking    # sync URL hash
     - content.code.copy      # copy code button
     - toc.follow             # right TOC follows scroll
+    - content.tabs.link    # 联动 Tab 标签页
 
   palette:
     # light
