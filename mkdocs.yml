@@ -9,7 +9,7 @@ theme:
   font:
     text: Roboto             # 官方推荐字体，阅读感最好
     code: Roboto Mono        # 代码等宽字体
-  logo: assets/favicon.png
+  logo: false
   favicon: assets/favicon.png
   custom_dir: docs/overrides  # Theme overrides directory (keep it under /docs so Actions sparse-checkout won't miss it)
 
