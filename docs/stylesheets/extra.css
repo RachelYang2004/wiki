@@ -1,10 +1,10 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V29.7 (Full - Intelligent Table & 100px Padded Images)
-- 专项：图片左右 padding 增加至 100px，对齐工业视觉中轴
-- 表格：移除 fixed 布局，恢复 auto 宽度分配，解决单元格异常换行问题
-- 细节：表头 (th) 禁止换行，边框维持 0.5px 极细精密感
-- 风格：H1-H6 延续 700 字重正文色，彻底去紫色化
+Fashion Star Wiki - V29.8 (Full - Padded Images & No-Wrap Tables)
+- 专项：图片保持 100px padding 并强制居中
+- 表格：取消左右 padding，恢复满幅对齐，并强制单元格内容禁止换行
+- 交互：当表格过长时将自动启用横向滚动，确保单词与数字的完整性
+- 风格：H1-H6 延续 700 字重正文色，边框维持 0.5px 精密感
 ==========================================================================
 */
 
@@ -52,9 +52,7 @@ Fashion Star Wiki - V29.7 (Full - Intelligent Table & 100px Padded Images)
   padding-left: 20px !important; 
 }
 .md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link,
-.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link span,
-.md-nav__item--level--1 .md-nav__link,
-.md-nav__item--level--1 .md-nav__link .md-ellipsis {
+.md-nav--primary > .md-nav__list > .md-nav__item > .md-nav__link span {
   font-weight: 700 !important;
 }
 .md-sidebar--primary .md-nav__item--active > .md-nav__link {
@@ -87,53 +85,48 @@ Fashion Star Wiki - V29.7 (Full - Intelligent Table & 100px Padded Images)
   margin-top: 1.6rem !important;
 }
 
-/* 7. 图片 100px Padding 优化 */
+/* 7. 图片 100px Padding + 居中优化 */
 .md-typeset img {
   padding: 0 100px !important;
   box-sizing: border-box !important;
-  display: block;
-  margin: 1.5rem auto !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
-/* 移动端恢复小边距 */
+/* 移动端恢复 */
 @media screen and (max-width: 44.9375em) {
   .md-typeset img { padding: 0 10px !important; }
 }
 
-/* 8. 表格智能布局 (Auto Width Strategy) */
+/* 8. 表格满幅对齐 + 单词防换行建议 */
 .md-typeset__table {
-  padding: 0 100px !important; /* 同步图片边距 */
-  overflow: auto;
-}
-
-@media screen and (max-width: 44.9375em) {
-  .md-typeset__table { padding: 0 10px !important; }
+  padding: 0 !important; /* 取消表格容器 padding */
+  overflow-x: auto !important; /* 当内容过宽时启用横向滚动 */
+  margin: 1.5rem 0 !important;
 }
 
 .md-typeset table:not([class]) {
   width: 100% !important;
+  min-width: 100% !important;
   display: table !important;
   border-collapse: collapse !important;
   border: 0.5px solid var(--fs-divider) !important; 
   font-size: 14px !important;
-  margin: 1rem 0 !important;
-  table-layout: auto !important; /* 关键：让浏览器根据内容自动调整列宽 */
+  table-layout: auto !important; 
 }
 
 .md-typeset table:not([class]) th, 
 .md-typeset table:not([class]) td {
   border: 0.5px solid var(--fs-divider) !important;
   padding: 10px 15px !important;
+  /* 建议：强制不换行，确保单词和数字完整 */
+  white-space: nowrap !important; 
 }
 
 .md-typeset table:not([class]) th {
   background-color: var(--md-default-bg-color--light) !important;
   font-weight: 700 !important;
-  white-space: nowrap !important; /* 强制表头标题不换行 */
-}
-
-.md-typeset table:not([class]) td {
-  word-break: normal !important; /* 恢复正常换行，配合 auto 布局 */
 }
 
 /* 奇偶行背景 */
