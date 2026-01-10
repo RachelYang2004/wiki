@@ -174,19 +174,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
   font-size: 12.8px !important;
 }
 
-/* Title: visually rename to "On this page" */
-.md-sidebar--secondary .md-nav--secondary .md-nav__title{
-  font-size: 0 !important;
-  color: transparent !important;
-  margin-bottom: 0.25rem !important;
-  position: relative !important;
-}
-.md-sidebar--secondary .md-nav--secondary .md-nav__title::before{
-  content: "On this page" !important;
-  font-size: 12.8px !important;
-  color: var(--md-default-fg-color--light) !important;
-  letter-spacing: 0.02em;
-}
 
 /* Link spacing */
 .md-sidebar--secondary .md-nav--secondary .md-nav__link,
@@ -752,19 +739,6 @@ Fashion Star Wiki - V21.0 (Stable Base)
   font-size: 12.8px !important;
 }
 
-/* Title: visually rename to "On this page" */
-.md-sidebar--secondary .md-nav--secondary .md-nav__title{
-  font-size: 0 !important;
-  color: transparent !important;
-  margin-bottom: 0.25rem !important;
-  position: relative !important;
-}
-.md-sidebar--secondary .md-nav--secondary .md-nav__title::before{
-  content: "On this page" !important;
-  font-size: 12.8px !important;
-  color: var(--md-default-fg-color--light) !important;
-  letter-spacing: 0.02em;
-}
 
 /* Link spacing */
 .md-sidebar--secondary .md-nav--secondary .md-nav__link,
