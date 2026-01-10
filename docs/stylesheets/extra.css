@@ -1,8 +1,8 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V27.6 (Full - Strict 3px Visual Alignment)
+Fashion Star Wiki - V27.7 (Full - Clip-Path Precision)
 - 版本策略：全量提供，版本号严格递增
-- 专项：利用 content-box 剪裁技术，强行将滚动条视觉宽度锁定为 3px 直角
+- 专项：利用 clip-path 物理切边技术，强制视觉呈现严格 3px 直角滚动条
 - 修复：全一级目录（含 Home）加粗，且全端 Logo 暴力清理
 - 包含：右侧 TOC 多语言修复、表格 Seeed 风格优化、正文阅读感提升
 ==========================================================================
@@ -42,13 +42,11 @@ Fashion Star Wiki - V27.6 (Full - Strict 3px Visual Alignment)
   position: absolute !important; pointer-events: none !important; 
   opacity: 0 !important; margin: 0 !important; padding: 0 !important;
 }
-.md-header__title { margin-left: 0 !important; }
 .md-header__ellipsis { padding-left: 0.5rem !important; }
 
-/* 3. 极简 3px 直角滚动条 (Scrollbar content-box Fix) */
+/* 3. 极简 3px 直角滚动条 (Clip-Path Brute Force) */
 ::-webkit-scrollbar {
-  width: 6px !important;    /* 物理总宽度 */
-  height: 6px !important;
+  width: 10px !important;    /* 物理设宽一点，防止浏览器忽略 */
 }
 ::-webkit-scrollbar-track {
   background: transparent !important;
@@ -56,9 +54,8 @@ Fashion Star Wiki - V27.6 (Full - Strict 3px Visual Alignment)
 ::-webkit-scrollbar-thumb {
   background-color: transparent; 
   border-radius: 0 !important; 
-  /* 核心逻辑：通过 1.5px 透明边框，将中间 3px 的内容区“挤”出来 */
-  border: 1.5px solid transparent !important;
-  background-clip: content-box !important;
+  /* 核心逻辑：只显示滚动条区域左侧 3px 的矩形，其余部分强制裁剪掉 */
+  clip-path: inset(0 7px 0 0) !important; 
 }
 /* 交互显现 */
 body:hover::-webkit-scrollbar-thumb,
@@ -76,7 +73,6 @@ body:hover::-webkit-scrollbar-thumb,
   color: var(--fs-leftnav-fg) !important;
   position: relative;
   padding-left: 20px !important; 
-  transition: color 0.25s;
 }
 
 /* 顶级目录（Home等）强力加粗逻辑 */
