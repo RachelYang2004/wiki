@@ -1,9 +1,8 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V25.5 (Final Clean & Integrated)
+Fashion Star Wiki - V25.7 (Ultra Clean - SVG Path Fix)
 - 整合：1380px 宽度、3px 悬浮竖线、FS 专属深黑模式
-- 修复：强制隐藏 YAML 关不掉的默认 Material 图标占位符
-- 增强：正文、侧边栏多模式色彩对比度均衡
+- 修复：针对 DevTools 发现的 SVG path 进行定点爆破，彻底移除默认 Logo
 - 翻译：右侧 TOC 多语言自动修复
 ==========================================================================
 */
@@ -38,15 +37,29 @@ Fashion Star Wiki - V25.5 (Final Clean & Integrated)
   --fs-bg-active: rgba(134, 65, 169, 0.15);
 }
 
-/* 2. 顶部导航栏清理 (Header Clean-up) */
-/* 隐藏 YAML 设置为 false 后依然残留的默认 Material 图标 */
+/* 2. 顶部导航栏清理 (Ultra Header Clean-up) */
+/* 针对你通过 DevTool 发现的 path 及其父级 svg 进行深度隐藏 */
+.md-header__button.md-logo svg,
+.md-header__button.md-logo path,
 .md-header__button.md-logo .md-icon {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-/* 调整站点名称位置，填补图标消失后的空白 */
+/* 移除 Logo 区域的占位宽度和间距 */
+.md-header__button.md-logo {
+  display: none !important; /* 尝试直接关掉整个 Logo 按钮容器 */
+}
+
+/* 让站点名称直接左对齐 */
 .md-header__title {
-  margin-left: 0.4rem !important;
+  margin-left: 0 !important;
+}
+.md-header__ellipsis {
+  padding-left: 0 !important;
 }
 
 /* 3. 布局 (Layout) - 1380px 黄金宽度与分割线 */
@@ -97,12 +110,10 @@ Fashion Star Wiki - V25.5 (Final Clean & Integrated)
   padding: 0.8rem 0 !important;
 }
 
-/* 彻底隐藏怪符号 */
 .md-sidebar--secondary .md-nav__title[for="__toc"] .md-nav__icon {
   display: none !important;
 }
 
-/* 注入伪元素标题文本 */
 .md-sidebar--secondary .md-nav__title[for="__toc"]::after {
   font-size: 12.8px !important;
   font-weight: 700 !important;
