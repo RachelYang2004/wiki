@@ -44,6 +44,26 @@ theme:
         icon: fashion/tech-moon
         name: Switch to dark mode
 
+extra:
+  sitemap:
+    filename: sitemap.xml
+  translations:
+    # 英文版提示
+    en:
+      edit.link.title: "Edit on GitHub"
+      toc.title: "On this page"
+    # 西班牙语提示
+    es:
+      edit.link.title: "Editar en GitHub"
+    # 法语提示
+    fr:
+      edit.link.title: "Modifier sur GitHub"
+    # 德语提示
+    de:
+      edit.link.title: "Auf GitHub bearbeiten"
+    # 日语提示
+    ja:
+      edit.link.title: "GitHubで編集"
 
 extra:
   translations:
