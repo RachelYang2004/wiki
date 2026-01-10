@@ -52,23 +52,7 @@ extra_css:
 extra:
   sitemap:
     filename: sitemap.xml
-    
-  translations:
-    en:
-      data:
-        toc.title: "On this page"
-    es:
-      data:
-        toc.title: "En esta página"
-    fr:
-      data:
-        toc.title: "Sur cette page"
-    de:
-      data:
-        toc.title: "Auf dieser Seite"
-    ja:
-      data:
-        toc.title: "このページの内容"
+
 
 markdown_extensions:
   - admonition
