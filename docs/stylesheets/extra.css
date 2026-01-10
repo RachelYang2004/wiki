@@ -1,10 +1,11 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V30.8 (Final Navigation Hierarchy)
-- 导航一级：[16px + 700] 仅限第一层级目录（含 Home）强制加粗
-- 导航非一级(下拉)：[16px + 400] 只要是带下拉的二级及以下项目，不加粗
-- 导航文章：[14.5px + 400] 所有最末级纯文章链接，设为 14.5px
-- 表格：回归 V29.2 对齐逻辑，维持 0.5px 极细线
+Fashion Star Wiki - V31.0 (Nav Correction & Hierarchy)
+- 导航一级：[16px + 700] 顶级项目（含 Home）保持加粗
+- 导航非一级(下拉)：[16px + 400] 二级及以下带下拉的项目修正为 16px 且不加粗
+- 导航文章：[14.5px + 400] 末级文章标题维持 14.5px
+- 表格：延续 V29.2 对齐基准，0.5px 极细线，无额外 Padding 干扰
+- 图片：保持 block 居中，无额外 Padding
 - 风格：H1-H6 统一 700 字重正文色，去紫色化
 ==========================================================================
 */
@@ -45,14 +46,14 @@ Fashion Star Wiki - V30.8 (Final Navigation Hierarchy)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航 (精细层级控制 - V30.8) */
+/* 4. 左侧导航 (精细层级控制 - V31.0) */
 
-/* A. 基础样式设置 */
+/* A. 基础通用设置 */
 .md-sidebar--primary .md-nav__link {
   color: var(--fs-leftnav-fg) !important;
   position: relative;
   padding-left: 20px !important; 
-  font-weight: 400 !important; /* 默认不加粗 */
+  font-weight: 400 !important; 
 }
 
 /* B. [一级目录] Home 和顶级项目：16px + 700加粗 */
@@ -63,22 +64,23 @@ Fashion Star Wiki - V30.8 (Final Navigation Hierarchy)
   font-size: 16px !important;
 }
 
-/* C. [非一级但带下拉] 只要是二级及以下的父级项目：16px + 不加粗 */
+/* C. [非一级但带下拉] 二级及以下父级项目：修正为 16px + 不加粗 */
 .md-nav__item--level--2.md-nav__item--nested > .md-nav__link,
 .md-nav__item--level--3.md-nav__item--nested > .md-nav__link,
+.md-nav__item--level--4.md-nav__item--nested > .md-nav__link,
 .md-nav__item--level--2.md-nav__item--nested > label.md-nav__link,
 .md-nav__item--level--3.md-nav__item--nested > label.md-nav__link {
   font-size: 16px !important;
   font-weight: 400 !important;
 }
 
-/* D. [文章标题] 非一级且非下拉的最末级：14.5px + 不加粗 */
+/* D. [文章标题] 非一级且非下拉的末级链接：14.5px + 不加粗 */
 .md-nav__item:not(.md-nav__item--nested):not(.md-nav__item--level--1) > .md-nav__link {
   font-size: 14.5px !important;
   font-weight: 400 !important;
 }
 
-/* E. 选中状态：保持 700 字重以示明确引导 */
+/* E. 选中状态：紫色标识 + 保持 700 强调 */
 .md-sidebar--primary .md-nav__item--active > .md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
