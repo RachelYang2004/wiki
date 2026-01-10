@@ -1,9 +1,10 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V25.9 (Final Pure Style)
-- 整合：1380px 宽度、3px 悬浮竖线、FS 专属深黑模式
+Fashion Star Wiki - V26.0 (Perfect Alignment)
+- 整合：1380px 宽度、3px 贯穿式选中竖线、FS 专属深黑模式
+- 修复：左侧选中竖线高度现在上下完全顶满容器 (10.8px -> 100%)
 - 修复：全端（桌面+移动端）彻底爆破默认 Logo 图标
-- 优化：移除左侧导航选中项的背景颜色，仅保留文字高亮与竖线
+- 优化：移除左侧导航选中项背景色，仅保留文字高亮
 - 翻译：右侧 TOC 多语言自动修复
 ==========================================================================
 */
@@ -15,13 +16,11 @@ Fashion Star Wiki - V25.9 (Final Pure Style)
   --md-primary-fg-color: var(--fs-accent);
   --md-accent-fg-color: var(--fs-accent);
   
-  /* 浅色模式文字颜色 */
   --fs-leftnav-fg: #444746;
   --fs-content-fg: #1F1F1F;
   --fs-toc-fg: #616161;
 }
 
-/* 深色模式 (Slate Scheme) 变量覆盖 */
 [data-md-color-scheme="slate"] {
   --fs-divider: rgba(255,255,255,0.10);
   --md-default-bg-color: #131314;
@@ -30,7 +29,6 @@ Fashion Star Wiki - V25.9 (Final Pure Style)
   --md-default-fg-color--light: #8e918f;
   --md-code-bg-color: #1e1f20;
   
-  /* 深色模式文字颜色 */
   --fs-leftnav-fg: #C4C7C5;
   --fs-content-fg: #E3E3E3;
   --fs-toc-fg: #8E918F;
@@ -52,7 +50,6 @@ Fashion Star Wiki - V25.9 (Final Pure Style)
   padding: 0 !important;
 }
 
-/* 修正间距：让站点名称在所有端都自然左对齐 */
 .md-header__title {
   margin-left: 0 !important;
 }
@@ -70,7 +67,7 @@ Fashion Star Wiki - V25.9 (Final Pure Style)
   }
 }
 
-/* 4. 左侧导航 (Navigation) - 3px 悬浮圆角竖线 */
+/* 4. 左侧导航 (Navigation) - 3px 满高选中竖线 */
 .md-sidebar--primary .md-nav__link {
   font-size: 16px !important;
   color: var(--fs-leftnav-fg) !important;
@@ -79,23 +76,24 @@ Fashion Star Wiki - V25.9 (Final Pure Style)
   transition: color 0.25s;
 }
 
-/* 选中状态：移除背景色，仅保留文字紫色加粗 */
+/* 选中状态：文字加粗高亮，无背景 */
 .md-sidebar--primary .md-nav__item--active > .md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
-  background-color: transparent !important; /* 彻底移除背景颜色 */
+  background-color: transparent !important;
 }
 
-/* 3px 悬浮竖线实现 */
+/* 3px 满高竖线实现：通过 top:0 和 bottom:0 顶满容器 */
 .md-sidebar--primary .md-nav__item--active > .md-nav__link::before {
   content: "";
   position: absolute;
-  left: 8px;
-  top: 0.25rem;
-  bottom: 0.25rem;
-  width: 3px;
+  left: 0;        /* 竖线靠最左侧边缘 */
+  top: 0;         /* 上顶到头 */
+  bottom: 0;      /* 下顶到头 */
+  width: 3px;     /* 宽度 3px */
   background: var(--fs-accent);
-  border-radius: 2px;
+  /* 去掉 border-radius 以获得纯直线的硬朗感，如果想要微圆角可以设为 1px */
+  border-radius: 0; 
 }
 
 /* 5. 右侧目录 (TOC) - 多语言标题修复 */
