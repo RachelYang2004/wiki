@@ -1,8 +1,8 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V27.7 (Full - Clip-Path Precision)
+Fashion Star Wiki - V27.8 (Full - Linear Gradient Precision)
 - 版本策略：全量提供，版本号严格递增
-- 专项：利用 clip-path 物理切边技术，强制视觉呈现严格 3px 直角滚动条
+- 专项：使用 linear-gradient 视觉欺骗法，强行在滑块中心渲染 3px 直角细线
 - 修复：全一级目录（含 Home）加粗，且全端 Logo 暴力清理
 - 包含：右侧 TOC 多语言修复、表格 Seeed 风格优化、正文阅读感提升
 ==========================================================================
@@ -42,29 +42,38 @@ Fashion Star Wiki - V27.7 (Full - Clip-Path Precision)
   position: absolute !important; pointer-events: none !important; 
   opacity: 0 !important; margin: 0 !important; padding: 0 !important;
 }
+.md-header__title { margin-left: 0 !important; }
 .md-header__ellipsis { padding-left: 0.5rem !important; }
 
-/* 3. 极简 3px 直角滚动条 (Clip-Path Brute Force) */
+/* 3. 极简 3px 直角滚动条 (Gradient Deception Fix) */
 ::-webkit-scrollbar {
-  width: 10px !important;    /* 物理设宽一点，防止浏览器忽略 */
+  width: 10px !important;    /* 物理宽度放大，确保护栏稳定 */
 }
 ::-webkit-scrollbar-track {
   background: transparent !important;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: transparent; 
-  border-radius: 0 !important; 
-  /* 核心逻辑：只显示滚动条区域左侧 3px 的矩形，其余部分强制裁剪掉 */
-  clip-path: inset(0 7px 0 0) !important; 
+  background-color: transparent !important; /* 滑块背景全透明 */
+  border-radius: 0 !important;
+  /* 核心逻辑：利用渐变色在 10px 的滑块中间画一条 3px 的实色线 */
+  background-image: linear-gradient(
+    to right, 
+    transparent 0px, 
+    transparent 7px, 
+    var(--fs-accent-light) 7px, 
+    var(--fs-accent-light) 10px
+  ) !important;
 }
-/* 交互显现 */
-body:hover::-webkit-scrollbar-thumb,
-.md-sidebar__scrollwrap:hover::-webkit-scrollbar-thumb,
-.md-content__inner:hover::-webkit-scrollbar-thumb {
-  background-color: var(--fs-accent-light) !important;
-}
+
+/* 交互状态：鼠标直触滑块时，颜色变深 */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--fs-accent) !important;
+  background-image: linear-gradient(
+    to right, 
+    transparent 0px, 
+    transparent 7px, 
+    var(--fs-accent) 7px, 
+    var(--fs-accent) 10px
+  ) !important;
 }
 
 /* 4. 左侧导航 (Navigation) - 3px 满高竖线 & 根目录加粗 */
@@ -73,6 +82,7 @@ body:hover::-webkit-scrollbar-thumb,
   color: var(--fs-leftnav-fg) !important;
   position: relative;
   padding-left: 20px !important; 
+  transition: color 0.25s;
 }
 
 /* 顶级目录（Home等）强力加粗逻辑 */
