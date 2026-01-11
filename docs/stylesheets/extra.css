@@ -1,11 +1,11 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V33.4 (Weight Stress Test)
-- 基础：基于 V33.3 逻辑修正版
-- Section 标题：[16px] 锁定字号，字重/颜色遵循原生。
-- 父目录(带下拉)：[16px] 字重显式设定为 550 [动作 - 逻辑验证项]。
-- 文章标题：[14.5px] 保持默认，颜色锁定。
-- 非选中颜色：[#444746 / #C4C7C5]。
+Fashion Star Wiki - V33.5 (Parent Category 500 Weight)
+- 基础：基于 V33.4 验证版
+- 父目录(带下拉)：[16px] 字重下调至 500 [动作]
+- Section 标题：[16px] 锁定字号，字重/颜色遵循原生
+- 文章标题：[14.5px] 保持默认
+- 非选中颜色：[#444746 / #C4C7C5] 
 ==========================================================================
 */
 
@@ -44,7 +44,7 @@ Fashion Star Wiki - V33.4 (Weight Stress Test)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏逻辑 (V33.4) */
+/* 4. 左侧导航栏逻辑 (V33.5) */
 
 /* [A] 全局非选中颜色 */
 .md-nav__link, 
@@ -52,20 +52,19 @@ Fashion Star Wiki - V33.4 (Weight Stress Test)
   color: var(--fs-nav-inactive);
 }
 
-/* [B] Section 标题：仅字号 16px，不干涉字重 */
+/* [B] Section 标题：仅字号 16px */
 .md-nav__title {
   font-size: 16px !important;
 }
 
-/* [C] 父目录（带下拉箭头）：字号 16px + 字重 550 */
-/* 精准锁定包含子项的目录项 */
+/* [C] 父目录（带下拉箭头）：字号 16px + 精准字重 500 */
 .md-nav__item--nested > .md-nav__link,
 .md-nav__item--nested > label.md-nav__link {
   font-size: 16px !important;
-  font-weight: 550 !important; 
+  font-weight: 500 !important; 
 }
 
-/* [D] 文章标题（末级链接）：字号 14.5px */
+/* [D] 文章标题：字号 14.5px */
 .md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
   font-size: 14.5px !important;
 }
@@ -79,7 +78,7 @@ Fashion Star Wiki - V33.4 (Weight Stress Test)
   font-weight: 700;
 }
 
-/* [F] 确保 Hover 遵循原生紫色 */
+/* [F] Hover 遵循原生紫色反馈 */
 .md-nav__link:hover {
   color: var(--fs-accent);
 }
