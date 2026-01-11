@@ -1,9 +1,10 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V32.0 (Clean Slate Reset)
-- 状态：已删除所有左侧导航栏自定义 CSS，完全交由原生 Material 接管。
-- 目的：适配 navigation.indexes 并消除代码补丁冲突。
-- 保留项：顶部隐藏、滚动条、正文/表格工业风、布局平衡。
+Fashion Star Wiki - V32.1 (Navigation Precision Refinement)
+- 颜色：深浅模式非选中色精准控制 [#444746 / #C4C7C5]
+- Section 标题：[16px] 激活时 [700 + 紫色]，无竖线
+- 父目录(带下拉)：[16px] 激活时 [700 + 紫色 + 左侧竖线]
+- 文章：激活时 [700 + 紫色 + 左侧竖线]
 ==========================================================================
 */
 
@@ -13,6 +14,7 @@ Fashion Star Wiki - V32.0 (Clean Slate Reset)
   --fs-divider: rgba(0,0,0,0.15); 
   --md-primary-fg-color: var(--fs-accent);
   --md-accent-fg-color: var(--fs-accent);
+  --fs-leftnav-fg: #444746; /* 浅色模式非选中色 */
   --fs-content-fg: #1F1F1F;
 }
 
@@ -21,6 +23,7 @@ Fashion Star Wiki - V32.0 (Clean Slate Reset)
   --md-default-bg-color: #131314;
   --md-default-bg-color--light: #1e1f20;
   --md-default-fg-color: #e3e3e3;
+  --fs-leftnav-fg: #C4C7C5; /* 深色模式非选中色 */
   --fs-content-fg: #E3E3E3;
 }
 
@@ -40,12 +43,48 @@ Fashion Star Wiki - V32.0 (Clean Slate Reset)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - 已归零 (完全交由原生控制) */
-/* 此处之前的所有 .md-nav__link, .md-nav__title, .md-nav__item 自定义已删除。
-   如果后续需要调整，我们将从原生表现开始按需添加。
-*/
+/* 4. 左侧导航栏精修 (V32.1) */
 
-/* 5. 右侧目录 (TOC) 多语言 */
+/* A. 基础颜色与字号 */
+.md-nav__link {
+  color: var(--fs-leftnav-fg) !important;
+  font-weight: 400;
+}
+
+/* B. Section 标题与父目录 (16px) */
+.md-nav__title,
+.md-nav__item--nested > .md-nav__link,
+.md-nav__item--nested > label.md-nav__link {
+  font-size: 16px !important;
+}
+
+/* C. 激活状态通用：加粗 700 + 紫色 */
+/* 涵盖 Section 标题、父目录、文章 */
+.md-nav__item--active > .md-nav__link,
+.md-nav__item--active > label.md-nav__link,
+.md-nav__title--active {
+  color: var(--fs-accent) !important;
+  font-weight: 700 !important;
+}
+
+/* D. 竖线显示逻辑 */
+/* 规则：激活项显示竖线，但排除 Section 标题 (.md-nav__title) */
+.md-nav__item--active > .md-nav__link::before,
+.md-nav__item--active > label.md-nav__link::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--fs-accent);
+  display: block;
+}
+
+/* 明确取消 Section 标题的竖线（以防继承） */
+.md-nav__title::before {
+  display: none !important;
+}
+
+/* 5. 右侧目录 (TOC) */
 .md-sidebar--secondary .md-nav__title[for="__toc"] {
   font-size: 0 !important; color: transparent !important;
 }
@@ -72,7 +111,7 @@ Fashion Star Wiki - V32.0 (Clean Slate Reset)
   margin: 1.5rem auto !important;
 }
 
-/* 8. 表格细节 (回归 V29.2 工业基准) */
+/* 8. 表格细节 */
 .md-typeset__table { overflow-x: auto !important; }
 .md-typeset table:not([class]) {
   border-collapse: collapse !important;
