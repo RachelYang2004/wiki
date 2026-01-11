@@ -1,9 +1,9 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V39.1 (James V33.8 Base + Strong Isolated TOC Line)
-- 核心逻辑：100% 沿用 James V33.8 的左侧导航、Section 隔离及高亮路径。
-- 唯一改动：为右侧 TOC 区域添加垂直分割线。
-- 隔离技术：使用 aside.md-sidebar--secondary 确保 CSS 逻辑不向左侧溢出。
+Fashion Star Wiki - V39.2 (James V33.8 Base + Precise TOC Line)
+- 核心基准：完全保留 James V33.8 的左侧 Section 隔离与高亮逻辑。
+- 修复目标：根据截图，将 TOC 分割线精准挂载在 nav.md-nav--secondary 上。
+- 对齐逻辑：利用 border-left 实现线效，确保与截图中的绿色 padding 边沿重合。
 ==========================================================================
 */
 
@@ -61,7 +61,6 @@ Fashion Star Wiki - V39.1 (James V33.8 Base + Strong Isolated TOC Line)
   font-size: 14.5px !important;
 }
 
-/* 选中路径高亮逻辑 (James 版核心：子选择器隔离) */
 li.md-nav__item--active > .md-nav__link,
 li.md-nav__item--active > label.md-nav__link {
   color: var(--fs-accent) !important;
@@ -72,24 +71,28 @@ li.md-nav__item--active > label.md-nav__link {
   color: var(--fs-accent);
 }
 
-/* 5. 右侧目录 (TOC) - 强隔离新增分割线 */
-aside.md-sidebar--secondary .md-nav__title[for="__toc"] {
+/* 5. 右侧目录 (TOC) - 精准挂载 */
+
+/* [A] 隐藏原标题并替换 */
+.md-sidebar--secondary .md-nav__title[for="__toc"] {
   font-size: 0 !important;
   color: transparent !important;
 }
-aside.md-sidebar--secondary .md-nav__title[for="__toc"]::after {
+.md-sidebar--secondary .md-nav__title[for="__toc"]::after {
   font-size: 12.8px !important;
   font-weight: 700 !important;
   color: var(--md-default-fg-color--light) !important;
   display: block;
 }
-[lang="en"] aside.md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "On this page"; }
-[lang="zh"] aside.md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "本页目录"; }
+[lang="en"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "On this page"; }
+[lang="zh"] .md-sidebar--secondary .md-nav__title[for="__toc"]::after { content: "本页目录"; }
 
-/* TOC 边框线逻辑 */
+/* [B] 分割线精准实现 - 针对截图中的 nav.md-nav--secondary */
 @media screen and (min-width: 60em) {
+  /* 仅针对右侧 aside 下的 secondary 导航容器 */
   aside.md-sidebar--secondary nav.md-nav--secondary {
     border-left: 1px solid var(--fs-divider) !important;
+    /* 截图显示原生是 16px，我们用 12px padding + 线宽 + margin 微调实现完美视觉 */
     padding-left: 12px !important;
     margin-left: 4px !important;
   }
@@ -118,7 +121,7 @@ aside.md-sidebar--secondary .md-nav__title[for="__toc"]::after {
   font-weight: 700 !important;
 }
 
-/* 9. 布局平衡 */
+/* 9. 布局平衡 (James V33.8 原版) */
 @media screen and (min-width: 60em) {
   .md-grid { max-width: 1380px !important; }
   .md-content { box-shadow: inset 1px 0 0 var(--fs-divider) !important; }
