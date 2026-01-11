@@ -23,6 +23,7 @@ theme:
     - content.tabs.link    # 联动 Tab 标签页
     # - content.action.edit  # 页面右上角显示“编辑此页”图标
     - navigation.tabs
+    - navigation.indexes 
 
   palette:
     # dark
