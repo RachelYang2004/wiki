@@ -1,4 +1,44 @@
+site_name: Fashion Star Wiki
+site_url: https://wiki.fashionstar.com.hk/
+use_directory_urls: true
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.path
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    - content.code.copy
+    - toc.follow
+    - content.tabs.link
+    - navigation.tabs
+    - i18n.languages
+
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: fashion/tech-moon
+        name: Switch to dark mode
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: fashion/tech-sun
+        name: Switch to light mode
+
+extra_css:
+  - stylesheets/extra.css
+
 plugins:
+  - search
+  - glightbox
+  - include-markdown:
+      rewrite_relative_urls: true
+      dedent: true
   - i18n:
       default_locale: en
       reconfigure_material: true
@@ -32,7 +72,20 @@ plugins:
           Get Ready: 准备工作
           PC Configuration Tool: PC端调试软件
           Web Configuration Tool: 网页版调试工具
-          "C#": "C#"  # 保持原样或翻译为 C#语言
+          "C#": "C#"
+
+# 保持你原有的长 Nav 结构
+nav:
+  - Home: index.md
+  - Uart Bus Servo:
+      - uart_servo/index.md
+      - Protocol: uart_servo/protocols/uart_rs485_protocol.md
+      - Specifications:
+          - RP6-U12H-M: uart_servo/specs/rp6-u12h-m.md
+          # ... (后续内容保持原样)
+      - SDK:
+          - "C#": "uart_servo/sdk/csharp_sdk.md"
+          # ...
 
 nav:
   - Home: index.md
