@@ -1,11 +1,9 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V38.7 (V38.3 Base + Minimal Image Styling)
-- 核心进展：维持 V38.3 完美的左右分割线与左侧 Section 隔离逻辑。
-- 本版目标：
-  1. 约束图片最大宽度为 85%（左右留白）。
-  2. 圆角微调为 4px，保持硬朗风格。
-  3. 移除所有图片阴影，追求极简平面的视觉效果。
+Fashion Star Wiki - V38.8 (Fix Section Logic + Minimal Images)
+- 核心修复：解决点击文章时，父级 Section 标题错误变色加粗的问题。
+- 图片风格：保留 V38.7 (85% 宽度, 4px 圆角, 无阴影)。
+- 侧边栏逻辑：左侧 V33.8 基座，右侧 V38.3 容器线。
 ==========================================================================
 */
 
@@ -44,15 +42,25 @@ Fashion Star Wiki - V38.7 (V38.3 Base + Minimal Image Styling)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 (严格锁定 V33.8 逻辑) */
+/* 4. 左侧导航栏 (深度逻辑修复) */
+
+/* [A] 全局基础 */
 .md-nav__link, .md-nav__title {
   color: var(--fs-nav-inactive);
   transition: color 125ms, font-weight 125ms;
 }
-.md-nav__title {
-  font-size: 16px !important;
+
+/* [B] Section 标题“防火墙” (核心修复) */
+/* 无论父级 li 是否 active，只要是 md-nav__title，强制保持灰色和普通字重 */
+li.md-nav__item .md-nav__title,
+li.md-nav__item--active .md-nav__title,
+li.md-nav__item--section .md-nav__title {
+  color: var(--fs-nav-inactive) !important;
   font-weight: normal !important;
+  background: none !important; /* 防止背景色干扰 */
 }
+
+/* [C] 目录与文章层级字号 */
 .md-nav__item--nested > .md-nav__link,
 .md-nav__item--nested > .md-nav__container > .md-nav__link {
   font-size: 16px !important;
@@ -60,12 +68,17 @@ Fashion Star Wiki - V38.7 (V38.3 Base + Minimal Image Styling)
 .md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
   font-size: 14.5px !important;
 }
+
+/* [D] 选中高亮逻辑 */
+/* 这里的逻辑需要非常小心，只针对 link 和 container，且会被 [B] 的 title 规则覆盖 */
 li.md-nav__item--active > .md-nav__link,
 li.md-nav__item--active > .md-nav__container > .md-nav__link,
 li.md-nav__item--active > label.md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
 }
+
+/* [E] 物理消除竖线 (保持纯净) */
 .md-nav__link::before, .md-nav__container::before, label::before, .md-nav__title::before {
   display: none !important;
   content: none !important;
@@ -73,9 +86,13 @@ li.md-nav__item--active > label.md-nav__link {
 .md-nav__link, .md-nav__container, .md-nav__title {
   padding-left: 0 !important;
 }
-.md-nav__link:hover { color: var(--fs-accent); }
 
-/* 5. 右侧 TOC 栏位 (V38.3 成功逻辑) */
+/* [F] Hover 效果 */
+/* 只有普通的 link 变色，Section Title (md-nav__title) 保持不变或单独定义 */
+.md-nav__link:hover { color: var(--fs-accent); }
+.md-nav__title:hover { cursor: default; color: var(--fs-nav-inactive); }
+
+/* 5. 右侧 TOC 栏位 (V38.3 稳定版) */
 .md-sidebar--secondary .md-nav__title[for="__toc"] {
   font-size: 0 !important;
   color: transparent !important;
@@ -97,7 +114,7 @@ li.md-nav__item--active > label.md-nav__link {
   }
 }
 
-/* 6. 正文样式 / 7. 图片优化 (极简修正) */
+/* 6. 正文样式 / 7. 图片优化 (V38.7 极简版) */
 .md-typeset { color: var(--fs-content-fg); }
 .md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4, .md-typeset h5, .md-typeset h6 { color: var(--fs-content-fg) !important; font-weight: 700 !important; margin-top: 1.6rem !important; }
 
@@ -105,8 +122,8 @@ li.md-nav__item--active > label.md-nav__link {
   display: block !important; 
   margin: 2rem auto !important;
   max-width: 85% !important;   
-  border-radius: 4px !important; /* 调整为 4px */
-  box-shadow: none !important;    /* 彻底取消阴影 */
+  border-radius: 4px !important; 
+  box-shadow: none !important;
 }
 
 /* 8. 表格样式 */
