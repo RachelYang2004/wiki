@@ -1,109 +1,38 @@
-site_name: Fashion Star Wiki
-site_url: https://wiki.fashionstar.com.hk/
-use_directory_urls: true
-
-
-theme:
-  name: material
-  language: en               # 告诉主题：默认的基础语系是英文 (SEO 核心)
-  font:
-    text: Roboto             # 官方推荐字体，阅读感最好
-    code: Roboto Mono        # 代码等宽字体
-  logo: false
-  favicon: assets/favicon.png
-  custom_dir: docs/overrides  # Theme overrides directory (keep it under /docs so Actions sparse-checkout won't miss it)
-
-  features:
-    - navigation.path        # breadcrumb
-    - navigation.indexes     # parent index pages clickable
-    - navigation.top         # back-to-top
-    - navigation.tracking    # sync URL hash
-    - content.code.copy      # copy code button
-    - toc.follow             # right TOC follows scroll
-    - content.tabs.link    # 联动 Tab 标签页
-    # - content.action.edit  # 页面右上角显示“编辑此页”图标
-    - navigation.tabs
-    - navigation.indexes 
-
-  palette:
-    # dark
-    - scheme: slate
-      primary: custom
-      accent: custom
-      toggle:
-        # uses docs/overrides/.icons/fashion/tech-sun.svg
-        icon: fashion/tech-sun
-        name: Switch to light mode
-
-    # light
-    - scheme: default
-      primary: custom
-      accent: custom
-      toggle:
-        # uses docs/overrides/.icons/fashion/tech-moon.svg
-        icon: fashion/tech-moon
-        name: Switch to dark mode
-  
-# 将 sitemap 移出 plugins 列表，放在这里作为 extra 配置（部分版本支持这样降级处理）
-extra:
-  sitemap:
-    filename: sitemap.xml
-
-extra_css:
-  - stylesheets/extra.css
-
-
-markdown_extensions:
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.emoji:
-      emoji_index: !!python/name:pymdownx.emoji.twemoji
-      emoji_generator: !!python/name:pymdownx.emoji.to_svg
-  - pymdownx.caret  # 支持插入符号和下标
-  - pymdownx.tilde  # 支持删除线
-
-hooks:
-  - docs/hooks/gh_alerts.py
-
 plugins:
-  - search
-  - glightbox
-  - include-markdown:
-      rewrite_relative_urls: true
-      dedent: true
   - i18n:
-      default_locale: en          # 将 default_language 改为 default_locale
-      reconfigure_material: true  # 开启此项可以让 SEO 爬虫在不同语言间无缝切换，并自动引导用户到首选语言
-      fallback_to_default: true   # 将 link_to_preferred_support 改为 fallback_to_default
+      default_locale: en
+      reconfigure_material: true
+      fallback_to_default: true
       languages:
-        # 1. 英语 (默认)
         - locale: en
           name: "🇺🇸 English"
           default: true
           build: true
-        # 2. 西班牙语
-        - locale: es
-          name: "🇪🇸 Español"
+        - locale: zh
+          name: "🇨🇳 中文"
           default: false
           build: true
-        # 3. 法语
-        - locale: fr
-          name: "🇫🇷 Français"
-          default: false
-          build: true
-        # 4. 德语
-        - locale: de
-          name: "🇩🇪 Deutsch"
-          default: false
-          build: true
-        # 5. 日语
-        - locale: ja
-          name: "🇯🇵 日本語"
-          default: false
-          build: true
-
-
+      nav_translations:
+        zh:
+          Home: 首页
+          Uart Bus Servo: 串口总线舵机
+          RS485 Bus Servo: RS485总线舵机
+          CAN Bus Servo: CAN总线舵机
+          Protocol: 通讯协议
+          Specifications: 规格参数
+          CAD Files: CAD文件
+          Software: 配套软件
+          SDK: 开发库
+          PLC: 工业PLC
+          Document: 官方文档
+          Robotic Arm: 机械臂
+          StarAI Arm: StarAI机械臂
+          Piper Mate: Piper Mate机械臂
+          Quick Start: 快速入门
+          Get Ready: 准备工作
+          PC Configuration Tool: PC端调试软件
+          Web Configuration Tool: 网页版调试工具
+          "C#": "C#"  # 保持原样或翻译为 C#语言
 
 nav:
   - Home: index.md
