@@ -1,9 +1,9 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V40.10 (Revert to V40.8 + 2.5px Line Width)
-- 核心基座：完全退回 V40.8 (Section 逻辑隔离 + 图片 80% + TOC 分割线)。
-- 唯一改动：将路径竖线宽度从 2px 调整为 2.5px。
-- 物理隔离：维持 V40.8 验证成功的 Section 屏蔽逻辑，确保 Section 标题无竖线。
+Fashion Star Wiki - V40.11 (Stable 2.5px + Home Precision Fix)
+- 核心基座：V40.10 (2.5px 宽度 + Section 逻辑隔离)。
+- Home 修复：使用 :first-child 锁定第一个导航项，确保字体 16px 且无竖线。
+- 逻辑优势：不依赖动态 href 路径，兼容所有页面深度。
 ==========================================================================
 */
 
@@ -42,13 +42,19 @@ Fashion Star Wiki - V40.10 (Revert to V40.8 + 2.5px Line Width)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - James V33.8 完美隔离版 */
+/* 4. 左侧导航栏 - 核心逻辑 */
 
-/* [A] 颜色与字号 */
+/* [A] 颜色与字号基础 */
 .md-nav__link, .md-nav__title {
   color: var(--fs-nav-inactive);
   transition: color 125ms, font-weight 125ms;
 }
+
+/* [B] Home 专项：锁定第一个导航项 (li:first-child) */
+.md-nav__list > .md-nav__item:first-child > .md-nav__link {
+  font-size: 16px !important;
+}
+
 .md-nav__title { font-size: 16px !important; }
 
 .md-nav__item--nested > .md-nav__link,
@@ -59,14 +65,14 @@ Fashion Star Wiki - V40.10 (Revert to V40.8 + 2.5px Line Width)
   font-size: 14.5px !important;
 }
 
-/* [B] 选中高亮 (紫色+加粗) */
+/* [C] 选中高亮 (紫色+加粗) */
 li.md-nav__item--active > .md-nav__link,
 li.md-nav__item--active > label.md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
 }
 
-/* [C] 全路径竖线 (2.5px 宽度 + 全高度) */
+/* [D] 全路径竖线 (2.5px 宽度 + 全高度) */
 li.md-nav__item--active > .md-nav__link,
 li.md-nav__item--active > label.md-nav__link {
   position: relative;
@@ -77,21 +83,21 @@ li.md-nav__item--active > label.md-nav__link::after {
   content: "";
   position: absolute;
   left: -12px;
-  top: 0;         /* 顶满上方 */
-  bottom: 0;      /* 顶满下方 */
-  width: 2.5px;   /* 宽度更新为 2.5px */
+  top: 0;
+  bottom: 0;
+  width: 2.5px;
   background-color: var(--fs-accent);
   display: block !important;
 }
 
-/* [D] Section 物理隔离屏蔽 (继承 V40.8 成功逻辑) */
+/* [E] 屏蔽逻辑：干掉 Section 和 Home 的竖线 */
+/* 锁定第一个 li 屏蔽 Home 线，锁定 --section 屏蔽 Section 线 */
+.md-nav__list > .md-nav__item:first-child > .md-nav__link::after,
 .md-nav__item--section > .md-nav__link::after,
 .md-nav__item--section > label::after,
-.md-nav__title::after,
-[for="__drawer"]::after {
+.md-nav__title::after {
   display: none !important;
   content: none !important;
-  width: 0 !important;
 }
 
 .md-nav__link:hover { color: var(--fs-accent); }
