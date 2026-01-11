@@ -1,10 +1,11 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V32.2 (Navigation Selection Logic Fix)
-- 颜色：非选中态锁定 [#444746 / #C4C7C5]
-- Section 标题：完全回归原生，绝不显示竖线
-- 导航链路：[16px] 父目录与 [14.5px] 文章在选中时统一 [700 + 紫色 + 左竖线]
-- 兼容性：适配 navigation.indexes 模式下的目录点击高亮
+Fashion Star Wiki - V32.3 (Navigation logic - Text Only)
+- 竖线：已移除所有自定义竖线逻辑，完全清空。
+- Section 标题：完全交由原生 Material 控制。
+- 父目录(Nested)：[16px] 激活态 [700 + 紫色]。
+- 文章(末级)：[14.5px] 激活态 [700 + 紫色]。
+- 颜色：非选中态锁定 [#444746 / #C4C7C5]。
 ==========================================================================
 */
 
@@ -43,40 +44,38 @@ Fashion Star Wiki - V32.2 (Navigation Selection Logic Fix)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏精修 (V32.2) */
+/* 4. 左侧导航栏逻辑 (V32.3) */
 
-/* [A] 基础颜色控制 */
+/* [A] 基础颜色控制：非选中态 */
 .md-nav__link {
   color: var(--fs-leftnav-fg) !important;
 }
 
-/* [B] 字号定义：父目录 16px，文章 14.5px */
+/* [B] 字号控制 */
+/* 带下拉或有层级关系的目录：16px */
 .md-nav__item--nested > .md-nav__link,
 .md-nav__item--nested > label.md-nav__link {
   font-size: 16px !important;
 }
+/* 纯文章页面：14.5px */
 .md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
   font-size: 14.5px !important;
 }
 
-/* [C] 激活态高亮：只要处于激活路径，文字变紫加粗 */
-/* 这里排除了 .md-nav__title 确保 Section 标题不被强制变紫色 */
+/* [C] 激活态高亮 (仅限 md-nav__item 内的元素，避开 Section 标题) */
+/* 只要处于 active 路径，文字变紫、加粗 700 */
 .md-nav__item--active > .md-nav__link,
 .md-nav__item--active > label.md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
 }
 
-/* [D] 竖线逻辑：核心修正 */
-/* 仅针对 nav__item 内的链接显示竖线，这会自动避开 Section 标题 (.md-nav__title) */
-.md-nav__item--active > .md-nav__link::before,
-.md-nav__item--active > label.md-nav__link::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--fs-accent);
-  display: block;
+/* [D] 竖线归零：确保没有任何竖线出现 */
+.md-nav__link::before,
+label.md-nav__link::before,
+.md-nav__title::before {
+  display: none !important;
+  content: none !important;
 }
 
 /* 5. 右侧目录 (TOC) */
