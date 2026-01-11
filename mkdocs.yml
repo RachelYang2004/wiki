@@ -76,7 +76,7 @@ plugins:
           build: true
           nav:
             - 首页: index.md
-            - 串口总线舵机:
+            - UART总线舵机:
               - uart_servo/index.md
               - 通讯协议: uart_servo/protocols/uart_rs485_protocol.md
               - 规格参数:
