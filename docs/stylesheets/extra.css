@@ -1,12 +1,11 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V35.2 (Total Section De-lineation)
-- 核心进展：V35.0 已解决挤占与颜色，本版专门解决 Section 残留竖线问题。
+Fashion Star Wiki - V35.4 (Precision Surgical Strike)
+- 核心进展：通过 DevTools 确认了 Section 带有 .md-nav__item--section 类名。
 - 逻辑更新：
-  1. 深度清空：针对 [data-md-level="0"] 的所有伪元素 (before/after) 强制 content: none。
-  2. 物理截断：给 Section 容器增加 overflow: hidden，确保任何装饰性线条无法显示。
-  3. 竖线贯穿：继续维持文章激活项竖线的 top: 0; bottom: 0; 填满效果。
-- 视觉：Section [紧贴左侧 + 灰色 + 无线]；文章 [24px 缩进 + 紫色全高竖线]。
+  1. 竖线定点清除：强制所有属于 .md-nav__item--section 的伪元素 ::before 消失。
+  2. 空间强制回归：确保带链接的 Section 容器 padding-left 为 0。
+  3. 竖线全高：维持普通文章 (li:not(.md-nav__item--section)) 的竖线顶天立地。
 ==========================================================================
 */
 
@@ -29,7 +28,7 @@ Fashion Star Wiki - V35.2 (Total Section De-lineation)
   --fs-nav-inactive: #C4C7C5;
 }
 
-/* 2. 顶部清理 */
+/* 2. 顶部清理 (保持稳定) */
 .md-logo, [class*="md-logo"], .md-header__button.md-logo, 
 .md-nav__title .md-logo, .md-nav__title[for="__drawer"] .md-icon,
 [class*="md-logo"] svg, [class*="md-logo"] img {
@@ -40,83 +39,77 @@ Fashion Star Wiki - V35.2 (Total Section De-lineation)
 .md-header__title { margin-left: 0 !important; }
 .md-header__ellipsis { padding-left: 0.5rem !important; }
 
-/* 3. 滚动条 */
+/* 3. 滚动条 (保持稳定) */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - 物理截断版 (V35.2) */
+/* 4. 左侧导航栏 - 定点爆破版 (V35.4) */
 
-/* [A] 全局链接 */
-.md-nav__link {
-  color: var(--fs-nav-inactive);
-  transition: color 0.2s;
-}
-
-/* [B] Section (Level 0) 绝对纯净区 */
-/* 强制左对齐，并增加 overflow 物理截断残留竖线 */
-.md-nav [data-md-level="0"] > .md-nav__link,
-.md-nav [data-md-level="0"] > label,
-.md-nav .md-nav__title {
+/* [A] Section 标题隔离：核心打击目标 */
+/* 针对所有带 --section 类名的项，强制归位 */
+.md-nav__item--section > .md-nav__link,
+.md-nav__item--section > .md-nav__container,
+.md-nav__item--section .md-nav__link,
+.md-nav__title {
   padding-left: 0 !important;
   margin-left: 0 !important;
   color: var(--fs-nav-inactive) !important;
   font-weight: 700 !important;
   font-size: 16px !important;
-  overflow: hidden !important; /* 物理隔离：禁止任何伪元素溢出显示 */
 }
 
-/* 封死 Level 0 区域所有可能的伪元素线 */
-.md-nav [data-md-level="0"] > .md-nav__link::before,
-.md-nav [data-md-level="0"] > .md-nav__link::after,
-.md-nav [data-md-level="0"] > label::before,
-.md-nav [data-md-level="0"] > label::after,
-.md-nav .md-nav__title::before,
-.md-nav .md-nav__title::after {
+/* 彻底拔除 Section 下的 ::before 竖线 (针对截图中的 ::before) */
+.md-nav__item--section::before,
+.md-nav__item--section > .md-nav__link::before,
+.md-nav__item--section > .md-nav__container::before,
+.md-nav__item--section .md-nav__link::before,
+.md-nav__title::before {
   display: none !important;
   content: none !important;
   width: 0 !important;
 }
 
-/* [C] 正常导航项 (Level > 0) */
-/* 只有目录和文章层级缩进 24px */
-.md-nav .md-nav__item:not([data-md-level="0"]) > .md-nav__link,
-.md-nav .md-nav__item:not([data-md-level="0"]) > label {
+/* [B] 普通文章与目录 (排除 Section) */
+/* 只有非 Section 的项才允许 24px 缩进和紫色高亮 */
+.md-nav__item:not(.md-nav__item--section) > .md-nav__link,
+.md-nav__item:not(.md-nav__item--section) > .md-nav__container {
   padding-left: 24px !important;
   position: relative;
 }
 
-/* [D] 激活高亮 (排除 Level 0) */
-.md-nav .md-nav__item--active:not([data-md-level="0"]) > .md-nav__link,
-.md-nav .md-nav__item--active:not([data-md-level="0"]) > label {
+/* [C] 激活路径颜色 (仅限非 Section) */
+.md-nav__item--active:not(.md-nav__item--section) > .md-nav__link,
+.md-nav__item--active:not(.md-nav__item--section) > .md-nav__container .md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
 }
 
-/* [E] 竖线实体：顶天立地垂直贯穿 */
-.md-nav .md-nav__item--active:not([data-md-level="0"]) > .md-nav__link::before,
-.md-nav .md-nav__item--active:not([data-md-level="0"]) > label::before {
-  content: "";
+/* [D] 竖线渲染：顶天立地 (仅限非 Section) */
+.md-nav__item--active:not(.md-nav__item--section) > .md-nav__link::before,
+.md-nav__item--active:not(.md-nav__item--section) > .md-nav__container::before {
+  content: "" !important;
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   width: 3.5px;
-  background-color: var(--fs-accent);
+  background-color: var(--fs-accent) !important;
   display: block !important;
 }
 
-/* [F] 排除 Home / 索引项 */
+/* [E] 首页项特殊处理 */
 .md-nav__link[href*="index.html"]::before,
 .md-nav__link[href$="/"]::before {
   display: none !important;
 }
 
-/* [G] 字号细化 */
-.md-nav__item--nested > .md-nav__link { font-size: 16px !important; }
+/* [F] 字号细化 */
+.md-nav__item--nested > .md-nav__link,
+.md-nav__item--nested > .md-nav__container .md-nav__link { font-size: 16px !important; }
 .md-nav__item:not(.md-nav__item--nested) > .md-nav__link { font-size: 14.5px !important; }
 
-/* [H] Hover */
+/* [G] Hover 效果 */
 .md-nav__link:hover { color: var(--fs-accent); }
 
 /* 5. 右侧目录 / 6. 正文 / 7. 图片 / 8. 表格 (保持稳定) */
