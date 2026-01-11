@@ -1,12 +1,12 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V37.4 (Stable Base + Precision Alignment)
+Fashion Star Wiki - V37.5 (Stable Base + Deep Structure Fix)
 - 核心进展：维持 V33.8 颜色/字重逻辑。
 - 逻辑更新：
-  1. 解决挤压：撤销全局 padding，仅对“有资格显示竖线”的项开启位移。
-  2. 竖线回归：将文章标题包含在竖线规则内。
-  3. 彻底屏蔽：利用 :not 选择器组合，物理切断 Home 和 Section 的一切伪元素。
-- 视觉：Section/Home 顶格对齐；文章/父目录带竖线且整体向右缩进 12px。
+  1. 父目录捕捉：针对 div.md-nav__container 这种复合结构植入竖线。
+  2. 文章捕捉：确保最末端的 a.md-nav__link 也能正确触发。
+  3. Home 免疫：通过 href 精确匹配排除 Home，撤销其缩进与伪元素。
+  4. 缩进修复：仅在竖线显示的元素上应用 padding-left。
 ==========================================================================
 */
 
@@ -45,7 +45,7 @@ Fashion Star Wiki - V37.4 (Stable Base + Precision Alignment)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - 像素级对齐版 (V37.4) */
+/* 4. 左侧导航栏 - 深度结构版 (V37.5) */
 
 /* [A] 基础颜色与字号 (继承 V33.8) */
 .md-nav__link, .md-nav__title {
@@ -53,7 +53,7 @@ Fashion Star Wiki - V37.4 (Stable Base + Precision Alignment)
   transition: color 125ms, font-weight 125ms;
 }
 
-/* [B] Section 标题：完全隔离区 (继承 V33.8) */
+/* [B] Section 标题：完全隔离 (继承 V33.8) */
 .md-nav__title {
   font-size: 16px !important;
   padding-left: 0 !important;
@@ -62,7 +62,7 @@ Fashion Star Wiki - V37.4 (Stable Base + Precision Alignment)
 
 /* [C] 目录与文章层级字号定义 */
 .md-nav__item--nested > .md-nav__link,
-.md-nav__item--nested > label.md-nav__link {
+.md-nav__item--nested > .md-nav__container > .md-nav__link {
   font-size: 16px !important;
 }
 .md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
@@ -71,24 +71,25 @@ Fashion Star Wiki - V37.4 (Stable Base + Precision Alignment)
 
 /* [D] 选中路径高亮颜色 (继承 V33.8) */
 li.md-nav__item--active > .md-nav__link,
-li.md-nav__item--active > label.md-nav__link {
+li.md-nav__item--active > .md-nav__container > .md-nav__link,
+li.md-nav__item--active > .md-nav__container > label {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
 }
 
-/* [E] 竖线方案：按需分配位移与线条 */
+/* [E] 竖线方案：区分 Container 和 Link */
 
-/* 1. 只有激活的文章或目录，才允许显示竖线并向右位移 */
-/* 增加 :not([href*="index"]) 等逻辑排除首页 */
-li.md-nav__item--active:not(.md-nav__item--section) > .md-nav__link:not([href$="/"]):not([href*="index"]),
-li.md-nav__item--active:not(.md-nav__item--section) > label.md-nav__link {
+/* 1. 捕捉父目录 (Container 结构) 和 文章 (Link 结构) */
+/* 同时排除 Section 和 Home */
+li.md-nav__item--active:not(.md-nav__item--section) .md-nav__container,
+li.md-nav__item--active:not(.md-nav__item--section) > .md-nav__link:not([href$="/"]):not([href*="index"]) {
   position: relative;
-  padding-left: 12px !important; /* 只有这时候才缩进 */
+  padding-left: 12px !important;
 }
 
-/* 2. 生成紫色竖线 (排除首页和 Section) */
-li.md-nav__item--active:not(.md-nav__item--section) > .md-nav__link:not([href$="/"]):not([href*="index"])::before,
-li.md-nav__item--active:not(.md-nav__item--section) > label.md-nav__link::before {
+/* 2. 渲染竖线 */
+li.md-nav__item--active:not(.md-nav__item--section) .md-nav__container::before,
+li.md-nav__item--active:not(.md-nav__item--section) > .md-nav__link:not([href$="/"]):not([href*="index"])::before {
   content: "";
   position: absolute;
   left: 0;
@@ -99,17 +100,17 @@ li.md-nav__item--active:not(.md-nav__item--section) > label.md-nav__link::before
   display: block;
 }
 
-/* 3. 首页与 Section 强制归零 (防止任何可能的继承) */
+/* 3. Home 和 Section 深度清理 (撤销缩进，隐藏线条) */
 .md-nav__link[href$="/"], 
 .md-nav__link[href*="index.html"],
-.md-nav__item--section .md-nav__link,
-.md-nav__title {
+.md-nav__item--section > .md-nav__link,
+.md-nav__item--section .md-nav__container {
   padding-left: 0 !important;
 }
-.md-nav__link[href$="/"]::before,
+.md-nav__link[href$="/"]::before, 
 .md-nav__link[href*="index.html"]::before,
-.md-nav__item--section .md-nav__link::before,
-.md-nav__title::before {
+.md-nav__item--section .md-nav__container::before,
+.md-nav__item--section .md-nav__link::before {
   display: none !important;
 }
 
