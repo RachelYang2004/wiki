@@ -1,10 +1,11 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V32.9 (Parent Category 500 Weight Only)
-- Section 标题：[完全锁定] 移除所有自定义约束，由 Material 原生控制。
-- 一级父目录(带下拉)：[16px] 明确字重为 500，对比文章效果。
-- 文章：[14.5px] 保持默认逻辑。
-- 逻辑基础：完全基于 V32.0 归零版，仅添加父级目录的字号和字重约束。
+Fashion Star Wiki - V33.0 (Precise Font-Size Refinement)
+- 基础：基于 V32.0 归零版
+- Section 标题：[16px] 仅调整字号，字重/颜色遵循原生 [动作]
+- 父目录(带下拉)：[16px] 仅调整字号，字重/颜色遵循原生 [动作]
+- 文章标题：完全不做变动 [动作]
+- 目的：实现分级清晰感，同时不干预原生变色/加粗逻辑
 ==========================================================================
 */
 
@@ -41,21 +42,22 @@ Fashion Star Wiki - V32.9 (Parent Category 500 Weight Only)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏精准调整 (V32.9) */
+/* 4. 左侧导航栏精准微调 (V33.0) */
 
-/* [A] 父目录（有下拉箭头/多层级项）：字号 16px，字重 500 */
-/* 这里我们使用了具体的 item 结构，绕开了顶部的 .md-nav__title */
+/* [A] Section 标题：仅调整字号 */
+.md-nav__title {
+  font-size: 16px !important;
+  /* 不设定 font-weight 和 color，保持原生 */
+}
+
+/* [B] 父目录（带有下拉或嵌套结构）：仅调整字号 */
 .md-nav__item--nested > .md-nav__link,
 .md-nav__item--nested > label.md-nav__link {
   font-size: 16px !important;
-  font-weight: 500 !important;
+  /* 不设定 font-weight 和 color，保持原生 */
 }
 
-/* [B] 普通文章链接：字号 14.5px */
-/* 仅针对不包含子项的普通链接 */
-.md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
-  font-size: 14.5px !important;
-}
+/* [C] 文章标题（普通链接）：不添加任何规则，直接继承原生（通常为 14-14.5px） */
 
 /* 5. 右侧目录 (TOC) 多语言 */
 .md-sidebar--secondary .md-nav__title[for="__toc"] {
