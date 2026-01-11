@@ -1,10 +1,11 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V37.2 (Stable Base + Padding-Based Logic)
-- 核心进展：维持 V33.8 完美的颜色与 Section 隔离逻辑。
-- 本版目标：找回缺失的竖线，且确保 Section 标题不被误伤。
-- 竖线新思路：不再依赖 data-md-level，而是利用 li 内部链接的 padding 差。
-  只有缩进了 24px 的激活项（即文章/子目录）才显示竖线。
+Fashion Star Wiki - V37.3 (Stable Base + Precision Vertical Line)
+- 核心进展：维持 V33.8 颜色/字重逻辑；修复竖线重叠文字问题。
+- 本版目标：
+  1. 竖线左移：通过 padding-left: 12px 为竖线腾出空间，解决“压到文字”。
+  2. 范围修正：开启文章与目录竖线，精准屏蔽 Section 与 Home。
+  3. 顶格渲染：竖线保持 top:0; bottom:0 的贯穿效果。
 ==========================================================================
 */
 
@@ -43,25 +44,23 @@ Fashion Star Wiki - V37.2 (Stable Base + Padding-Based Logic)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - 物理隔离竖线版 (V37.2) */
+/* 4. 左侧导航栏 - 竖线定位优化版 (V37.3) */
 
-/* [A] 基础颜色与字号 (继承 V33.8) */
+/* [A] 全局非选中颜色与字号基础 (继承 V33.8) */
 .md-nav__link, 
 .md-nav__title {
   color: var(--fs-nav-inactive);
   transition: color 125ms, font-weight 125ms;
 }
 
-/* [B] Section 标题：隔离区 (继承 V33.8) */
-/* 强制 Section 及其内部链接 padding 为 0，确保它不触发竖线逻辑 */
-.md-nav__title,
-.md-nav__title .md-nav__link {
+/* [B] Section 标题：完全隔离 (继承 V33.8) */
+.md-nav__title {
   font-size: 16px !important;
   padding-left: 0 !important;
-  margin-left: 0 !important;
+  position: relative;
 }
 
-/* [C] 目录与文章层级字号定义 */
+/* [C] 目录层级字号定义 (继承 V33.8) */
 .md-nav__item--nested > .md-nav__link,
 .md-nav__item--nested > label.md-nav__link {
   font-size: 16px !important;
@@ -77,14 +76,16 @@ li.md-nav__item--active > label.md-nav__link {
   font-weight: 700 !important;
 }
 
-/* [E] 竖线方案：物理偏移判定 */
-/* 只有当链接本身带有缩进（padding-left）时，我们才认为它是需要竖线的普通项 */
+/* [E] 竖线方案：精准定位与防重叠 */
+/* 1. 为所有激活项开启相对定位 */
 li.md-nav__item--active > .md-nav__link,
 li.md-nav__item--active > label.md-nav__link {
   position: relative;
+  /* 增加左内边距，确保竖线不压文字 */
+  padding-left: 12px !important; 
 }
 
-/* 生成竖线，但如果是 Section 里的标题 (padding 为 0)，竖线即便生成也会因为位置重合或被 B 部分的 display:none 覆盖而消失 */
+/* 2. 统一生成紫色竖线 */
 li.md-nav__item--active > .md-nav__link::before,
 li.md-nav__item--active > label.md-nav__link::before {
   content: "";
@@ -92,29 +93,39 @@ li.md-nav__item--active > label.md-nav__link::before {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 3.5px;
+  width: 4px;
   background-color: var(--fs-accent);
+  display: block;
 }
 
-/* 关键：精准排除。如果一个 Active 项是 Section 标题，强行抹除它的 ::before */
+/* 3. 精准爆破：物理删除 Section 和 Home 的竖线 */
+/* 针对 Section 标题 */
 .md-nav__title::before,
-.md-nav__title .md-nav__link::before,
 .md-nav__item--section > .md-nav__link::before,
-.md-nav__item--section > .md-nav__container::before {
+.md-nav__item--section > label::before,
+.md-nav__item--section .md-nav__container::before {
   display: none !important;
   content: none !important;
 }
 
-/* [F] 首页去线 */
+/* 针对 Home (首页) */
+.md-nav__link[href$="/"]::before,
 .md-nav__link[href*="index.html"]::before,
-.md-nav__link[href$="/"]::before {
+.md-nav__link[href$="/"] {
+  padding-left: 0 !important; /* 首页恢复左对齐 */
+}
+.md-nav__link[href$="/"]::before,
+.md-nav__link[href*="index.html"]::before {
   display: none !important;
 }
 
-/* [G] 原生 Hover */
-.md-nav__link:hover {
-  color: var(--fs-accent);
+/* 针对不需要缩进的顶级项恢复 Padding */
+.md-nav__title {
+  padding-left: 0 !important;
 }
+
+/* [F] Hover 效果 */
+.md-nav__link:hover { color: var(--fs-accent); }
 
 /* 5. 右侧目录 / 6. 正文 / 7. 图片 / 8. 表格 (保持稳定) */
 .md-sidebar--secondary .md-nav__title[for="__toc"] { font-size: 0 !important; color: transparent !important; }
