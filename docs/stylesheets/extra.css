@@ -1,9 +1,9 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V39.4 (James V33.8 Base + Optimized Images)
-- 核心基座：100% 沿用 James V33.8 侧边栏隔离逻辑。
-- TOC 逻辑：沿用 V39.3 验证成功的伪元素分割线。
-- 图片优化：宽度 80%，4px 圆角，无阴影，全局居中。
+Fashion Star Wiki - V40.0 (Path Highlight with Section Guard)
+- 核心基座：James V33.8 (Section 隔离 + 图片 80% + TOC 分割线)。
+- 新增功能：左侧导航激活路径竖线。
+- 隔离逻辑：仅在 li 内部的 nav 容器上绘制 ::before 线，物理上无法到达 Section。
 ==========================================================================
 */
 
@@ -42,15 +42,16 @@ Fashion Star Wiki - V39.4 (James V33.8 Base + Optimized Images)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - 严格 James V33.8 原版 */
-.md-nav__link, 
-.md-nav__title {
+/* 4. 左侧导航栏 - James V33.8 增强版 */
+
+/* [A] 基础颜色与字号 */
+.md-nav__link, .md-nav__title {
   color: var(--fs-nav-inactive);
   transition: color 125ms, font-weight 125ms;
 }
-.md-nav__title {
-  font-size: 16px !important;
-}
+
+.md-nav__title { font-size: 16px !important; }
+
 .md-nav__item--nested > .md-nav__link,
 .md-nav__item--nested > label.md-nav__link {
   font-size: 16px !important;
@@ -58,16 +59,26 @@ Fashion Star Wiki - V39.4 (James V33.8 Base + Optimized Images)
 .md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
   font-size: 14.5px !important;
 }
+
+/* [B] 选中路径高亮 (紫色+加粗) */
 li.md-nav__item--active > .md-nav__link,
 li.md-nav__item--active > label.md-nav__link {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
 }
-.md-nav__link:hover {
-  color: var(--fs-accent);
+
+/* [C] 全路径左侧竖线实现 (关键点) */
+/* 我们只在 li 内部的 nested 容器上加线，这样最顶层的 Section 永远不会有线 */
+.md-nav__item--active > .md-nav__container > .md-nav {
+  position: relative;
+  /* 为线留出微小空间，不改变 padding 防止影响 Section 排版 */
+  box-shadow: inset 1px 0 0 var(--fs-accent); 
+  margin-left: 1px;
 }
 
-/* 5. 右侧目录 (TOC) - V39.3 验证版线 */
+.md-nav__link:hover { color: var(--fs-accent); }
+
+/* 5. 右侧目录 (TOC) - 伪元素分割线 */
 .md-sidebar--secondary .md-nav__title[for="__toc"] {
   font-size: 0 !important;
   color: transparent !important;
@@ -87,14 +98,8 @@ li.md-nav__item--active > label.md-nav__link {
     padding-left: 16px !important;
   }
   .md-sidebar--secondary nav.md-nav--secondary::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background-color: var(--fs-divider);
-    z-index: 1;
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px; background-color: var(--fs-divider); z-index: 1;
   }
 }
 
@@ -105,29 +110,19 @@ li.md-nav__item--active > label.md-nav__link {
   font-weight: 700 !important;
   margin-top: 1.6rem !important;
 }
-
-/* [核心修改：图片样式] */
 .md-typeset img { 
-  display: block !important; 
-  margin: 2rem auto !important;  /* 居中并增加呼吸感 */
-  max-width: 80% !important;     /* 宽度约束 80% */
-  border-radius: 4px !important; /* 4px 倒角 */
-  box-shadow: none !important;   /* 彻底移除阴影 */
+  display: block !important; margin: 2rem auto !important; 
+  max-width: 80% !important; border-radius: 4px !important; box-shadow: none !important; 
 }
-
 .md-typeset__table { overflow-x: auto !important; }
 .md-typeset table:not([class]) {
-  border-collapse: collapse !important;
-  border: 0.5px solid var(--fs-divider) !important;
-  font-size: 14px !important;
+  border-collapse: collapse !important; border: 0.5px solid var(--fs-divider) !important; font-size: 14px !important;
 }
 .md-typeset table:not([class]) th, .md-typeset table:not([class]) td {
-  border: 0.5px solid var(--fs-divider) !important;
-  padding: 10px 15px !important;
+  border: 0.5px solid var(--fs-divider) !important; padding: 10px 15px !important;
 }
 .md-typeset table:not([class]) th {
-  background-color: var(--md-default-bg-color--light) !important;
-  font-weight: 700 !important;
+  background-color: var(--md-default-bg-color--light) !important; font-weight: 700 !important;
 }
 
 /* 9. 布局平衡 */
