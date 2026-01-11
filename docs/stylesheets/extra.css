@@ -1,11 +1,11 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V38.6 (V38.3 Base + Modern Image Styling)
+Fashion Star Wiki - V38.7 (V38.3 Base + Minimal Image Styling)
 - 核心进展：维持 V38.3 完美的左右分割线与左侧 Section 隔离逻辑。
 - 本版目标：
-  1. 约束图片最大宽度为 85%，实现左右视觉缩进。
-  2. 增加 8px 圆角与柔和阴影，提升科技文档质感。
-  3. 针对深浅色模式自动适配阴影颜色。
+  1. 约束图片最大宽度为 85%（左右留白）。
+  2. 圆角微调为 4px，保持硬朗风格。
+  3. 移除所有图片阴影，追求极简平面的视觉效果。
 ==========================================================================
 */
 
@@ -17,8 +17,6 @@ Fashion Star Wiki - V38.6 (V38.3 Base + Modern Image Styling)
   --md-accent-fg-color: var(--fs-accent);
   --fs-content-fg: #1F1F1F;
   --fs-nav-inactive: #444746;
-  /* 图片阴影颜色 - 浅色 */
-  --fs-img-shadow: rgba(0,0,0,0.1);
 }
 
 [data-md-color-scheme="slate"] {
@@ -28,8 +26,6 @@ Fashion Star Wiki - V38.6 (V38.3 Base + Modern Image Styling)
   --md-default-fg-color: #e3e3e3;
   --fs-content-fg: #E3E3E3;
   --fs-nav-inactive: #C4C7C5;
-  /* 图片阴影颜色 - 深色 */
-  --fs-img-shadow: rgba(0,0,0,0.4);
 }
 
 /* 2. 顶部清理 */
@@ -101,24 +97,16 @@ li.md-nav__item--active > label.md-nav__link {
   }
 }
 
-/* 6. 正文样式 / 7. 图片优化 (方案 B 落地) */
+/* 6. 正文样式 / 7. 图片优化 (极简修正) */
 .md-typeset { color: var(--fs-content-fg); }
 .md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4, .md-typeset h5, .md-typeset h6 { color: var(--fs-content-fg) !important; font-weight: 700 !important; margin-top: 1.6rem !important; }
 
-/* 核心改动：图片现代样式 */
 .md-typeset img { 
   display: block !important; 
-  margin: 2rem auto !important; /* 增加上下间距 */
-  max-width: 85% !important;   /* 约束宽度，实现左右间距 */
-  border-radius: 8px;           /* 圆角 */
-  box-shadow: 0 4px 12px var(--fs-img-shadow); /* 柔和阴影 */
-  transition: transform 0.3s;   /* 增加一个微小的交互效果 */
-}
-
-/* 兼容 Lightbox，防止点击时样式冲突 */
-.glightbox-container img {
-  box-shadow: none !important;
-  border-radius: 0 !important;
+  margin: 2rem auto !important;
+  max-width: 85% !important;   
+  border-radius: 4px !important; /* 调整为 4px */
+  box-shadow: none !important;    /* 彻底取消阴影 */
 }
 
 /* 8. 表格样式 */
