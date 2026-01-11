@@ -72,13 +72,15 @@ plugins:
           name: "🇨🇳 中文"
           default: false
           build: true
-      nav_translations: false
+      nav_translations:
+        zh:
+          Home: 首页
+
 
 # 终极修复方案：在 nav 内部直接使用 i18n 语法
 # 格式为：- 标题 (语言代码): 路径
 nav:
-  - Home(en): index.md
-  - 首页(zh): index.md
+  - Home: index.md
   
   - Uart Bus Servo:
     - uart_servo/index.md
