@@ -1,9 +1,9 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V40.4 (Path Highlighting & Absolute Section Guard)
+Fashion Star Wiki - V40.5 (Final Path Highlighting & Physical Section Guard)
 - 核心基座：James V33.8 (Section 逻辑隔离 + 图片 80% + TOC 分割线)。
-- 修复目标：彻底消除 Section 标题左侧的竖线。
-- 策略：使用极高权重的属性选择器，针对性屏蔽所有非文章链接的伪元素。
+- 核心修复：利用 .md-nav__item--section 类名物理屏蔽 Section 竖线。
+- 逻辑：即使 Section 内部包含 .md-nav__link，也因为父级黑名单而被禁止生成线。
 ==========================================================================
 */
 
@@ -42,7 +42,7 @@ Fashion Star Wiki - V40.4 (Path Highlighting & Absolute Section Guard)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - James V33.8 增强版 */
+/* 4. 左侧导航栏 - James V33.8 完美隔离版 */
 
 /* [A] 基础颜色与字号 */
 .md-nav__link, .md-nav__title {
@@ -67,7 +67,6 @@ li.md-nav__item--active > label.md-nav__link {
 }
 
 /* [C] 全路径左侧竖线 (3px 绝对定位) */
-/* 仅针对 li 下的直属链接或 label 生成竖线 */
 li.md-nav__item--active > .md-nav__link,
 li.md-nav__item--active > label.md-nav__link {
   position: relative;
@@ -85,17 +84,13 @@ li.md-nav__item--active > label.md-nav__link::after {
   border-radius: 2px;
 }
 
-/* [D] Section 竖线强力屏蔽 (终极黑名单) */
-/* 明确禁止所有 Section 标题、抽屉标签、以及任何非列表内容的伪元素 */
-.md-nav__title::after,
-.md-nav__title--site::after,
-.md-nav__item--active > .md-nav__title::after,
-label[for="__drawer"]::after,
-label[for="__toc"]::after,
-.md-sidebar--primary .md-nav__title::after {
+/* [D] 核心修复：Section 竖线终极物理屏蔽 */
+/* 只要父级 li 带有 .md-nav__item--section 类，其内部所有元素绝对不显示竖线 */
+li.md-nav__item--section .md-nav__link::after,
+li.md-nav__item--section label::after,
+.md-nav__title::after {
   display: none !important;
   content: none !important;
-  width: 0 !important;
 }
 
 .md-nav__link:hover { color: var(--fs-accent); }
