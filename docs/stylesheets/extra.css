@@ -1,12 +1,12 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V34.9 (Final Section Integrity Fix)
-- 核心目标：彻底修复 Section (Level 0) 的变色、挤压与误出竖线问题。
-- 修改逻辑 [动作]：
-  1. 颜色硬核锁定：强制 .md-nav__title 保持灰色，杜绝随文章选中变紫。
-  2. 物理零位移：强制 Section 及其内部链接 padding-left: 0，解决挤压。
-  3. 竖线精准投放：仅对 li 列表项内的链接生成竖线，且高度顶满 (top/bottom: 0)。
-- 结构稳定性：维持路径 [加粗 + 紫色]，维持文章 [14.5px]，目录 [16px]。
+Fashion Star Wiki - V35.0 (The Flag Version - Final Stability)
+- 目标：解决 Section 挤压、误出竖线，并实现竖线“顶天立地”。
+- 核心逻辑：
+  1. 空间归位：利用 data-md-level="0" 属性强行让 Section 标题左对齐 (0 padding)。
+  2. 颜色锁定：强制 Section 及其内部链接在任何路径下保持非 Logo 色。
+  3. 竖线全高：top/bottom: 0 贯穿容器，宽度 3.5px。
+  4. 精准排除：只有 level 0 以外的项 (目录/文章) 允许有 24px 缩进和竖线。
 ==========================================================================
 */
 
@@ -45,74 +45,75 @@ Fashion Star Wiki - V34.9 (Final Section Integrity Fix)
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - Section 深度保护版 (V34.9) */
+/* 4. 左侧导航栏 - 结构对撞版 (V35.0) */
 
-/* [A] Section 标题：绝对禁止位移、变色与竖线 */
-.md-nav__title, 
-.md-nav__title .md-nav__link,
-.md-nav__link.md-nav__link--active:not(li *) {
+/* [A] 全局重置 */
+.md-nav__link {
+  color: var(--fs-nav-inactive);
+  transition: color 0.2s, font-weight 0.2s;
+}
+
+/* [B] Section (Level 0) 物理隔离 */
+/* 强制所有 Level 0 容器（Section）左对齐，不给竖线留位 */
+.md-nav__item[data-md-level="0"] > .md-nav__link,
+.md-nav__item[data-md-level="0"] > label,
+.md-nav__title,
+.md-nav__title .md-nav__link {
   padding-left: 0 !important;
-  margin-left: 0 !important;
-  color: var(--fs-nav-inactive) !important; /* 强制锁定灰色 */
-  font-weight: 700 !important; /* 维持 Section 的加粗感 */
+  color: var(--fs-nav-inactive) !important; /* 强制颜色不随路径变紫 */
+  font-weight: 700 !important; /* Section 保持加粗以示区分 */
   font-size: 16px !important;
 }
 
-/* 封死所有属于 Section 标题区域的伪元素 */
-.md-nav__title::before, 
-.md-nav__title::after,
-.md-nav__title .md-nav__link::before,
-.md-nav__title .md-nav__link::after {
+/* 物理禁止 Section 及其内部产生任何竖线伪元素 */
+.md-nav__item[data-md-level="0"] > .md-nav__link::before,
+.md-nav__item[data-md-level="0"] > label::before,
+.md-nav__title::before,
+.md-nav__title::after {
   display: none !important;
   content: none !important;
 }
 
-/* [B] 正常导航项：只有处于 li 内的链接才缩进 24px */
-li .md-nav__link {
+/* [C] 正常项目 (Level > 0)：文章与目录 */
+/* 只有非 Level 0 的项才缩进 24px */
+.md-nav__item:not([data-md-level="0"]) > .md-nav__link,
+.md-nav__item:not([data-md-level="0"]) > label {
   padding-left: 24px !important;
   position: relative;
-  color: var(--fs-nav-inactive);
 }
 
-/* [C] 激活路径高亮：[加粗 + 紫色] (精准排除 Section) */
-li.md-nav__item--active > .md-nav__link,
-li.md-nav__item--active > label.md-nav__link {
+/* [D] 激活路径高亮 (排除 Level 0 Section) */
+.md-nav__item--active:not([data-md-level="0"]) > .md-nav__link,
+.md-nav__item--active:not([data-md-level="0"]) > label {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
 }
 
-/* [D] 竖线渲染：仅针对 li 内部的 Active 链接，高度顶满 */
-li.md-nav__item--active > .md-nav__link::before,
-li.md-nav__item--active > label.md-nav__link::before {
+/* [E] 竖线实体渲染：高度填满顶天立地 */
+.md-nav__item--active:not([data-md-level="0"]) > .md-nav__link::before,
+.md-nav__item--active:not([data-md-level="0"]) > label::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0;      /* 顶天 */
-  bottom: 0;   /* 立地 */
+  top: 0;       /* 竖线顶天 */
+  bottom: 0;    /* 竖线立地 */
   width: 3.5px;
   background-color: var(--fs-accent);
   display: block !important;
 }
 
-/* [E] 首页/索引页去线 */
+/* [F] 排除 Home/索引 */
 .md-nav__link[href*="index.html"]::before,
 .md-nav__link[href$="/"]::before {
   display: none !important;
 }
 
-/* [F] 字号细化 */
-.md-nav__item--nested > .md-nav__link,
-.md-nav__item--nested > label.md-nav__link {
-  font-size: 16px !important;
-}
-.md-nav__item:not(.md-nav__item--nested) > .md-nav__link {
-  font-size: 14.5px !important;
-}
+/* [G] 字号细化 */
+.md-nav__item--nested > .md-nav__link { font-size: 16px !important; }
+.md-nav__item:not(.md-nav__item--nested) > .md-nav__link { font-size: 14.5px !important; }
 
-/* [G] Hover 效果 */
-.md-nav__link:hover {
-  color: var(--fs-accent);
-}
+/* [H] Hover 效果 */
+.md-nav__link:hover { color: var(--fs-accent); }
 
 /* 5. 右侧目录 / 6. 正文 / 7. 图片 / 8. 表格 (保持稳定) */
 .md-sidebar--secondary .md-nav__title[for="__toc"] { font-size: 0 !important; color: transparent !important; }
