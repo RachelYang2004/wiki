@@ -54,7 +54,7 @@ hooks:
   - docs/hooks/gh_alerts.py
 
 plugins:
-- search:
+  - search:
       # 只需要 en。因为 jieba 会自动处理所有非拉丁字符（中文）
       lang: en
       # 必须保留这个，否则 jieba 分出来的词在前端搜不到
