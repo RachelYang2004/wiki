@@ -4,6 +4,7 @@ use_directory_urls: true
 
 theme:
   name: material
+#  language: en
   font:
     text: Roboto
     code: Roboto Mono
@@ -73,32 +74,36 @@ plugins:
           build: true
       nav_translations:
         zh:
-          "Home": "首页"
-          "Uart Bus Servo": "串口总线舵机"
-          "RS485 Bus Servo": "RS485总线舵机"
-          "CAN Bus Servo": "CAN总线舵机"
-          "Protocol": "通讯协议"
-          "Specifications": "规格参数"
-          "CAD Files": "CAD文件"
-          "Software": "配套软件"
-          "SDK": "开发库"
-          "PLC": "工业PLC"
-          "Document": "官方文档"
-          "Robotic Arm": "机械臂"
-          "StarAI Arm": "StarAI机械臂"
-          "Piper Mate": "Piper Mate机械臂"
-          "Quick Start": "快速入门"
-          "Get Ready": "准备工作"
-          "PC Configuration Tool": "PC端调试软件"
-          "Web Configuration Tool": "网页版调试工具"
+          Home: 首页
+          Uart Bus Servo: 串口总线舵机
+          RS485 Bus Servo: RS485总线舵机
+          CAN Bus Servo: CAN总线舵机
+          Protocol: 通讯协议
+          Specifications: 规格参数
+          CAD Files: CAD文件
+          Software: 配套软件
+          SDK: 开发库
+          PLC: 工业PLC
+          Document: 官方文档
+          Robotic Arm: 机械臂
+          StarAI Arm: StarAI机械臂
+          Piper Mate: Piper Mate机械臂
+          Quick Start: 快速入门
+          Get Ready: 准备工作
+          PC Configuration Tool: PC端调试软件
+          Web Configuration Tool: 网页版调试工具
           "C#": "C#"
 
+# 终极修复方案：在 nav 内部直接使用 i18n 语法
+# 格式为：- 标题 (语言代码): 路径
 nav:
-  - "Home": index.md
-  - "Uart Bus Servo":
+  - Home (en): index.md
+  - 首页 (zh): index.md
+  
+  - Uart Bus Servo:
     - uart_servo/index.md
-    - "Protocol": uart_servo/protocols/uart_rs485_protocol.md
-    - "Specifications":
+    - Protocol: uart_servo/protocols/uart_rs485_protocol.md
+    - Specifications:
       - RP6-U12H-M: uart_servo/specs/rp6-u12h-m.md
       - RX6-U12H-M: uart_servo/specs/rx6-u12h-m.md
       - HP6/RP6-U15H-M: uart_servo/specs/hp-rp6-u15h-m.md
@@ -112,17 +117,17 @@ nav:
       - HX8/RX8-U51H-M: uart_servo/specs/hx-rx8-u51h-m.md
       - RX18-U100H-M: uart_servo/specs/rx18-u100h-m.md
       - RX18-U101H-M: uart_servo/specs/rx18-u101h-m.md
-    - "CAD Files":
+    - CAD Files:
       - RA8/RP8/RX8 Series: uart_servo/cad_files/ra8-rp8-rx8-series.md
       - RP6/RX6-U12 Series: uart_servo/cad_files/rp6-rx6-u12-series.md
       - RX6-U15 Series: uart_servo/cad_files/rx6-u15-series.md
       - RP6-U18 Series: uart_servo/cad_files/rp6-u18-series.md
       - RX18 Series: uart_servo/cad_files/rx18-series.md
-    - "Software":
-      - "PC Configuration Tool": uart_servo/software/pc_configuration_tool.md
-      - "Web Configuration Tool": uart_servo/software/web_configuration_tool.md
-    - "SDK":
-      - "PLC": 
+    - Software:
+      - PC Configuration Tool: uart_servo/software/pc_configuration_tool.md
+      - Web Configuration Tool: uart_servo/software/web_configuration_tool.md
+    - SDK:
+      - PLC: 
         - Sinamics: uart_servo/sdk/plc/sinamics_tia_portal_v19.md
         - Codesys: uart_servo/sdk/plc/codesys.md
         - Inovance: uart_servo/sdk/plc/inovance.md
@@ -137,25 +142,25 @@ nav:
       - C++: "uart_servo/sdk/cpp_sdk.md"
       - "C#": "uart_servo/sdk/csharp_sdk.md"
       - Ros: uart_servo/sdk/ros_sdk.md
-    - "Document": uart_servo/documents/uc01_instruction_manual.md
-  - "RS485 Bus Servo":
+    - Document: uart_servo/documents/uc01_instruction_manual.md
+  - RS485 Bus Servo:
     - rs485_servo/index.md
-    - "Protocol": rs485_servo/protocols/uart_rs485_protocol.md
-    - "Specifications":
+    - Protocol: rs485_servo/protocols/uart_rs485_protocol.md
+    - Specifications:
       - HX8-R28H-M: rs485_servo/specs/hx8-r28h-m.md
       - HX8-R29H-M: rs485_servo/specs/hx8-r29h-m.md
       - HX8-R50H-M: rs485_servo/specs/hx8-r50h-m.md
       - HX8-R51H-M: rs485_servo/specs/hx8-r51h-m.md
       - RX18-R100H-M: rs485_servo/specs/rx18-r100h-m.md
       - RX18-R101H-M: rs485_servo/specs/rx18-r101h-m.md
-    - "CAD Files":
+    - CAD Files:
       - HX8/RX8 R Series: rs485_servo/cad_files/hx8-rx8-r-series.md
       - HX18 R Series: rs485_servo/cad_files/hx18-r-series.md
-    - "Software":
-      - "PC Configuration Tool": rs485_servo/software/pc_configuration_tool.md
-      - "Web Configuration Tool": rs485_servo/software/web_configuration_tool.md
-    - "SDK":
-      - "PLC":
+    - Software:
+      - PC Configuration Tool: rs485_servo/software/pc_configuration_tool.md
+      - Web Configuration Tool: rs485_servo/software/web_configuration_tool.md
+    - SDK:
+      - PLC:
         - Sinamics: rs485_servo/sdk/plc/sinamics_tia_portal_v19.md
         - Codesys: rs485_servo/sdk/plc/codesys.md
         - Inovance: rs485_servo/sdk/plc/inovance.md
@@ -170,20 +175,20 @@ nav:
       - C++: rs485_servo/sdk/cpp_sdk.md
       - "C#": rs485_servo/sdk/csharp_sdk.md
       - Ros: rs485_servo/sdk/ros_sdk.md
-    - "Document": rs485_servo/documents/uc01_instruction_manual.md
-  - "CAN Bus Servo":
-    - "Protocol": can_servo/protocols/can_protocol.md
-    - "Specifications":
+    - Document: rs485_servo/documents/uc01_instruction_manual.md
+  - CAN Bus Servo:
+    - Protocol: can_servo/protocols/can_protocol.md
+    - Specifications:
       - HX8-C100H-M: can_servo/specs/hx8-c100h-m.md
       - HX8-C100W-M: can_servo/specs/hx8-c100w-m.md
-    - "CAD Files":
+    - CAD Files:
       - HX8/RX8 C Series: can_servo/cad_files/hx8-rx8-c-series.md
       - HX18 C Series: can_servo/cad_files/hx18-c-series.md
-    - "Software":
-      - "PC Configuration Tool": can_servo/software/pc_configuration_tool.md
-      - "Web Configuration Tool": can_servo/software/web_configuration_tool.md
-    - "SDK":
-      - "PLC":
+    - Software:
+      - PC Configuration Tool: can_servo/software/pc_configuration_tool.md
+      - Web Configuration Tool: can_servo/software/web_configuration_tool.md
+    - SDK:
+      - PLC:
         - Sinamics: can_servo/sdk/plc/sinamics_tia_portal_v19.md
         - Codesys: can_servo/sdk/plc/codesys.md
         - Inovance: can_servo/sdk/plc/inovance.md
@@ -198,9 +203,9 @@ nav:
       - C++: can_servo/sdk/cpp_sdk.md
       - "C#": can_servo/sdk/csharp_sdk.md
       - Ros: can_servo/sdk/ros_sdk.md
-    - "Document": can_servo/documents/uc01_instruction_manual.md
-  - "Robotic Arm":
-    - "StarAI Arm":
-      - "Quick Start": robotic_arm/starai_arm/quick_start.md
-    - "Piper Mate":
-      - "Get Ready": robotic_arm/piper_mate/get_ready.md
+    - Document: can_servo/documents/uc01_instruction_manual.md
+  - Robotic Arm:
+    - StarAI Arm:
+      - Quick Start: robotic_arm/starai_arm/quick_start.md
+    - Piper Mate:
+      - Get Ready: robotic_arm/piper_mate/get_ready.md
