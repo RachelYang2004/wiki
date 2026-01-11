@@ -1,11 +1,11 @@
 /*
 ==========================================================================
-Fashion Star Wiki - V35.4 (Precision Surgical Strike)
-- 核心进展：通过 DevTools 确认了 Section 带有 .md-nav__item--section 类名。
+Fashion Star Wiki - V35.5 (Precision Strike based on DevTools)
+- 核心进展：通过截图确认 Section 带有 .md-nav__item--section 类名且包含 ::before。
 - 逻辑更新：
-  1. 竖线定点清除：强制所有属于 .md-nav__item--section 的伪元素 ::before 消失。
-  2. 空间强制回归：确保带链接的 Section 容器 padding-left 为 0。
-  3. 竖线全高：维持普通文章 (li:not(.md-nav__item--section)) 的竖线顶天立地。
+  1. 竖线定点清除：强制所有带 --section 类名的项及其内部 div/a 的 ::before 彻底消失。
+  2. 空间回归：强制 Section 及其内部 div 的 padding-left 为 0。
+  3. 竖线贯穿：普通文章（Active 且非 Section）维持 3.5px 全高竖线。
 ==========================================================================
 */
 
@@ -28,7 +28,7 @@ Fashion Star Wiki - V35.4 (Precision Surgical Strike)
   --fs-nav-inactive: #C4C7C5;
 }
 
-/* 2. 顶部清理 (保持稳定) */
+/* 2. 顶部清理 */
 .md-logo, [class*="md-logo"], .md-header__button.md-logo, 
 .md-nav__title .md-logo, .md-nav__title[for="__drawer"] .md-icon,
 [class*="md-logo"] svg, [class*="md-logo"] img {
@@ -39,55 +39,57 @@ Fashion Star Wiki - V35.4 (Precision Surgical Strike)
 .md-header__title { margin-left: 0 !important; }
 .md-header__ellipsis { padding-left: 0.5rem !important; }
 
-/* 3. 滚动条 (保持稳定) */
+/* 3. 滚动条 */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-thumb { background-color: var(--fs-divider); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background-color: var(--fs-accent); }
 
-/* 4. 左侧导航栏 - 定点爆破版 (V35.4) */
+/* 4. 左侧导航栏 - 定点爆破版 (V35.5) */
 
-/* [A] Section 标题隔离：核心打击目标 */
-/* 针对所有带 --section 类名的项，强制归位 */
+/* [A] Section (Level 0) 物理隔离：通过 --section 类名锁定 */
 .md-nav__item--section > .md-nav__link,
 .md-nav__item--section > .md-nav__container,
 .md-nav__item--section .md-nav__link,
 .md-nav__title {
   padding-left: 0 !important;
   margin-left: 0 !important;
-  color: var(--fs-nav-inactive) !important;
+  color: var(--fs-nav-inactive) !important; /* 强制锁定灰色 */
   font-weight: 700 !important;
   font-size: 16px !important;
 }
 
-/* 彻底拔除 Section 下的 ::before 竖线 (针对截图中的 ::before) */
+/* 彻底拔除 Section 及其子元素生成的所有竖线 (针对截图中的 ::before) */
 .md-nav__item--section::before,
-.md-nav__item--section > .md-nav__link::before,
-.md-nav__item--section > .md-nav__container::before,
+.md-nav__item--section::after,
 .md-nav__item--section .md-nav__link::before,
+.md-nav__item--section .md-nav__link::after,
+.md-nav__item--section .md-nav__container::before,
 .md-nav__title::before {
   display: none !important;
   content: none !important;
   width: 0 !important;
 }
 
-/* [B] 普通文章与目录 (排除 Section) */
-/* 只有非 Section 的项才允许 24px 缩进和紫色高亮 */
+/* [B] 普通项（文章/目录）：非 Section 且非 Title 才缩进 24px */
 .md-nav__item:not(.md-nav__item--section) > .md-nav__link,
-.md-nav__item:not(.md-nav__item--section) > .md-nav__container {
+.md-nav__item:not(.md-nav__item--section) > .md-nav__container,
+.md-nav__item:not(.md-nav__item--section) > label {
   padding-left: 24px !important;
   position: relative;
 }
 
-/* [C] 激活路径颜色 (仅限非 Section) */
+/* [C] 激活路径颜色：[紫色 + 加粗] (排除 Section) */
 .md-nav__item--active:not(.md-nav__item--section) > .md-nav__link,
-.md-nav__item--active:not(.md-nav__item--section) > .md-nav__container .md-nav__link {
+.md-nav__item--active:not(.md-nav__item--section) > .md-nav__container .md-nav__link,
+.md-nav__item--active:not(.md-nav__item--section) > label {
   color: var(--fs-accent) !important;
   font-weight: 700 !important;
 }
 
-/* [D] 竖线渲染：顶天立地 (仅限非 Section) */
+/* [D] 竖线实体渲染：顶天立地 (仅限非 Section 项) */
 .md-nav__item--active:not(.md-nav__item--section) > .md-nav__link::before,
-.md-nav__item--active:not(.md-nav__item--section) > .md-nav__container::before {
+.md-nav__item--active:not(.md-nav__item--section) > .md-nav__container::before,
+.md-nav__item--active:not(.md-nav__item--section) > label::before {
   content: "" !important;
   position: absolute;
   left: 0;
@@ -98,15 +100,14 @@ Fashion Star Wiki - V35.4 (Precision Surgical Strike)
   display: block !important;
 }
 
-/* [E] 首页项特殊处理 */
+/* [E] 首页项去线 */
 .md-nav__link[href*="index.html"]::before,
 .md-nav__link[href$="/"]::before {
   display: none !important;
 }
 
 /* [F] 字号细化 */
-.md-nav__item--nested > .md-nav__link,
-.md-nav__item--nested > .md-nav__container .md-nav__link { font-size: 16px !important; }
+.md-nav__item--nested > .md-nav__link { font-size: 16px !important; }
 .md-nav__item:not(.md-nav__item--nested) > .md-nav__link { font-size: 14.5px !important; }
 
 /* [G] Hover 效果 */
