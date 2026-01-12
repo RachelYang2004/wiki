@@ -8,6 +8,9 @@ site_dir: site
 theme:
   name: material
   custom_dir: docs/overrides  
+  icon:
+    # Change the language selector icon
+    alternate: fashion/lan-switch
   favicon: assets/favicon.png
   font:
     text: Roboto
@@ -42,11 +45,9 @@ extra:
     - name: 🇺🇸 English
       link: /
       lang: en
-      icon: fashion/tech-sun
     - name: 🇨🇳 中文
       link: /zh/
       lang: zh
-      icon: fashion/tech-sun
 
 extra_css:
   - stylesheets/extra.css
