@@ -9,6 +9,9 @@ theme:
   name: material
   language: zh
   custom_dir: docs/overrides 
+  icon:
+    # Change the language selector icon
+    alternate: fashion/lang-switch
   favicon: assets/favicon.png
   font:
     text: Microsoft YaHei
@@ -43,11 +46,9 @@ extra:
     - name: 🇺🇸 English
       link: /
       lang: en
-      icon: fashion/tech-sun
     - name: 🇨🇳 中文
       link: /zh/
       lang: zh
-      icon: fashion/tech-sun
 
 extra_css:
   - stylesheets/extra.css
