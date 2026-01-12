@@ -1,4 +1,4 @@
-# UART Bus Servo 25KG Test
+# UART Bus Servo 25KG Test-中文
 
 ![U25产品图片](image/U25产品图片.png)
 
@@ -14,6 +14,7 @@
 - Three stop modes: **Free / Lock / Damping**
 - Five protections: **temperature / voltage / stall / power / current**
 - PC configuration tool; firmware upgradable
+- 泡饭
 
 ## 2. Model definition
 
