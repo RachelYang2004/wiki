@@ -10,6 +10,9 @@ theme:
   language: zh
   custom_dir: docs/overrides 
   favicon: assets/favicon.png
+  font:
+    text: Microsoft YaHei
+    code: Roboto Mono  
   logo: false
   features:
     - navigation.path
