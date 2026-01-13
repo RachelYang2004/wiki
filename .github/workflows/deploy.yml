@@ -21,7 +21,10 @@ jobs:
           python-version: 3.x
       # 关键修改：安装 requirements.txt 中列出的所有插件
       - run: pip install -r requirements.txt
-      - run: mkdocs build
+      - name: Build English Edition
+        run: mkdocs build -f mkdocs.en.yml
+      - name: Build Chinese Edition
+        run: mkdocs build -f mkdocs.zh.yml
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
